@@ -53,6 +53,7 @@ public class TaskFragment extends Fragment {
                 messageText.setText(model.getMessageText());
                 messageUser.setText(model.getMessageUser());
                 //Covert time to ago
+//ddd
                 long timeInMillis = System.currentTimeMillis();
                 String CovertMessageTime = TimeAgo.from(model.getMessageTime());
 
