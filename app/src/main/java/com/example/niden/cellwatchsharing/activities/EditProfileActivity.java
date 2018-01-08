@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-//Final changes
+//Third push
 public class EditProfileActivity extends AppCompatActivity {
     private static final String TAG = EditProfileActivity.class.getSimpleName();
 
@@ -53,7 +53,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 String profileContact = editProfileContact.getText().toString();
                 String profileHobby = editProfileHobby.getText().toString();
                 String profileBirthday = editProfileBirthday.getText().toString();
-                Toast.makeText(null,"Hello",Toast.LENGTH_LONG).show();
                 // update the user profile information in Firebase database.
                 if(TextUtils.isEmpty(profileName) || TextUtils.isEmpty(profileBio) || TextUtils.isEmpty(profileContact)
                         || TextUtils.isEmpty(profileHobby) || TextUtils.isEmpty(profileBirthday)){
