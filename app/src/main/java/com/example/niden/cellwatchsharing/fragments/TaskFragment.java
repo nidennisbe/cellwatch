@@ -56,5 +56,6 @@ public class TaskFragment extends Fragment {
             }
         };
         listOfTasks.setAdapter(mAdapter);
+        //testing
     }
 }
