@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+
+
+    <group android:checkableBehavior="single"
+        app:itemBackground="@drawable/style_button_sign_in_round">
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_gallary"
+            android:title="Gallery" />
+        <item
+            android:id="@+id/nav_circles"
+            android:icon="@drawable/ic_circles"
+            android:title="Technicians" />
+        <item
+            android:id="@+id/nav_task"
+            android:icon="@drawable/ic_circles"
+            android:title="Tasks" />
+        <item
+            android:id="@+id/nav_anouncement"
+            android:icon="@drawable/ic_news"
+            android:title="Announcement" />
+    </group>
+
+    <item android:title="Setting">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_about"
+                android:title="Version" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="Log out" />
+        </menu>
+    </item>
+
+</menu>

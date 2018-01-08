@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "160470651274",
+    "firebase_url": "https://cellwatchsharing.firebaseio.com",
+    "project_id": "cellwatchsharing",
+    "storage_bucket": "cellwatchsharing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160470651274:android:cfdf28db3709ccfb",
+        "android_client_info": {
+          "package_name": "com.example.niden.cellwatchsharing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160470651274-e1m62b92bh23f0e1eqmro6chbuasp3tc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.niden.cellwatchsharing",
+            "certificate_hash": "7d058dc1764393fd2844d098862912511282a7f0"
+          }
+        },
+        {
+          "client_id": "160470651274-dj6jt81p2tbpu2fcivalpjdqpsoa93vo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvIMH1Kii8SA27z_L6-lEr5NZLJ_l-_CQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160470651274-dj6jt81p2tbpu2fcivalpjdqpsoa93vo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
