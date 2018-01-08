@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
@@ -15,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-
+//Final changes
 public class EditProfileActivity extends AppCompatActivity {
     private static final String TAG = EditProfileActivity.class.getSimpleName();
 
@@ -24,6 +25,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editProfileContact;
     private EditText editProfileHobby;
     private EditText editProfileBirthday;
+
     String task="";
 
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -51,7 +53,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 String profileContact = editProfileContact.getText().toString();
                 String profileHobby = editProfileHobby.getText().toString();
                 String profileBirthday = editProfileBirthday.getText().toString();
-
+                Toast.makeText(null,"Hello",Toast.LENGTH_LONG).show();
                 // update the user profile information in Firebase database.
                 if(TextUtils.isEmpty(profileName) || TextUtils.isEmpty(profileBio) || TextUtils.isEmpty(profileContact)
                         || TextUtils.isEmpty(profileHobby) || TextUtils.isEmpty(profileBirthday)){
