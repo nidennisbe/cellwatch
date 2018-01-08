@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.PostEntityDatabase;
+import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.github.marlonlom.utilities.timeago.TimeAgo;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +24,7 @@ import org.w3c.dom.Text;
  */
 
 public class TaskFragment extends Fragment {
-    private FirebaseListAdapter<PostEntityDatabase> mAdapter;
+    private FirebaseListAdapter<TaskEntityDatabase> mAdapter;
     private ListView listOfTasks;
     View myView;
     @Nullable
@@ -31,33 +32,26 @@ public class TaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_task_layout,container,false);
         listOfTasks = (ListView) myView.findViewById(R.id.list_of_tasks);
-        displayChatMessages();
+        displayListOfTechnician();
         return myView;
 
 
     }
 
 
-    public void displayChatMessages() {
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("public_chat");
-        mAdapter = new FirebaseListAdapter<PostEntityDatabase>(getActivity(), PostEntityDatabase.class,
+    public void displayListOfTechnician() {
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("technician");
+        mAdapter = new FirebaseListAdapter<TaskEntityDatabase>(getActivity(), TaskEntityDatabase.class,
                 R.layout.item_post, mRef) {
             @Override
-            protected void populateView(View v, PostEntityDatabase model, int position) {
-                // Get references to the DialogsUtils of item_message.xmle.xml
-
+            protected void populateView(View v, TaskEntityDatabase model, int position) {
                 TextView messageText = (TextView) v.findViewById(R.id.message_text);
 
 
                 //setText
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
-                //Covert time to ago
-
-                long timeInMillis = System.currentTimeMillis();
-                String CovertMessageTime = TimeAgo.from(model.getMessageTime());
-
+                messageText.setText(model.getTechnicianName());
             }
+
         };
         listOfTasks.setAdapter(mAdapter);
         //testing

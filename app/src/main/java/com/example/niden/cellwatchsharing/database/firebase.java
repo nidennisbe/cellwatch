@@ -19,7 +19,7 @@ public class firebase extends MainActivity {
       //Create new post for announment
     public void insertPostToFirebase(EditText txMessage) {
         FirebaseDatabase.getInstance()
-                .getReference().child("public_chat")
+                .getReference().child("technician")
                 .push()
                 .setValue(new PostEntityDatabase(txMessage.getText().toString(),
                         FirebaseAuth.getInstance()
