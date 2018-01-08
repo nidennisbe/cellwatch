@@ -101,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_gallery) {
            fragmentManager.beginTransaction().replace(R.id.content_frame,new GallaryFragment()).commit();
         } else if (id == R.id.nav_circles) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame,new CirclesFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new CirclesFragment()).commit();
+        } else if (id == R.id.nav_task) {
+                fragmentManager.beginTransaction().replace(R.id.content_frame,new AnnouncementFragment()).commit();
         } else if (id == R.id.nav_anouncement) {
            fragmentManager.beginTransaction().replace(R.id.content_frame,new AnnouncementFragment()).commit();
         } else if (id == R.id.nav_about) {

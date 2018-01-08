@@ -4,8 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CellWatchSharing.iml" filepath="$PROJECT_DIR$/CellWatchSharing.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cellwatch.iml" filepath="$PROJECT_DIR$/cellwatch.iml" />
+      <module fileurl="file://C:\Users\niden\Desktop\CellWatchSharing\cellwatch.iml" filepath="C:\Users\niden\Desktop\CellWatchSharing\cellwatch.iml" />
     </modules>
   </component>
 </project>
