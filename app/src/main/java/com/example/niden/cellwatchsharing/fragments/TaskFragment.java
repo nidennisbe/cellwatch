@@ -49,7 +49,7 @@ public class TaskFragment extends Fragment {
 
 
                 //setText
-                messageText.setText(model.getTechnicianName());
+
             }
 
         };
