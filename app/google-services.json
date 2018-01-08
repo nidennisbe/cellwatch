@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "160470651274-2gd0abdhn59v4t82ff76ufk0cqismp3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.niden.cellwatchsharing",
+            "certificate_hash": "b22e4ffc90cb5950251d4a97dbbca5fb56803970"
+          }
+        },
+        {
           "client_id": "160470651274-e1m62b92bh23f0e1eqmro6chbuasp3tc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
