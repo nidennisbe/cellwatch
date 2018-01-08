@@ -14,6 +14,7 @@
         tools:layout_editor_absoluteY="157dp" />
 
     <ListView
+        android:id="@+id/list_of_tasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>

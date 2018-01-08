@@ -16,6 +16,8 @@ import com.github.marlonlom.utilities.timeago.TimeAgo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by niden on 16-Nov-17.
  */
@@ -29,6 +31,7 @@ public class TaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_task_layout,container,false);
         listOfTasks = (ListView) myView.findViewById(R.id.list_of_tasks);
+        displayChatMessages();
         return myView;
 
 
@@ -42,17 +45,17 @@ public class TaskFragment extends Fragment {
             @Override
             protected void populateView(View v, PostEntityDatabase model, int position) {
                 // Get references to the DialogsUtils of item_message.xmle.xml
+
                 TextView messageText = (TextView) v.findViewById(R.id.message_text);
-                TextView messageUser = (TextView) v.findViewById(R.id.message_user);
-                TextView messageTime = (TextView) v.findViewById(R.id.message_time);
+
+
                 //setText
                 messageText.setText(model.getMessageText());
                 messageUser.setText(model.getMessageUser());
                 //Covert time to ago
                 long timeInMillis = System.currentTimeMillis();
                 String CovertMessageTime = TimeAgo.from(model.getMessageTime());
-                messageTime.setText(CovertMessageTime);
-                //listOfMessages.setStackFromBottom(true);
+
             }
         };
         listOfTasks.setAdapter(mAdapter);
