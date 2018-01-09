@@ -14,6 +14,7 @@ import com.example.niden.cellwatchsharing.database.PostEntityDatabase;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.github.marlonlom.utilities.timeago.TimeAgo;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,24 +33,25 @@ public class TaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_task_layout,container,false);
         listOfTasks = (ListView) myView.findViewById(R.id.list_of_tasks);
-        displayListOfTechnician();
+        displayListOfTask();
         return myView;
-
 
     }
 
+    public void displayListOfTask() {
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users")
 
-    public void displayListOfTechnician() {
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("technician");
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("tasks");;
         mAdapter = new FirebaseListAdapter<TaskEntityDatabase>(getActivity(), TaskEntityDatabase.class,
-                R.layout.item_post, mRef) {
+                R.layout.item_task, mRef) {
             @Override
             protected void populateView(View v, TaskEntityDatabase model, int position) {
-                TextView messageText = (TextView) v.findViewById(R.id.message_text);
+                TextView messageText = (TextView) v.findViewById(R.id.task_name);
 
 
                 //setText
-                messageText.setText(model.getTechnicianName());
+                messageText.setText(model.getMessageText());
             }
 
         };

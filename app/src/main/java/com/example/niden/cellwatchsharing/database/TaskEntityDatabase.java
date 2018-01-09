@@ -7,11 +7,11 @@ import java.util.Date;
  */
 
 public class TaskEntityDatabase {
-    private String technicianName;
+    private String messageText;
 
 
-    public TaskEntityDatabase(String technicianName) {
-        this.technicianName = technicianName;
+    public TaskEntityDatabase(String messageText) {
+        this.messageText = messageText;
 
     }
 
@@ -19,12 +19,12 @@ public class TaskEntityDatabase {
 
     }
 
-    public String getTechnicianName() {
-        return technicianName;
+    public String getMessageText() {
+        return messageText;
     }
 
-    public void setTechnicianName(String technicianName) {
-        this.technicianName = technicianName;
+    public void setTechnicianName(String messageText) {
+        this.messageText = messageText;
     }
 
 
