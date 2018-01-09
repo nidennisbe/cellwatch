@@ -1,15 +1,20 @@
 package com.example.niden.cellwatchsharing.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.activities.TaskContentActivity;
 import com.example.niden.cellwatchsharing.database.PostEntityDatabase;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -28,15 +33,27 @@ public class TaskFragment extends Fragment {
     private FirebaseListAdapter<TaskEntityDatabase> mAdapter;
     private ListView listOfTasks;
     View myView;
+    Context context=this.getActivity();
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_task_layout,container,false);
         listOfTasks = (ListView) myView.findViewById(R.id.list_of_tasks);
         displayListOfTask();
-        return myView;
 
+
+        listOfTasks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent myIntent = new Intent(context, TaskContentActivity.class);
+//                context.startActivity(myIntent);
+                Toast.makeText(null,"Testing",Toast.LENGTH_SHORT).show();
+            }
+        });
+        return myView;
     }
+
+
 
     public void displayListOfTask() {
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users")
