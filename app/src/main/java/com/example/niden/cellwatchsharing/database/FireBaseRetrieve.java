@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class FireBaseRetrieve {
 
-    String strName,strBio,strContact;
+    String strName,strBio,strUID;
     DatabaseReference mMessagesDatabaseReference;
     User user = new User();
     FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
@@ -26,7 +26,8 @@ public class FireBaseRetrieve {
 
     //Showing profile information
     public void displayProfileInfo(final TextView textViewName, final TextView textViewBio){
-        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getFirebaseAuth().getUid());
+        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+                .child(user.getFirebaseAuth().getUid());
         mMessagesDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
