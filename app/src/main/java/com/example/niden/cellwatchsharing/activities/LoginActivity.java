@@ -2,6 +2,7 @@ package com.example.niden.cellwatchsharing.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -84,7 +85,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 //End of Validation
                 myDialog = DialogsUtils.showProgressDialog(LoginActivity.this, "Signing in...");
-                mUser.loginAUser(LoginActivity.this,email,password,myDialog);
+                    mUser.loginAUser(LoginActivity.this, email, password, myDialog);
+
+
             }
         });
     }

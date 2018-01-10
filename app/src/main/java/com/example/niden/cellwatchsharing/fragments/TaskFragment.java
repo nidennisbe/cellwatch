@@ -1,5 +1,6 @@
 package com.example.niden.cellwatchsharing.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +34,7 @@ public class TaskFragment extends Fragment {
     private FirebaseListAdapter<TaskEntityDatabase> mAdapter;
     private ListView listOfTasks;
     View myView;
-    Context context=this.getActivity();
+    private Activity refActivity=getActivity();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, Bundle savedInstanceState) {
@@ -45,9 +46,11 @@ public class TaskFragment extends Fragment {
         listOfTasks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent myIntent = new Intent(context, TaskContentActivity.class);
-//                context.startActivity(myIntent);
-                Toast.makeText(null,"Testing",Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(getActivity(), TaskContentActivity.class);
+                getActivity().startActivity(myIntent);
+
+                    Toast.makeText(getActivity(), "Testing", Toast.LENGTH_SHORT).show();
+
             }
         });
         return myView;
@@ -73,6 +76,6 @@ public class TaskFragment extends Fragment {
 
         };
         listOfTasks.setAdapter(mAdapter);
-        //testing
+
     }
 }

@@ -109,7 +109,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
            fragmentManager.beginTransaction().replace(R.id.content_frame,new AnnouncementFragment()).commit();
         } else if (id == R.id.nav_about) {
             fragmentManager.beginTransaction().replace(R.id.content_frame,new CirclesFragment()).commit();
-        } else if (id == R.id.nav_logout) {
+        }
+        else if (id ==R.id.content_frame){
+            fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
+        }
+        else if (id == R.id.nav_logout) {
             firebaseAuth.signOut();
 // this listener will be called when there is change in firebase user session
             FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
