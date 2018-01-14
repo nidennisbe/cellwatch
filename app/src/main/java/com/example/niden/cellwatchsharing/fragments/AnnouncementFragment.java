@@ -25,12 +25,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by niden on 16-Nov-17.
+ * Admin side for inserting task
  */
 
 public class AnnouncementFragment extends Fragment {
     View parentHolder;
     private Activity referenceActivity;
-    private EditText txMessage;
+    private EditText txTaskName,txDescription,txAddress,txSuburb,txClass;
     private ListView listOfMessages;
     private FirebaseListAdapter<PostEntityDatabase> mAdapter;
     public TextView displayEmail;
@@ -45,23 +46,30 @@ public class AnnouncementFragment extends Fragment {
        // mFirebase.makeFirebaseWorkOffline();
 
 
-        txMessage = (EditText) parentHolder.findViewById(R.id.editTextMessage);
-        listOfMessages = (ListView) parentHolder.findViewById(R.id.list_of_messages);
+        txTaskName = (EditText) parentHolder.findViewById(R.id.editTextTaskName);
+        txAddress = (EditText) parentHolder.findViewById(R.id.editTextAddress);
+        txDescription = (EditText) parentHolder.findViewById(R.id.editTextDescription);
+        txSuburb = (EditText) parentHolder.findViewById(R.id.editTextSuburb);
+        txClass = (EditText) parentHolder.findViewById(R.id.editTextClass);
+
+
         final Button btnPost = (Button) parentHolder.findViewById(R.id.fragment_announcement_btn_post);
-        displayEmail = (TextView) parentHolder.findViewById(R.id.textViewEmail);
 
         btnPost.setEnabled(false);
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mFirebase.insertPostToFirebase(txMessage);
-                txMessage.setText("");
+                mFirebase.insertPostToFirebase(txTaskName,txClass,txDescription,txAddress,txSuburb);
+                txTaskName.setText("");
+                txAddress.setText("");
+                txDescription.setText("");
+                txSuburb.setText("");
+                txClass.setText("");
             }
         });
-        displayChatMessages();
 
         //Listener for disable and enable button item_post depend on EditText
-        txMessage.addTextChangedListener(new TextWatcher() {
+        txTaskName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -88,27 +96,5 @@ public class AnnouncementFragment extends Fragment {
 
     }
 
-    public void displayChatMessages() {
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("public_chat");
-        mAdapter = new FirebaseListAdapter<PostEntityDatabase>(getActivity(), PostEntityDatabase.class,
-                R.layout.item_post, mRef) {
-            @Override
-            protected void populateView(View v, PostEntityDatabase model, int position) {
-                // Get references to the DialogsUtils of item_message.xmle.xml
-                TextView messageText = (TextView) v.findViewById(R.id.message_text);
-                TextView messageUser = (TextView) v.findViewById(R.id.message_user);
-                TextView messageTime = (TextView) v.findViewById(R.id.message_time);
-                //setText
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
-                //Covert time to ago
-                long timeInMillis = System.currentTimeMillis();
-                String CovertMessageTime = TimeAgo.from(model.getMessageTime());
-                messageTime.setText(CovertMessageTime);
-                //listOfMessages.setStackFromBottom(true);
-            }
-        };
-        listOfMessages.setAdapter(mAdapter);
-    }
 
 }

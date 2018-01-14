@@ -28,11 +28,12 @@ public class FirebaseDatabaseHelper {
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void createUserInFirebaseDatabase(String userId, FirebaseUserEntity firebaseUserEntity){
-        Map<String, FirebaseUserEntity> user = new HashMap<>();
-        user.put(userId, firebaseUserEntity);
-
-        databaseReference.child("users").child(userId).setValue(user);
+    public void createUserInFirebaseDatabase(String userId, Object firebaseUserEntity){
+        Map<String, Object> user = new HashMap<>();
+        user.put("info", firebaseUserEntity);
+        databaseReference.child("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .updateChildren(user);
     }
 
 

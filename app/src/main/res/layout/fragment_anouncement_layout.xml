@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,61 +12,72 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:background="#ffffff"
-        android:elevation="1dp"
-        android:orientation="horizontal">
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_image"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@android:drawable/ic_menu_add"
-            android:onClick="openGallary" />
-
-        <EditText
-            android:id="@+id/editTextMessage"
-            android:layout_width="280dp"
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:maxLength="100"
-            android:background="#ffffff"
-            android:hint="Say something to the team"
-            android:inputType="textMultiLine|textFilter|textVisiblePassword|textNoSuggestions"
-            android:padding="5dp"
-            android:textColorLink="@android:color/holo_blue_light" />
+            android:src="@drawable/logo_cellwatch" />
+
+        <EditText
+            android:id="@+id/editTextTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Enter task name"
+            android:inputType="textPersonName"
+            android:padding="20dp" />
+
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Description"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editTextAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Address"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editTextSuburb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Suburb"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editTextClass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Class"
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/fragment_announcement_btn_post"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:background="@drawable/style_button_border_only"
-            android:elevation="2dp"
-            android:text="Post"
-            android:textColor="@color/colorPrimary" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:paddingTop="60dp"
-        android:layout_height="wrap_content"
-        android:background="@color/common_google_signin_btn_text_dark_default"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/list_of_messages"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_height="15dp"
             android:layout_weight="2"
-            android:transcriptMode="alwaysScroll"
-            android:stackFromBottom="true"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="16dp" />
-
+            android:background="@drawable/style_button_sign_in_round"
+            android:elevation="2dp"
+            android:text="Submit"
+            android:textColor="@color/cardview_light_background" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
