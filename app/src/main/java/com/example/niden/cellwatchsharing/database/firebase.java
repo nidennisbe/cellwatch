@@ -6,6 +6,9 @@ import com.example.niden.cellwatchsharing.activities.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import static com.example.niden.cellwatchsharing.database.User.firebaseAuth;
 import static com.example.niden.cellwatchsharing.fragments.AnnouncementFragment.database;
 
@@ -18,17 +21,17 @@ public class firebase extends MainActivity {
 
     public static FirebaseAuth firebaseAuth;
       //Create new post for announment
-    public void insertPostToFirebase(EditText txMessage) {
+      String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    public void insertPostToFirebase(EditText txTaskName,EditText txClass,EditText txAddress,EditText txDescription,EditText txSuburb) {
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("tasks")
                 .push()
-                .setValue(new PostEntityDatabase(txMessage.getText().toString(),
-                        FirebaseAuth.getInstance()
-                                .getCurrentUser()
-                                .getUid())
-                );
+                .setValue(new TaskEntityDatabase(txTaskName.getText().toString(),txClass.getText().toString(),txAddress.getText().toString(),txDescription.getText().toString(),
+                        txSuburb.getText().toString(),currentDateTimeString
+
+                ));
     }
 }

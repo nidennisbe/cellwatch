@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import static com.example.niden.cellwatchsharing.activities.OnlineTechniciansActivity.counterRef;
@@ -115,8 +117,9 @@ public class User extends Application {
                             Toast.makeText(context, "Login failed. Please check your email and password", Toast.LENGTH_SHORT).show();
                             myDialog.dismiss();
                         } else {
+                            String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
                             final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid())
-                                    .child("userLoginTime").push().setValue(System.currentTimeMillis());
+                                    .child("userLoginTime").push().setValue(currentDateTimeString);
                             Intent profileIntent = new Intent(context, MainActivity.class);
                             context.startActivity(profileIntent);
                             myDialog.dismiss();

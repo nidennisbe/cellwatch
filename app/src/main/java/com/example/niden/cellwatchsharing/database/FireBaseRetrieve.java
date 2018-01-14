@@ -32,9 +32,9 @@ public class FireBaseRetrieve {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    FirebaseUserEntity userInfo = postSnapshot.getValue(FirebaseUserEntity.class);
-                    strName=userInfo.getName();
-                    strBio=userInfo.getBio();
+                    firebaseUserEntity = postSnapshot.getValue(FirebaseUserEntity.class);
+                    strName=firebaseUserEntity.getName();
+                    strBio=firebaseUserEntity.getBio();
                    // strContact=userInfo.getPhone();
                 }
                 // Log.d(null,uName);

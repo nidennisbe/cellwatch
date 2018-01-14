@@ -42,14 +42,14 @@ public class TaskFragment extends Fragment {
         listOfTasks = (ListView) myView.findViewById(R.id.list_of_tasks);
         displayListOfTask();
 
-
+//Set action on click of listview
         listOfTasks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent myIntent = new Intent(getActivity(), TaskContentActivity.class);
                 getActivity().startActivity(myIntent);
 
-                    Toast.makeText(getActivity(), "Testing", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), position+"", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -60,18 +60,17 @@ public class TaskFragment extends Fragment {
 
     public void displayListOfTask() {
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users")
-
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("tasks");;
+                .child("tasks");
         mAdapter = new FirebaseListAdapter<TaskEntityDatabase>(getActivity(), TaskEntityDatabase.class,
                 R.layout.item_task, mRef) {
             @Override
             protected void populateView(View v, TaskEntityDatabase model, int position) {
-                TextView messageText = (TextView) v.findViewById(R.id.task_name);
-
-
+                TextView tvTaskName = (TextView) v.findViewById(R.id.task_name);
+                TextView tvDate = (TextView)v.findViewById(R.id.textViewTaskDate);
                 //setText
-                messageText.setText(model.getMessageText());
+                tvTaskName.setText(model.getTask_name());
+                tvDate.setText(model.getTask_date());
             }
 
         };
