@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int SELECT_PICTURE = 100;
     public static Activity activity;
     User mUser = new User();
+    NavigationView navigationView;
+
 
 
     @Override
@@ -167,6 +169,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onRestart() {
         mUser.checkUserLogin(activity);
         super.onRestart();
+    }
+
+    public void hideItem(MainActivity mainActivity)
+    {
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_anouncement).setVisible(false);
+        nav_Menu.findItem(R.id.nav_task).setVisible(false);
     }
 
 }
