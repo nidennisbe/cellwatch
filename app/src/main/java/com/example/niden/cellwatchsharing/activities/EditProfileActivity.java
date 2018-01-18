@@ -70,7 +70,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     String profileEmail = user.getEmail();
 
 
-                    FirebaseUserEntity userEntity = new FirebaseUserEntity(id,profileEmail, profileName, profileBio, profileContact,profileHobby,profileBirthday);
+                    FirebaseUserEntity userEntity = new FirebaseUserEntity(id,profileEmail, profileName, profileBio, profileContact,profileHobby,profileBirthday,1);
                     FirebaseDatabaseHelper firebaseDatabaseHelper = new FirebaseDatabaseHelper();
                     firebaseDatabaseHelper.createUserInFirebaseDatabase(id, userEntity);
 
