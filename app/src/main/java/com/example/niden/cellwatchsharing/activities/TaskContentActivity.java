@@ -1,16 +1,22 @@
 package com.example.niden.cellwatchsharing.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.constraint.solver.widgets.Snapshot;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,25 +50,36 @@ public class TaskContentActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
     private String mCurrentPhotoPath;
     Button btnCamera;
-    private GridView gridView;
-
-
+    RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
+    public RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    ImageView imageView;
+    public static ArrayList<String> itemsData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_content);
 
-        // Initialize GridView
 
-        gridView = (GridView)findViewById(R.id.gridview1);
+        imageView = (ImageView)findViewById(R.id.gallaryImage);
+        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         btnCamera = (Button)findViewById(R.id.button_camera) ;
         etTaskName = (EditText)findViewById(R.id.editTextTaskName);
         etClass = (EditText)findViewById(R.id.editTextClass);
         etDescription = (EditText)findViewById(R.id.editTextDescription);
         etAddress = (EditText)findViewById(R.id.editTextAddress);
         etSuburb = (EditText)findViewById(R.id.editTextSuburb);
-        //gridView.setAdapter(new ImageAdapter(this));
+        recyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new GridLayoutManager(this,4);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+
+//        mRecyclerView.setAdapter(mAdapter);
+
 
         displayTaskDetail(etTaskName,etClass,etDescription,etAddress,etSuburb);
 
@@ -145,16 +163,13 @@ public class TaskContentActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Save Image To Gallery
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE );
-        File f = new File(mCurrentPhotoPath );
+        File f = new File(mCurrentPhotoPath);
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
         // Add Image Path To List
-        //myList.add(mCurrentPhotoPath);
+       itemsData.add(mCurrentPhotoPath);
 
-
-        // Refresh Gridview Image Thumbnails
-        gridView.invalidateViews();
     }
 
     public File createImageFile() throws IOException

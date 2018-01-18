@@ -1,5 +1,6 @@
 package com.example.niden.cellwatchsharing.database;
 
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class FireBaseRetrieve {
 
-    String strName,strBio,strUID;
+    Object strName,strBio,strUID;
     DatabaseReference mMessagesDatabaseReference;
     User user = new User();
     FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
@@ -37,9 +38,9 @@ public class FireBaseRetrieve {
                     strBio=firebaseUserEntity.getBio();
                    // strContact=userInfo.getPhone();
                 }
-                // Log.d(null,uName);
-                textViewName.setText(strName);
-                textViewBio.setText(strBio);
+               // Log.d(null,strName);
+//                textViewName.setText(strName);
+//                textViewBio.setText(strBio);
 
                 // textViewContact.setText(strContact);
             }

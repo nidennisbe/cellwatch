@@ -6,9 +6,6 @@ public class FirebaseUserEntity {
     private String uId;
     private String email;
 
-    public FirebaseUserEntity(String user_type) {
-
-    }
 
     public void setName(String name) {
         this.name = name;
