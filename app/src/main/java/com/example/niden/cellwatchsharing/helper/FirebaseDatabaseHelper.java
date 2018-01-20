@@ -28,7 +28,7 @@ public class FirebaseDatabaseHelper {
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void createUserInFirebaseDatabase(String userId, Object firebaseUserEntity){
+    public void createUserInFirebaseDatabase(String userId, FirebaseUserEntity firebaseUserEntity){
         Map<String, Object> user = new HashMap<>();
         user.put("info", firebaseUserEntity);
         databaseReference.child("users")

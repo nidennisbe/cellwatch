@@ -1,5 +1,6 @@
 package com.example.niden.cellwatchsharing.database;
 
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -9,6 +10,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * Created by niden on 25-Nov-17.
@@ -27,19 +30,20 @@ public class FireBaseRetrieve {
     //Showing profile information
     public void displayProfileInfo(final TextView textViewName, final TextView textViewBio){
         mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
-                .child(user.getFirebaseAuth().getUid());
-        mMessagesDatabaseReference.addValueEventListener(new ValueEventListener() {
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
+        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    firebaseUserEntity = postSnapshot.getValue(FirebaseUserEntity.class);
+
+
+                    firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+
                     strName=firebaseUserEntity.getName();
                     strBio=firebaseUserEntity.getBio();
-                   // strContact=userInfo.getPhone();
-                }
-                // Log.d(null,uName);
-                textViewName.setText(strName);
-                textViewBio.setText(strBio);
+
+                    textViewBio.setText(strBio);
+                    textViewName.setText(strName);
+//                Log.d("a",strBio);
 
                 // textViewContact.setText(strContact);
             }

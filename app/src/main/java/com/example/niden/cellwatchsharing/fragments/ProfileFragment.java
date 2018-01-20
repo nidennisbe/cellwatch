@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
         referenceActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_profile_layout,container,false);
        // myView = inflater.inflate(R.layout.fragment_profile_layout,container,false);
-
+        getActivity().setTitle("Profile");
 
         imageViewEditProfile = (ImageView)parentHolder.findViewById(R.id.btn_edit_profile);
         textViewName = (TextView)parentHolder.findViewById(R.id.user_profile_name);

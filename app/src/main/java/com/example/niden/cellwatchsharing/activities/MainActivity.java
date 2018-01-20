@@ -19,16 +19,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.User;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
-import com.example.niden.cellwatchsharing.fragments.AnnouncementFragment;
+import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
 import com.example.niden.cellwatchsharing.fragments.CirclesFragment;
 import com.example.niden.cellwatchsharing.fragments.GallaryFragment;
 import com.example.niden.cellwatchsharing.fragments.ProfileFragment;
@@ -59,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         activity = this;
+        FragmentManager fragmentManager =getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
 
 
 
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_task) {
                 fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
         } else if (id == R.id.nav_anouncement) {
-           fragmentManager.beginTransaction().replace(R.id.content_frame,new AnnouncementFragment()).commit();
+           fragmentManager.beginTransaction().replace(R.id.content_frame,new CreateTaskFragment()).commit();
         } else if (id == R.id.nav_about) {
             fragmentManager.beginTransaction().replace(R.id.content_frame,new CirclesFragment()).commit();
         }

@@ -6,9 +6,6 @@ public class FirebaseUserEntity {
     private String uId;
     private String email;
 
-    public FirebaseUserEntity(String user_type) {
-
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -70,4 +67,31 @@ public class FirebaseUserEntity {
         return task;
     }
 
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
+    }
+
+    public void setTask(String task) {
+        this.task = task;
+    }
 }

@@ -13,20 +13,25 @@ public class TaskEntityDatabase {
     private String task_suburb;
     private String task_class;
     private String task_date;
+    private String task_type;
+    private String task_technician_name;
 
     public TaskEntityDatabase(){
 
     }
 
 
-    TaskEntityDatabase(String task_name, String task_class, String task_description, String task_address, String task_suburb,String task_date) {
+    TaskEntityDatabase(String task_name, String task_class, String task_description, String task_address, String task_suburb,String task_date,String task_type, String task_technician_name) {
         this.task_name = task_name;
         this.task_description = task_description;
         this.task_address = task_address;
         this.task_suburb = task_suburb;
         this.task_class = task_class;
         this.task_date = task_date;
+        this.task_type = task_type;
+        this.task_technician_name = task_technician_name;
     }
+
 
 
 
@@ -76,5 +81,13 @@ public class TaskEntityDatabase {
 
     public void setTask_date(String task_date) {
         this.task_date = task_date;
+    }
+
+    public String getTask_type() {
+        return task_type;
+    }
+
+    public String getTask_technician_name() {
+        return task_technician_name;
     }
 }
