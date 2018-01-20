@@ -11,13 +11,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 /**
  * Created by niden on 25-Nov-17.
  */
 
 public class FireBaseRetrieve {
 
-    Object strName,strBio,strUID;
+    String strName,strBio,strUID;
     DatabaseReference mMessagesDatabaseReference;
     User user = new User();
     FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
@@ -28,19 +30,20 @@ public class FireBaseRetrieve {
     //Showing profile information
     public void displayProfileInfo(final TextView textViewName, final TextView textViewBio){
         mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
-                .child(user.getFirebaseAuth().getUid());
-        mMessagesDatabaseReference.addValueEventListener(new ValueEventListener() {
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
+        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    firebaseUserEntity = postSnapshot.getValue(FirebaseUserEntity.class);
+
+
+                    firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+
                     strName=firebaseUserEntity.getName();
                     strBio=firebaseUserEntity.getBio();
-                   // strContact=userInfo.getPhone();
-                }
-               // Log.d(null,strName);
-//                textViewName.setText(strName);
-//                textViewBio.setText(strBio);
+
+                    textViewBio.setText(strBio);
+                    textViewName.setText(strName);
+//                Log.d("a",strBio);
 
                 // textViewContact.setText(strContact);
             }

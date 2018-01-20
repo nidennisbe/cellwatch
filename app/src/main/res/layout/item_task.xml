@@ -4,8 +4,6 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:layout_margin="15dp"
-    android:background="@drawable/shadow_border"
     android:elevation="3dp"
     android:orientation="vertical"
     android:padding="10dp">
@@ -62,7 +60,9 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#72a3e8" />
+        android:layout_height="2dp"
+        android:layout_gravity="right"
+        android:layout_weight="1"
+        android:background="@color/colorDivider" />
 
 </LinearLayout>

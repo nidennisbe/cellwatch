@@ -1,5 +1,6 @@
 package com.example.niden.cellwatchsharing.activities;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,7 +26,9 @@ import com.example.niden.cellwatchsharing.adapters.ImageAdapter;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.database.User;
+import com.example.niden.cellwatchsharing.fragments.ProfileFragment;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
+import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,7 +64,7 @@ public class TaskContentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_content);
-
+        KeyboardUtils.hideSoftKeyboard(this);
 
         imageView = (ImageView)findViewById(R.id.gallaryImage);
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
@@ -101,6 +104,7 @@ public class TaskContentActivity extends AppCompatActivity {
                 .child(user.getFirebaseAuth().getUid())
                 .child("tasks")
         ;
+
         mMessagesDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

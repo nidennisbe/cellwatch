@@ -46,8 +46,8 @@ public class FriendsAdapter extends FirebaseRecyclerAdapter<FirebaseUserEntity,F
 
         public Viewholder(View view) {
             super(view);
-            imageView = (ImageView) view.findViewById(R.id.imageView);
-            name = (TextView) view.findViewById(R.id.txt_name);
+//            imageView = (ImageView) view.findViewById(R.id.imageView);
+//            name = (TextView) view.findViewById(R.id.txt_name);
 
 
 

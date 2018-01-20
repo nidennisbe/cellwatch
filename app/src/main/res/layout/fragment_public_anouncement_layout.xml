@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.niden.cellwatchsharing.fragments.AnnouncementFragment">
+    tools:context="com.example.niden.cellwatchsharing.fragments.CreateTaskFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

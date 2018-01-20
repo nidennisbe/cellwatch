@@ -41,7 +41,7 @@
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 //        referenceActivity = getActivity();
-//        parentHolder = inflater.inflate(R.layout.fragment_anouncement_layout, container, false);
+//        parentHolder = inflater.inflate(R.layout.fragment_create_task_layout, container, false);
 //       // mFirebase.makeFirebaseWorkOffline();
 //
 //
