@@ -40,10 +40,9 @@ public class ProfileFragment extends Fragment {
     View parentHolder;
     Activity referenceActivity;
     ImageView imageViewEditProfile;
-    TextView displayName;
     FireBaseRetrieve mFirebaseRetrive = new FireBaseRetrieve();
 
-    TextView textViewName,textViewBio,textViewContact;
+    TextView textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth;
 
     FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
 
@@ -58,9 +57,11 @@ public class ProfileFragment extends Fragment {
         imageViewEditProfile = (ImageView)parentHolder.findViewById(R.id.btn_edit_profile);
         textViewName = (TextView)parentHolder.findViewById(R.id.user_profile_name);
         textViewBio = (TextView)parentHolder.findViewById(R.id.user_profile_short_bio);
-        //textViewContact = (TextView)findViewById(R.id.user);
+        textViewPhone = (TextView)parentHolder.findViewById(R.id.tv_phonenumber);
+        textViewHobby = (TextView)parentHolder.findViewById(R.id.tv_hobby);
+        textViewDateBirth = (TextView)parentHolder.findViewById(R.id.tv_date_birth);
 
-        mFirebaseRetrive.displayProfileInfo(textViewName,textViewBio);
+        mFirebaseRetrive.displayProfileInfo(textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth);
         imageViewEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

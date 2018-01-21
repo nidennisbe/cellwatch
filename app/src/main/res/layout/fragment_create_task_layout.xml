@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Create a new task for technicians"
+            android:text="Create a new expiration_date for technicians"
             android:textColor="@color/place_autocomplete_prediction_secondary_text"
             android:textSize="18sp" />
 
@@ -28,9 +28,9 @@
             android:id="@+id/editTextTaskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
-            android:hint="Enter task name"
+            android:hint="Enter expiration_date name"
             android:inputType="textPersonName" />
 
         <Spinner
@@ -42,7 +42,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="horizontal">
 
             <TextView
@@ -84,7 +84,7 @@
             android:id="@+id/editTextDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="Description"
             android:inputType="textPersonName" />
@@ -93,7 +93,7 @@
             android:id="@+id/editTextAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="Address"
             android:inputType="textPersonName" />
@@ -102,7 +102,7 @@
             android:id="@+id/editTextSuburb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="Suburb"
             android:inputType="textPersonName" />
@@ -111,7 +111,7 @@
             android:id="@+id/editTextClass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="Class"
             android:inputType="textPersonName" />
@@ -119,13 +119,13 @@
         <Button
             android:id="@+id/fragment_announcement_btn_post"
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="20dp"
             android:layout_marginTop="40dp"
-            android:layout_weight="2"
-            android:background="@drawable/style_button_sign_in_round"
+            android:layout_weight="3"
+            android:background="@drawable/style_button_border_only"
             android:elevation="2dp"
             android:text="Submit"
-            android:textColor="@color/cardview_light_background" />
+            android:textColor="@color/colorPrimary" />
     </LinearLayout>
 
 </LinearLayout>

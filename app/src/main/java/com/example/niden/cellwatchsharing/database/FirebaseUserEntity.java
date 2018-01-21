@@ -13,25 +13,25 @@ public class FirebaseUserEntity {
 
     private String name;
     private String bio;
-    private String contact;
+    private String phone;
     private String birthday;
     private String hobby;
-    private String task;
+    private String expiration_date;
 
 
 
     public FirebaseUserEntity(){
     }
 
-    public FirebaseUserEntity(String uId, String email, String name, String bio, String contact, String birthday, String hobby,int user_type) {
+    public FirebaseUserEntity(String uId, String email, String name, String bio, String phone, String birthday, String hobby, String expiration_date) {
         this.uId = uId;
         this.email = email;
         this.name = name;
         this.bio = bio;
-        this.contact = contact;
+        this.phone = phone;
         this.birthday = birthday;
         this.hobby = hobby;
-        this.task = task;
+        this.expiration_date = expiration_date;
 
     }
 
@@ -52,7 +52,7 @@ public class FirebaseUserEntity {
     }
 
     public String getPhone() {
-        return contact;
+        return phone;
     }
 
     public String getBirthday() {
@@ -63,8 +63,8 @@ public class FirebaseUserEntity {
         return hobby;
     }
 
-    public String getTask() {
-        return task;
+    public String getExpiration_date() {
+        return expiration_date;
     }
 
     public void setuId(String uId) {
@@ -79,8 +79,8 @@ public class FirebaseUserEntity {
         this.bio = bio;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public void setBirthday(String birthday) {
@@ -91,7 +91,7 @@ public class FirebaseUserEntity {
         this.hobby = hobby;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void setExpiration_date(String expiration_date) {
+        this.expiration_date = expiration_date;
     }
 }

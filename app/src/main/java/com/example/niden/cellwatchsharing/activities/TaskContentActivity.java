@@ -52,12 +52,11 @@ public class TaskContentActivity extends AppCompatActivity {
     TaskEntityDatabase taskEntityDatabase = new TaskEntityDatabase();
     static final int REQUEST_TAKE_PHOTO = 1;
     private String mCurrentPhotoPath;
-    Button btnCamera;
     RecyclerView recyclerView;
     private RecyclerView mRecyclerView;
     public RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    ImageView imageView;
+    ImageView imageView,btnCamera;
     public static ArrayList<String> itemsData = new ArrayList<>();
 
     @Override
@@ -68,7 +67,7 @@ public class TaskContentActivity extends AppCompatActivity {
 
         imageView = (ImageView)findViewById(R.id.gallaryImage);
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        btnCamera = (Button)findViewById(R.id.button_camera) ;
+        btnCamera = (ImageView)findViewById(R.id.button_camera) ;
         etTaskName = (EditText)findViewById(R.id.editTextTaskName);
         etClass = (EditText)findViewById(R.id.editTextClass);
         etDescription = (EditText)findViewById(R.id.editTextDescription);

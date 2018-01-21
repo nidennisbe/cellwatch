@@ -93,7 +93,7 @@ public class CreateTaskFragment extends Fragment {
         mBtnEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerUtils.openDatePicker(referenceActivity,datePickerDialog,mBtnStartDate,mBtnEndDate);
+                DatePickerUtils.openEndDatePicker(referenceActivity,datePickerDialog,mBtnStartDate,mBtnEndDate);
             }
         });
 

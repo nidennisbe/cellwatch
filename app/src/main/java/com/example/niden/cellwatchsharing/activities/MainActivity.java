@@ -27,7 +27,7 @@ import com.example.niden.cellwatchsharing.database.User;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
-import com.example.niden.cellwatchsharing.fragments.CirclesFragment;
+import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
 import com.example.niden.cellwatchsharing.fragments.GallaryFragment;
 import com.example.niden.cellwatchsharing.fragments.ProfileFragment;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
@@ -78,20 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
     @Override
@@ -104,13 +91,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_gallery) {
            fragmentManager.beginTransaction().replace(R.id.content_frame,new GallaryFragment()).commit();
         } else if (id == R.id.nav_circles) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new CirclesFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new TechniciansFragment()).commit();
         } else if (id == R.id.nav_task) {
                 fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
         } else if (id == R.id.nav_anouncement) {
            fragmentManager.beginTransaction().replace(R.id.content_frame,new CreateTaskFragment()).commit();
         } else if (id == R.id.nav_about) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame,new CirclesFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();
         }
         else if (id ==R.id.content_frame){
             fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();

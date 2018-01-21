@@ -13,9 +13,8 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="5dp"
-        android:background="@color/common_google_signin_btn_text_dark_default">
+        android:background="@color/common_google_signin_btn_text_dark_default"
+        android:orientation="vertical">
 
 
     </LinearLayout>

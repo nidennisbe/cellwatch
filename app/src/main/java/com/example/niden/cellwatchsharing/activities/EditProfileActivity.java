@@ -25,7 +25,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editProfileContact;
     private EditText editProfileHobby;
     private EditText editProfileBirthday;
-
     String task="";
 
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -40,8 +39,8 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfileName = (EditText)findViewById(R.id.profile_name);
         editProfileBio = (EditText)findViewById(R.id.profile_bio);
         editProfileContact = (EditText)findViewById(R.id.profile_phone);
-        editProfileHobby = (EditText)findViewById(R.id.profile_hobby);
-        editProfileBirthday = (EditText)findViewById(R.id.profile_birth);
+        editProfileHobby = (EditText)findViewById(R.id.profile_expiration_date);
+        editProfileBirthday = (EditText)findViewById(R.id.profile_hobby);
         Button saveEditButton = (Button)findViewById(R.id.save_edit_button);
 
 
@@ -70,7 +69,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     String profileEmail = user.getEmail();
 
 
-                    FirebaseUserEntity userEntity = new FirebaseUserEntity(id,profileEmail, profileName, profileBio, profileContact,profileHobby,profileBirthday,1);
+                    FirebaseUserEntity userEntity = new FirebaseUserEntity(id,profileEmail, profileName, profileBio, profileContact,profileHobby,profileBirthday,profileHobby);
                     FirebaseDatabaseHelper firebaseDatabaseHelper = new FirebaseDatabaseHelper();
                     firebaseDatabaseHelper.createUserInFirebaseDatabase(id, userEntity);
 
@@ -80,9 +79,21 @@ public class EditProfileActivity extends AppCompatActivity {
                     editProfileContact.setText("");
                     editProfileHobby.setText("");
                     editProfileBirthday.setText("");
+                    EditProfileActivity.this.finish();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
             }
         });
+
+
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+
+    }
 }

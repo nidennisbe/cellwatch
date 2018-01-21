@@ -3,14 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="45dp"
     android:orientation="vertical"
+    android:padding="25dp"
     tools:context="com.example.niden.cellwatchsharing.activities.EditProfileActivity">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Personal Details"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/profile_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:hint="@string/edit_profile_name"
         android:inputType="textPersonName"
         android:maxLines="1"
@@ -24,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_weight="1"
         android:hint="@string/edit_profile_bio"
         android:inputType="text"
         android:maxLines="1"
@@ -37,12 +47,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_weight="1"
         android:hint="@string/edit_profile_phone"
         android:inputType="phone"
         android:maxLines="1"
         android:padding="12dp"
         android:singleLine="true"
-        android:textColor="@color/colorTextLight"
+        android:textColor="@color/colorTextDark"
         android:textSize="12dp" />
 
     <EditText
@@ -50,6 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_weight="1"
         android:hint="@string/edit_profile_hobby"
         android:inputType="text"
         android:maxLines="1"
@@ -66,15 +78,15 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/profile_birth"
+            android:id="@+id/profile_expiration_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_weight="7"
+            android:layout_weight="2"
+            android:hint="Expiration Date"
             android:inputType="text"
             android:maxLines="1"
             android:padding="12dp"
-            android:hint="Expiration Date"
             android:singleLine="true"
             android:textColor="@color/colorTextDark"
             android:textSize="12dp" />
@@ -85,11 +97,12 @@
         android:id="@+id/save_edit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/colorTextLight"
+        android:layout_marginTop="100dp"
+        android:layout_weight="0.1"
+        android:background="@drawable/style_button_sign_in_round"
+        android:padding="12dp"
         android:text="@string/save_edit"
-        android:background="@color/colorPrimaryDark"
-        android:padding="12dp"/>
+        android:textColor="@color/colorTextLight" />
 
 
 </LinearLayout>

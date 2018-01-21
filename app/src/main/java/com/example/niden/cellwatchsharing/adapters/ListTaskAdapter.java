@@ -40,7 +40,7 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimationUtils.loadAnimation(activity,R.anim.zoom_in));
-               Intent myIntent = new Intent(activity, TaskContentActivity.class);
+                Intent myIntent = new Intent(activity, TaskContentActivity.class);
                 myIntent.putExtra("name", model.getTask_name());
 
               activity.startActivity(myIntent);
