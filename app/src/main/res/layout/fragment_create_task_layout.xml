@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Create a new expiration_date for technicians"
+            android:text="Create a new task for technicians"
             android:textColor="@color/place_autocomplete_prediction_secondary_text"
             android:textSize="18sp" />
 
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:ems="10"
-            android:hint="Enter expiration_date name"
+            android:hint="Enter task name"
             android:inputType="textPersonName" />
 
         <Spinner

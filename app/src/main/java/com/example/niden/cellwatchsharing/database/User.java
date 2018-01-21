@@ -43,7 +43,7 @@ import static com.example.niden.cellwatchsharing.activities.OnlineTechniciansAct
 public class User extends Application  {
     private static final String TAG = User.class.getSimpleName();
     public static FirebaseAuth firebaseAuth;
-    public FirebaseAuth.AuthStateListener mAuthListener;
+    public static FirebaseAuth.AuthStateListener mAuthListener;
     public static final int ADMIN = 1;
     public static final int TECHNICIAN = 2;
 
