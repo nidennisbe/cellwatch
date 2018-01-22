@@ -1,5 +1,6 @@
 package com.example.niden.cellwatchsharing.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.database.User;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -22,6 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -31,56 +36,53 @@ import java.util.HashMap;
 public class TechniciansFragment extends Fragment {
     DatabaseReference mRef;
     View myView;
+    Activity referenceActivity;
     private FirebaseListAdapter<FirebaseUserEntity> mAdapter;
     FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
-    RecyclerView recyclerView;
     private ListView listOfTechnicians;
     Context context;
-    User mUser = new User();
     DatabaseReference firebaseDatabase;
     TextView technicianName;
-    String technicianList;
-    private static HashMap<String, String> personList = new HashMap<>();;
-
+    public String technicianList;
+    ArrayList<String> list = new ArrayList<String>();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_technicians_layout,container,false);
-         technicianName = (TextView) myView.findViewById(R.id.txt_name);
+        referenceActivity = getActivity();
+
+
         listOfTechnicians = (ListView) myView.findViewById(R.id.list_technician);
         displayFriendsList();
 
         return myView;
     }
     public void displayFriendsList() {
-         mRef = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).child("info");
-        mAdapter = new FirebaseListAdapter<FirebaseUserEntity>(getActivity(), FirebaseUserEntity.class,
+         mRef = FirebaseDatabase.getInstance().getReference().child("users");
+        mAdapter = new FirebaseListAdapter<FirebaseUserEntity>(referenceActivity, FirebaseUserEntity.class,
                 R.layout.item_list_technician, mRef) {
+
+
             @Override
             protected void populateView(View v, FirebaseUserEntity model, int position) {
+                final TextView name_user = (TextView)v.findViewById(R.id.txt_name);
+                mRef.child(mAdapter.getRef(position).getKey()).child("info").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+                        name_user.setText(firebaseUserEntity.getName());
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         };
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                     firebaseUserEntity = postSnapshot.getValue(FirebaseUserEntity.class);
-
-                    personList.put(FirebaseAuth.getInstance().getUid(), firebaseUserEntity.getName());
 
 
-
-                   technicianList = firebaseUserEntity.getName();
-               technicianName.setText(technicianList);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
         listOfTechnicians.setAdapter(mAdapter);
+
     }
 }

@@ -17,14 +17,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.database.PostEntityDatabase;
 import com.example.niden.cellwatchsharing.database.UserEntityDatabase;
 import com.example.niden.cellwatchsharing.database.firebase;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -42,6 +46,7 @@ public class CreateTaskFragment extends Fragment {
     Spinner spinner,dropDownTechnician;
     Button mBtnStartDate,mBtnEndDate;
     DatePickerDialog datePickerDialog;
+    FirebaseListAdapter<UserEntityDatabase> mfirebaseListAdapter;
 
     @Nullable
     @Override
@@ -72,11 +77,25 @@ public class CreateTaskFragment extends Fragment {
         };
         spinner.setAdapter(firebaseListAdapter);
 
-        DatabaseReference mrefTechnician = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        FirebaseListAdapter<UserEntityDatabase> mfirebaseListAdapter = new FirebaseListAdapter<UserEntityDatabase>(referenceActivity, UserEntityDatabase.class, android.R.layout.simple_list_item_1, mrefTechnician) {
+
+
+        final DatabaseReference mrefTechnician = FirebaseDatabase.getInstance().getReference().child("users");
+        mfirebaseListAdapter= new FirebaseListAdapter<UserEntityDatabase>(referenceActivity, UserEntityDatabase.class, android.R.layout.simple_list_item_1, mrefTechnician) {
             @Override
-            protected void populateView(View v, UserEntityDatabase model, int position) {
-                ((TextView) v.findViewById(android.R.id.text1)).setText(model.getUserName());
+            protected void populateView(final View v, final UserEntityDatabase model, int position) {
+                mrefTechnician.child(mfirebaseListAdapter.getRef(position).getKey()).child("info").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                       FirebaseUserEntity firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+                        ((TextView) v.findViewById(android.R.id.text1)).setText(firebaseUserEntity.getName());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         };
         dropDownTechnician.setAdapter(mfirebaseListAdapter);

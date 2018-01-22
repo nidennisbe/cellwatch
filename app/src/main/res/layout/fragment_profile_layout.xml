@@ -7,17 +7,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/style_background_diagonal">
+        android:layout_height="wrap_content">
 
         <developer.shivam.crescento.CrescentoImageView
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_above="@id/header_cover_image"
-            attribute:crescentoTintColor="#FFFFFF"
+            attribute:crescentoTintColor="#a27cd4"
             attribute:crescentoTintMode="automatic"
-            attribute:curvature="20dp"
+            attribute:curvature="40dp"
             attribute:gradientDirection="top_to_bottom"
             attribute:gradientEndColor="#54d7ff"
             attribute:gradientStartColor="#2FACFE"

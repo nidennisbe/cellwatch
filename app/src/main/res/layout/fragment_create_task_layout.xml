@@ -33,20 +33,34 @@
             android:hint="Enter task name"
             android:inputType="textPersonName" />
 
-        <Spinner
-            android:id="@+id/spinnerTechnician"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Choose technican" />
+
+            <Spinner
+                android:id="@+id/spinnerTechnician"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Choose type:"
@@ -54,8 +68,8 @@
 
             <Spinner
                 android:id="@+id/spinnerType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="5" />
         </LinearLayout>
 
@@ -70,14 +84,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Start Date" />
+                android:background="@drawable/style_button_border_only"
+                android:text="Start Date"
+                android:textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TO"
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnEndDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="End Date" />
+                android:background="@drawable/style_button_border_only"
+                android:text="End Date"
+                android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 
         <EditText

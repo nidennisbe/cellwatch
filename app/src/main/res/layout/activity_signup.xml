@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:drawable/screen_background_light"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -12,7 +13,6 @@
 
         android:layout_gravity="center"
         android:layout_margin="45dp"
-        android:background="@color/common_google_signin_btn_text_dark_default"
         android:gravity="center"
         android:orientation="vertical"
         android:weightSum="1">

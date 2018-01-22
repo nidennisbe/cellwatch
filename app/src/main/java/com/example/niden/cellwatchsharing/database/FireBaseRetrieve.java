@@ -37,7 +37,6 @@ public class FireBaseRetrieve {
 
 
                     firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-
                     strName=firebaseUserEntity.getName();
                     strBio=firebaseUserEntity.getBio();
                     strPhone=firebaseUserEntity.getPhone();

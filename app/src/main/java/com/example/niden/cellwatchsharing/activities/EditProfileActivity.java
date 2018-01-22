@@ -1,13 +1,12 @@
 package com.example.niden.cellwatchsharing.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
@@ -25,7 +24,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editProfileContact;
     private EditText editProfileHobby;
     private EditText editProfileBirthday;
-    String task="";
+    String task = "";
 
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -36,12 +35,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
         setTitle("Edit Profile Information");
 
-        editProfileName = (EditText)findViewById(R.id.profile_name);
-        editProfileBio = (EditText)findViewById(R.id.profile_bio);
-        editProfileContact = (EditText)findViewById(R.id.profile_phone);
-        editProfileHobby = (EditText)findViewById(R.id.profile_expiration_date);
-        editProfileBirthday = (EditText)findViewById(R.id.profile_hobby);
-        Button saveEditButton = (Button)findViewById(R.id.save_edit_button);
+        editProfileName = (EditText) findViewById(R.id.profile_name);
+        editProfileBio = (EditText) findViewById(R.id.profile_bio);
+        editProfileContact = (EditText) findViewById(R.id.profile_phone);
+        editProfileHobby = (EditText) findViewById(R.id.profile_expiration_date);
+        editProfileBirthday = (EditText) findViewById(R.id.profile_hobby);
+        Button saveEditButton = (Button) findViewById(R.id.save_edit_button);
 
 
         saveEditButton.setOnClickListener(new View.OnClickListener() {
@@ -53,8 +52,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 String profileHobby = editProfileHobby.getText().toString();
                 String profileBirthday = editProfileBirthday.getText().toString();
                 // update the user profile information in Firebase database.
-                if(TextUtils.isEmpty(profileName) || TextUtils.isEmpty(profileBio) || TextUtils.isEmpty(profileContact)
-                        || TextUtils.isEmpty(profileHobby) || TextUtils.isEmpty(profileBirthday)){
+                if (TextUtils.isEmpty(profileName) || TextUtils.isEmpty(profileBio) || TextUtils.isEmpty(profileContact)
+                        || TextUtils.isEmpty(profileHobby) || TextUtils.isEmpty(profileBirthday)) {
                     //.displayMessageToast(EditProfileActivity.this, "All fields must be filled");
                 }
 
@@ -69,7 +68,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     String profileEmail = user.getEmail();
 
 
-                    FirebaseUserEntity userEntity = new FirebaseUserEntity(id,profileEmail, profileName, profileBio, profileContact,profileHobby,profileBirthday,profileHobby);
+                    FirebaseUserEntity userEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby, profileBirthday, profileHobby);
                     FirebaseDatabaseHelper firebaseDatabaseHelper = new FirebaseDatabaseHelper();
                     firebaseDatabaseHelper.createUserInFirebaseDatabase(id, userEntity);
 

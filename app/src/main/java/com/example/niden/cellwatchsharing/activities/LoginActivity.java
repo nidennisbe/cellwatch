@@ -1,8 +1,12 @@
 package com.example.niden.cellwatchsharing.activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -84,8 +88,32 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 //End of Validation
-                myDialog = DialogsUtils.showProgressDialog(LoginActivity.this, "Signing in...");
+                if (isOnline()) {
+                    //do whatever you want to do
+                    myDialog = DialogsUtils.showProgressDialog(LoginActivity.this, "Signing in...");
                     mUser.loginAUser(LoginActivity.this, email, password, myDialog);
+                }else
+                {
+                    try {
+                        AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+
+                        alertDialog.setTitle("Internet Connection");
+                        alertDialog.setMessage("Please check your internet connectivity and try again");
+                        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        alertDialog.show();
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
+                }
+
 
 
             }
@@ -106,4 +134,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
     }
+
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+          //  Toast.makeText(LoginActivity.this, "No Internet connection!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
 }
+

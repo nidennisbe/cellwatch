@@ -34,6 +34,7 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
 
     @Override
     protected void populateViewHolder(final Viewholder viewholder, final TaskEntityDatabase model, int position) {
+
         viewholder.tvTaskName.setText(model.getTask_name());
         viewholder.tvDate.setText(model.getTask_date());
         viewholder.linearLayout.setOnClickListener(new View.OnClickListener() {

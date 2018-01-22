@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
 import com.example.niden.cellwatchsharing.activities.LoginActivity;
 import com.example.niden.cellwatchsharing.activities.MainActivity;
 import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
@@ -97,9 +98,11 @@ public class User extends Application  {
                             Toast.makeText(context, "Fail to Register due to." + task.getException(), Toast.LENGTH_SHORT).show();
                             myDialog.dismiss();
                         } else {
-                            IntentUtils.openMainActivity(context);
+//                            IntentUtils.openMainActivity(context);
+                            Intent myIntent = new Intent(context, EditProfileActivity.class);
+                            context.startActivity(myIntent);
                             ((Activity) context).finish();
-                            insertUserInformation();
+                            //insertUserInformation();
                         }
                     }
                 });
