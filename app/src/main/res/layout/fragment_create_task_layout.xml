@@ -28,25 +28,39 @@
             android:id="@+id/editTextTaskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="Enter task name"
             android:inputType="textPersonName" />
 
-        <Spinner
-            android:id="@+id/spinnerTechnician"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Choose technican" />
+
+            <Spinner
+                android:id="@+id/spinnerTechnician"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_weight="2"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Choose type:"
@@ -54,8 +68,8 @@
 
             <Spinner
                 android:id="@+id/spinnerType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="5" />
         </LinearLayout>
 
@@ -70,21 +84,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Start Date" />
+                android:background="@drawable/style_button_border_only"
+                android:text="Start Date"
+                android:textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TO"
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnEndDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="End Date" />
+                android:background="@drawable/style_button_border_only"
+                android:text="End Date"
+                android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 
         <EditText
             android:id="@+id/editTextDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="Description"
             android:inputType="textPersonName" />
@@ -93,7 +120,7 @@
             android:id="@+id/editTextAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="Address"
             android:inputType="textPersonName" />
@@ -102,7 +129,7 @@
             android:id="@+id/editTextSuburb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="Suburb"
             android:inputType="textPersonName" />
@@ -111,7 +138,7 @@
             android:id="@+id/editTextClass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="Class"
             android:inputType="textPersonName" />
@@ -119,13 +146,13 @@
         <Button
             android:id="@+id/fragment_announcement_btn_post"
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="20dp"
             android:layout_marginTop="40dp"
-            android:layout_weight="2"
-            android:background="@drawable/style_button_sign_in_round"
+            android:layout_weight="3"
+            android:background="@drawable/style_button_border_only"
             android:elevation="2dp"
             android:text="Submit"
-            android:textColor="@color/cardview_light_background" />
+            android:textColor="@color/colorPrimary" />
     </LinearLayout>
 
 </LinearLayout>

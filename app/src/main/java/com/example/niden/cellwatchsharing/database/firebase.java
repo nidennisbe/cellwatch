@@ -20,7 +20,7 @@ public class firebase extends MainActivity {
     public static FirebaseAuth firebaseAuth;
       //Create new post for announment
       String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-    public void insertPostToFirebase(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner) {
+    public void insertTaskToFirebase(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner) {
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child("users")

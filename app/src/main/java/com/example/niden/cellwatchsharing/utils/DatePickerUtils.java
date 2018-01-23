@@ -31,6 +31,26 @@ public class DatePickerUtils {
                         // set day of month , month and year value in the edit text
                         mBtnStartDate.setText(dayOfMonth + "/"
                                 + (monthOfYear + 1) + "/" + year);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
+
+    public static void openEndDatePicker(Context referenceActivity, DatePickerDialog datePickerDialog, final Button mBtnStartDate,final  Button mBtnEndDate){
+        // calender class's instance and get current date , month and year from calender
+        final Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR); // current year
+        int mMonth = c.get(Calendar.MONTH); // current month
+        int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+        // date picker dialog
+        datePickerDialog = new DatePickerDialog(referenceActivity,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        // set day of month , month and year value in the edit text
+
                         mBtnEndDate.setText(dayOfMonth + "/"
                                 + (monthOfYear + 1) + "/" + year);
                     }

@@ -5,9 +5,9 @@
     tools:showIn="navigation_view">
 
 
-
-    <group android:checkableBehavior="single"
-        app:itemBackground="@drawable/style_button_sign_in_round">
+    <group
+        android:checkableBehavior="single"
+        app:itemBackground="@drawable/style_background_diagonal">
 
         <item
             android:id="@+id/nav_profile"
@@ -16,19 +16,20 @@
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_gallary"
-            android:title="Gallery" />
+            android:title="Gallery"
+            android:visible="false" />
         <item
             android:id="@+id/nav_circles"
             android:icon="@drawable/ic_circles"
             android:title="Technicians(Admin View)" />
         <item
             android:id="@+id/nav_task"
-            android:icon="@drawable/ic_circles"
+            android:icon="@drawable/ic_news"
             android:title="Tasks" />
         <item
             android:id="@+id/nav_anouncement"
-            android:icon="@drawable/ic_news"
-            android:title="Add task(Admin View)" />
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="Add new task(Admin View)" />
     </group>
 
     <item android:title="Setting">

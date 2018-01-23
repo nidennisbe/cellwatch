@@ -1,7 +1,7 @@
+/*
 package com.example.niden.cellwatchsharing.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.PostEntityDatabase;
-import com.example.niden.cellwatchsharing.fragments.CirclesFragment;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.ObservableSnapshotArray;
-import com.google.firebase.database.DatabaseReference;
 
+*/
 /**
  * Created by niden on 16-Nov-17.
- */
+ *//*
+
 
 public class adapter extends FirebaseListAdapter<PostEntityDatabase> {
 
@@ -47,3 +47,4 @@ public class adapter extends FirebaseListAdapter<PostEntityDatabase> {
     }
 
 }
+*/
