@@ -23,7 +23,6 @@ import com.example.niden.cellwatchsharing.database.UserEntityDatabase;
 import com.example.niden.cellwatchsharing.database.firebase;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.firebase.ui.database.FirebaseListAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -124,7 +123,7 @@ public class CreateTaskFragment extends Fragment {
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mFirebase.insertPostToFirebase(txTaskName,txClass,txDescription,txAddress,txSuburb,spinner);
+                mFirebase.insertTaskToFirebase(txTaskName,txClass,txDescription,txAddress,txSuburb,spinner);
                 txTaskName.setText("");
                 txAddress.setText("");
                 txDescription.setText("");

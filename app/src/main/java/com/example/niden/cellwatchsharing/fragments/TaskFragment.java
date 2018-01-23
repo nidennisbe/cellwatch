@@ -35,7 +35,7 @@ public class TaskFragment extends Fragment {
     View myView;
     Activity activity =getActivity();
     RecyclerView recyclerView;
-    FirebaseDatabase fb;
+    Query mRef;
     TextView texetViewNumberOfTask;
 
 
@@ -49,8 +49,7 @@ public class TaskFragment extends Fragment {
         getActivity().setTitle("Tasks");
 
 
-        Query mRef;
-         mRef = FirebaseDatabase.getInstance().getReference().child("users")
+        mRef = FirebaseDatabase.getInstance().getReference().child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("tasks");
         ListTaskAdapter mAdapter = new ListTaskAdapter(mRef, activity,R.layout.item_task );

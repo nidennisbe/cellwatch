@@ -1,4 +1,4 @@
-package com.example.niden.cellwatchsharing.database;
+package com.example.niden.cellwatchsharing.classes;
 
 import android.app.Activity;
 import android.app.Application;
@@ -6,36 +6,23 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.internal.NavigationMenu;
-import android.support.design.widget.NavigationView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.View;
 import android.widget.Toast;
 
-import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
 import com.example.niden.cellwatchsharing.activities.LoginActivity;
 import com.example.niden.cellwatchsharing.activities.MainActivity;
-import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
-import com.example.niden.cellwatchsharing.fragments.TaskFragment;
-import com.example.niden.cellwatchsharing.utils.IntentUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
-
-import static com.example.niden.cellwatchsharing.activities.OnlineTechniciansActivity.counterRef;
 
 /**
  * Created by niden on 20-Nov-17.
@@ -133,12 +120,13 @@ public class User extends Application  {
                             myDialog.dismiss();
                         }
                         else {
+                                     myDialog.dismiss();
                                     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
                                     final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid())
                                             .child("userLoginTime").push().setValue(currentDateTimeString);
                                     Intent profileIntent = new Intent(context, MainActivity.class);
                                     context.startActivity(profileIntent);
-                                    myDialog.dismiss();
+
                                 }
                             };
                         });

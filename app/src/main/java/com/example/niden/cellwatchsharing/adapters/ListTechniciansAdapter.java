@@ -1,15 +1,11 @@
-package com.example.niden.cellwatchsharing.fragments;
+package com.example.niden.cellwatchsharing.adapters;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,51 +13,58 @@ import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 /**
- * Created by niden on 16-Nov-17.
+ * Created by niden on 18-Nov-17.
  */
 
-public class TechniciansFragment extends Fragment {
+public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUserEntity,ListTechniciansAdapter.Viewholder>{
+    public Activity activity;
     DatabaseReference mRef;
-    View myView;
-    Activity referenceActivity;
     private FirebaseListAdapter<FirebaseUserEntity> mAdapter;
     FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
     private ListView listOfTechnicians;
-    RecyclerView rvListTechnician;
 
-    public TextView technicianName;
-    public String technicianList;
-    ArrayList<String> list = new ArrayList<String>();
-    @Nullable
-    @Override
-
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.fragment_technicians_layout,container,false);
-        referenceActivity = getActivity();
-
-       // rvListTechnician = (RecyclerView) myView.findViewById(R.id.recycler_view_technician);
-        listOfTechnicians = (ListView) myView.findViewById(R.id.list_technician);
-        displayFriendsList();
-
-
-        return myView;
+    public ListTechniciansAdapter(Query ref, Activity activity, int layout) {
+        super(FirebaseUserEntity.class, layout, ListTechniciansAdapter.Viewholder.class, ref);
+        this.activity = activity;
     }
 
+    @Override
+    public int getItemCount() {
+        return super.getItemCount();
+    }
+
+    @Override
+    protected void populateViewHolder(Viewholder viewHolder, FirebaseUserEntity model, int position) {
+        viewHolder.name.setText(model.getName());
+    }
+
+    public static class Viewholder extends RecyclerView.ViewHolder {
+
+        ImageView imageView;
+        TextView name;
+
+        public Viewholder(View view) {
+            super(view);
+//            imageView = (ImageView) view.findViewById(R.id.imageView);
+             name = (TextView) view.findViewById(R.id.txt_name);
 
 
+
+        }
+    }
 
     public void displayFriendsList() {
-         mRef = FirebaseDatabase.getInstance().getReference().child("users");
-        mAdapter = new FirebaseListAdapter<FirebaseUserEntity>(referenceActivity, FirebaseUserEntity.class,
+        mRef = FirebaseDatabase.getInstance().getReference().child("users");
+        mAdapter = new FirebaseListAdapter<FirebaseUserEntity>(activity, FirebaseUserEntity.class,
                 R.layout.item_technician, mRef) {
 
 
@@ -88,10 +91,9 @@ public class TechniciansFragment extends Fragment {
         listOfTechnicians.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(referenceActivity, TechnicianActivity.class);
-                referenceActivity.startActivity(myIntent);
+                Intent myIntent = new Intent(activity, TechnicianActivity.class);
+                activity.startActivity(myIntent);
             }
         });
     }
-
 }

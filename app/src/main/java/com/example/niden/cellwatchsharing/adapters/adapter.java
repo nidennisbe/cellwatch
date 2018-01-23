@@ -1,3 +1,4 @@
+/*
 package com.example.niden.cellwatchsharing.adapters;
 
 import android.content.Context;
@@ -11,9 +12,11 @@ import com.example.niden.cellwatchsharing.database.PostEntityDatabase;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.ObservableSnapshotArray;
 
+*/
 /**
  * Created by niden on 16-Nov-17.
- */
+ *//*
+
 
 public class adapter extends FirebaseListAdapter<PostEntityDatabase> {
 
@@ -44,3 +47,4 @@ public class adapter extends FirebaseListAdapter<PostEntityDatabase> {
     }
 
 }
+*/

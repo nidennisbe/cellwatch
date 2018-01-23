@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.database.User;
+import com.example.niden.cellwatchsharing.classes.User;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
@@ -35,7 +35,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-import static com.example.niden.cellwatchsharing.database.User.firebaseAuth;
+import static com.example.niden.cellwatchsharing.classes.User.firebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
