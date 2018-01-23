@@ -32,7 +32,7 @@ import java.util.ArrayList;
 public class TechniciansFragment extends Fragment {
     DatabaseReference mRef;
     View myView;
-    Activity referenceActivity;
+    Activity activity;
     private FirebaseListAdapter<FirebaseUserEntity> mAdapter;
     FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
     private ListView listOfTechnicians;
@@ -46,7 +46,8 @@ public class TechniciansFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_technicians_layout,container,false);
-        referenceActivity = getActivity();
+        activity = getActivity();
+        activity.setTitle("Technicians");
 
        // rvListTechnician = (RecyclerView) myView.findViewById(R.id.recycler_view_technician);
         listOfTechnicians = (ListView) myView.findViewById(R.id.list_technician);
@@ -61,7 +62,7 @@ public class TechniciansFragment extends Fragment {
 
     public void displayFriendsList() {
          mRef = FirebaseDatabase.getInstance().getReference().child("users");
-        mAdapter = new FirebaseListAdapter<FirebaseUserEntity>(referenceActivity, FirebaseUserEntity.class,
+        mAdapter = new FirebaseListAdapter<FirebaseUserEntity>(activity, FirebaseUserEntity.class,
                 R.layout.item_technician, mRef) {
 
 
@@ -88,8 +89,8 @@ public class TechniciansFragment extends Fragment {
         listOfTechnicians.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(referenceActivity, TechnicianActivity.class);
-                referenceActivity.startActivity(myIntent);
+                Intent myIntent = new Intent(activity, TechnicianActivity.class);
+                activity.startActivity(myIntent);
             }
         });
     }

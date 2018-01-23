@@ -24,6 +24,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editProfileContact;
     private EditText editProfileHobby;
     private EditText editProfileBirthday;
+    FirebaseUserEntity userEntity;
     String task = "";
 
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -68,7 +69,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     String profileEmail = user.getEmail();
 
 
-                    FirebaseUserEntity userEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby, profileBirthday, profileHobby);
+                    userEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby, profileBirthday, profileHobby);
                     FirebaseDatabaseHelper firebaseDatabaseHelper = new FirebaseDatabaseHelper();
                     firebaseDatabaseHelper.createUserInFirebaseDatabase(id, userEntity);
 

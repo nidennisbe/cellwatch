@@ -7,16 +7,12 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.activities.TaskContentActivity;
+import com.example.niden.cellwatchsharing.activities.TaskDetailActivity;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by niden on 21-Nov-17.
@@ -41,7 +37,7 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimationUtils.loadAnimation(activity,R.anim.zoom_in));
-                Intent myIntent = new Intent(activity, TaskContentActivity.class);
+                Intent myIntent = new Intent(activity, TaskDetailActivity.class);
                 myIntent.putExtra("name", model.getTask_name());
 
               activity.startActivity(myIntent);

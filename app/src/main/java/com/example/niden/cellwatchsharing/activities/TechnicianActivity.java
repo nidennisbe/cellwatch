@@ -36,6 +36,7 @@ public class TechnicianActivity extends AppCompatActivity {
         setContentView(R.layout.activity_technician);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Technicians list");
 
         textViewName = (TextView)findViewById(R.id.user_profile_name);
         textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);

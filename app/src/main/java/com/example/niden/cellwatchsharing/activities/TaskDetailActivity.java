@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TaskContentActivity extends AppCompatActivity {
+public class TaskDetailActivity extends AppCompatActivity {
 
     EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
     String strTaskName, strDescription, strAddress, strClass, strSuburb;
@@ -51,8 +51,9 @@ public class TaskContentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_content);
+        setContentView(R.layout.activity_task_detail);
         KeyboardUtils.hideSoftKeyboard(this);
+        setTitle("Task Detail");
 
         imageView = (ImageView) findViewById(R.id.gallaryImage);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);

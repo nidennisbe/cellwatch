@@ -52,7 +52,7 @@
             android:theme="@style/AppTheme" />
 
 
-        <activity android:name=".activities.TaskContentActivity"></activity>
+        <activity android:name=".activities.TaskDetailActivity"></activity>
     </application>
 
 </manifest>
