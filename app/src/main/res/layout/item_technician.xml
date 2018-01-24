@@ -23,11 +23,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
             android:text="Name"
             android:textColor="@color/colorTextDark"
-            android:textSize="30sp"
+            android:textSize="24sp"
             tools:layout_editor_absoluteX="63dp"
             tools:layout_editor_absoluteY="39dp" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/presence_online" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="150dp"
+    android:background="@drawable/toolbar_bg"
     android:elevation="3dp"
     android:orientation="vertical"
     android:padding="10dp">
@@ -26,6 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -34,8 +36,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-light"
                 android:padding="10dp"
-                android:textColor="@color/colorTextDark"
+                android:textSize="24sp"
                 android:textStyle="normal|bold" />
 
             <TextView
@@ -51,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-light"
                 android:padding="5dp"
                 android:text="Date" />
 
@@ -58,11 +62,11 @@
 
     </LinearLayout>
 
-    <View
+   <!-- <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_gravity="right"
         android:layout_weight="1"
-        android:background="@color/colorDivider" />
+        android:background="@color/colorDivider" />-->
 
 </LinearLayout>

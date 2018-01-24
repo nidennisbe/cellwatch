@@ -1,12 +1,13 @@
 package com.example.niden.cellwatchsharing.database;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by niden on 16-Nov-17.
  */
 
-public class TaskEntityDatabase {
+public class TaskEntityDatabase implements Serializable{
     private String task_name;
     private String task_description;
     private String task_address;

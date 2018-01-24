@@ -7,19 +7,13 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background">
 
-    <developer.shivam.crescento.CrescentoImageView
+    <ImageView
         android:id="@+id/header_cover_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:background="@drawable/style_background_triangle"
         android:layout_above="@id/header_cover_image"
-        attribute:crescentoTintColor="#a27cd4"
-        attribute:crescentoTintMode="automatic"
-        attribute:curvature="40dp"
-        attribute:gradientDirection="top_to_bottom"
-        attribute:gradientEndColor="#54d7ff"
-        attribute:gradientStartColor="#2FACFE"
-        attribute:gravity="top"
-        attribute:tintMode="src_over" />
+         />
 
     <ImageButton
         android:id="@+id/user_profile_photo"

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
 import com.example.niden.cellwatchsharing.activities.LoginActivity;
 import com.example.niden.cellwatchsharing.activities.MainActivity;
@@ -116,7 +117,7 @@ public class User extends Application  {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail", task.getException());
-                            Toast.makeText(context, "Login failed. Please check your email and password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.alert_check_emailpassword, Toast.LENGTH_SHORT).show();
                             myDialog.dismiss();
                         }
                         else {

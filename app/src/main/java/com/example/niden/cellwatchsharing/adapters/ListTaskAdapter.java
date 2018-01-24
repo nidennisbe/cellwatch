@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.TaskDetailActivity;
@@ -29,7 +30,7 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
     }
 
     @Override
-    protected void populateViewHolder(final Viewholder viewholder, final TaskEntityDatabase model, int position) {
+    protected void populateViewHolder(final Viewholder viewholder, final TaskEntityDatabase model, final int position) {
 
         viewholder.tvTaskName.setText(model.getTask_name());
         viewholder.tvDate.setText(model.getTask_date());
@@ -41,8 +42,15 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
                 myIntent.putExtra("name", model.getTask_name());
 
               activity.startActivity(myIntent);
+
+
             }
         });
+    }
+
+    @Override
+    public TaskEntityDatabase getItem(int position) {
+        return super.getItem(position);
     }
 
     @Override

@@ -45,7 +45,6 @@ public class TaskDetailActivity extends AppCompatActivity {
     public RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     ImageView imageView, btnCamera;
-    public static ArrayList<String> itemsData = new ArrayList<>();
     ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
 
     @Override
@@ -53,7 +52,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
         KeyboardUtils.hideSoftKeyboard(this);
-        setTitle("Task Detail");
+        setTitle(getString(R.string.toolbar_task_detail));
 
         imageView = (ImageView) findViewById(R.id.gallaryImage);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -83,10 +82,10 @@ public class TaskDetailActivity extends AppCompatActivity {
 //                openCamera();
 //                Toast.makeText(getApplicationContext(), "Login failed. Please check your email and password", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
-                intent.setType("image/*");
+                intent.setType(getString(R.string.image_type));
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGES);
+                startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), PICK_IMAGES);
             }
         });
     }

@@ -11,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.MainActivity;
 import com.example.niden.cellwatchsharing.adapters.ListTaskAdapter;
+import com.example.niden.cellwatchsharing.adapters.ListTechniciansAdapter;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
+import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -46,7 +49,7 @@ public class TaskFragment extends Fragment {
         myView = inflater.inflate(R.layout.fragment_task_layout,container,false);
         recyclerView = (RecyclerView) myView.findViewById(R.id.listTask);
         this.activity = getActivity();
-        getActivity().setTitle("Tasks");
+        getActivity().setTitle(getString(R.string.toobar_tasks));
 
 
         mRef = FirebaseDatabase.getInstance().getReference().child("users")
@@ -63,8 +66,12 @@ public class TaskFragment extends Fragment {
         recyclerView.getItemAnimator().setAddDuration(1000);
         recyclerView.getItemAnimator().setMoveDuration(1000);
         recyclerView.setAdapter(mAdapter);
-
+        int a = mAdapter.getItemCount();
+        Toast.makeText(activity,a+"",Toast.LENGTH_LONG).show();
         return myView;
+
+
+
     }
 
 

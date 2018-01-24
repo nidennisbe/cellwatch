@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
@@ -76,6 +77,7 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
                         name_user.setText(firebaseUserEntity.getName());
+
                     }
 
                     @Override
@@ -92,8 +94,21 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(activity, TechnicianActivity.class);
+                myIntent.putExtra("id",mAdapter.getRef(position).getKey());
                 activity.startActivity(myIntent);
+
             }
         });
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
 }

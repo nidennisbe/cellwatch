@@ -40,14 +40,14 @@ public class TechniciansFragment extends Fragment {
 
     public TextView technicianName;
     public String technicianList;
-    ArrayList<String> list = new ArrayList<String>();
+
     @Nullable
     @Override
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_technicians_layout,container,false);
         activity = getActivity();
-        activity.setTitle("Technicians");
+        activity.setTitle(getString(R.string.toobar_technicians));
 
        // rvListTechnician = (RecyclerView) myView.findViewById(R.id.recycler_view_technician);
         listOfTechnicians = (ListView) myView.findViewById(R.id.list_technician);

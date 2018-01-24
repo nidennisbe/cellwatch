@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -30,6 +31,7 @@ import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
 import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
 import com.example.niden.cellwatchsharing.fragments.GallaryFragment;
 import com.example.niden.cellwatchsharing.fragments.ProfileFragment;
+import com.example.niden.cellwatchsharing.utils.IntentUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static Activity activity;
     User mUser = new User();
     NavigationView navigationView;
-
+    FragmentManager fragmentManager;
 
 
     @Override
@@ -56,9 +58,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         activity = this;
         FragmentManager fragmentManager =getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
+
 
 
 
@@ -80,12 +84,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        FragmentManager fragmentManager =getFragmentManager();
+         fragmentManager =getFragmentManager();
         if (id == R.id.nav_profile) {
             fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
         } else if (id == R.id.nav_gallery) {
@@ -145,18 +148,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             myAlertDialog= DialogsUtils.showAlertDialog(MainActivity.this,"Quit app","Do you want to exit now?");
         }
+
+
     }//End of BackButtonPressed
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
-    @Override
-    protected void onRestart() {
-        mUser.checkUserLogin(activity);
-        super.onRestart();
-    }
+
 
     public void hideItem(MainActivity mainActivity)
     {
@@ -165,5 +162,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nav_Menu.findItem(R.id.nav_anouncement).setVisible(false);
         nav_Menu.findItem(R.id.nav_task).setVisible(false);
     }
+
 
 }

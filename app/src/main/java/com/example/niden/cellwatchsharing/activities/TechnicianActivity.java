@@ -33,10 +33,10 @@ public class TechnicianActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_technician);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setTitle("Technicians list");
+        setContentView(R.layout.activity_technician1);
+       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+
 
         textViewName = (TextView)findViewById(R.id.user_profile_name);
         textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);

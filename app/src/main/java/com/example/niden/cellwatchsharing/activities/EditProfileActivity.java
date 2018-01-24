@@ -34,7 +34,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        setTitle("Edit Profile Information");
+        setTitle(getString(R.string.toolbar_edit_profile_info));
 
         editProfileName = (EditText) findViewById(R.id.profile_name);
         editProfileBio = (EditText) findViewById(R.id.profile_bio);

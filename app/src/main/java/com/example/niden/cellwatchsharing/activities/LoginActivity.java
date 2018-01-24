@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,27 +75,27 @@ public class LoginActivity extends AppCompatActivity {
                 final String password = inputPassword.getText().toString();
                 //Validation
                 if (TextUtils.isEmpty(email)) {
-                    ToastUtils.displayMessageToast(LoginActivity.this,"You must enter you Email");
+                    ToastUtils.displayMessageToast(LoginActivity.this,getString(R.string.validation_email));
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    ToastUtils.displayMessageToast(LoginActivity.this,"You must enter your password");
+                    ToastUtils.displayMessageToast(LoginActivity.this,getString(R.string.validation_password));
                     return;
                 }
                 //End of Validation
                 if (isOnline()) {
                     //do whatever you want to do
-                    myDialog = DialogsUtils.showProgressDialog(LoginActivity.this, "Signing in...");
+                    myDialog = DialogsUtils.showProgressDialog(LoginActivity.this, getString(R.string.sign_in_process));
                     mUser.loginAUser(LoginActivity.this, email, password, myDialog);
                 }else
                 {
                     try {
                         AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
 
-                        alertDialog.setTitle("Internet Connection");
-                        alertDialog.setMessage("Please check your internet connectivity and try again");
+                        alertDialog.setTitle(getString(R.string.internet_connection));
+                        alertDialog.setMessage(getString(R.string.alert_internet_connection));
                         alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-                        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                        alertDialog.setButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
@@ -139,5 +140,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
 }
 

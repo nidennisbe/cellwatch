@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,29 +59,24 @@ public class SignUpActivity extends AppCompatActivity{
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(email)) {
-                    ToastUtils.displayMessageToast(SignUpActivity.this,"You must enter your Email");
+                    ToastUtils.displayMessageToast(SignUpActivity.this,getString(R.string.validation_email));
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    ToastUtils.displayMessageToast(SignUpActivity.this,"You must enter your password");
+                    ToastUtils.displayMessageToast(SignUpActivity.this,getString(R.string.validation_password));
                     return;
                 }
                 if (password.length() < 6) {
-                    ToastUtils.displayMessageToast(SignUpActivity.this,"Password is too short, Enter at least 6 digits");
+                    ToastUtils.displayMessageToast(SignUpActivity.this,getString(R.string.alert_short_password));
                     return;
                 }else{
-                    myDialog= DialogsUtils.showProgressDialog(SignUpActivity.this,"Signing up...");
+                    myDialog= DialogsUtils.showProgressDialog(SignUpActivity.this,getString(R.string.sign_up_process));
                 }
                 mUser.createNewUser(SignUpActivity.this,email,password,myDialog);
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-
-        super.onResume();
-    }
 
 
 }
