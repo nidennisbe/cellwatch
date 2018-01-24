@@ -23,11 +23,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity{
 
+    public static FirebaseAuth auth;
     private EditText inputEmail, inputPassword;
     Button btnSignIn, btnSignUp, btnResetPassword;
     ProgressDialog myDialog;
-    public static FirebaseAuth auth;
-    firebase mFirebase = new firebase();
     User mUser = new User();
 
     @Override

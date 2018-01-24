@@ -32,20 +32,20 @@ import java.util.Date;
 
 public class TaskDetailActivity extends AppCompatActivity {
 
+    static final int REQUEST_TAKE_PHOTO = 1;
+    static final int PICK_IMAGES = 732;
+    private String mCurrentPhotoPath;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager mLayoutManager;
+    ImageView imageView, btnCamera;
     EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
     String strTaskName, strDescription, strAddress, strClass, strSuburb;
     DatabaseReference mMessagesDatabaseReference;
     User user = new User();
     TaskEntityDatabase taskEntityDatabase = new TaskEntityDatabase();
-    static final int REQUEST_TAKE_PHOTO = 1;
-    static final int PICK_IMAGES = 732;
-    private String mCurrentPhotoPath;
-    RecyclerView recyclerView;
-    private RecyclerView mRecyclerView;
-    public RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    ImageView imageView, btnCamera;
     ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

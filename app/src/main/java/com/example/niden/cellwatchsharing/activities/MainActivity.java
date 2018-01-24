@@ -41,14 +41,13 @@ import static com.example.niden.cellwatchsharing.classes.User.firebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public TextView displayEmail;
-    AlertDialog.Builder myAlertDialog;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
     private static final int SELECT_PICTURE = 100;
     public static Activity activity;
     User mUser = new User();
     NavigationView navigationView;
     FragmentManager fragmentManager;
+    AlertDialog.Builder myAlertDialog;
 
 
     @Override
@@ -58,12 +57,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         activity = this;
+
         FragmentManager fragmentManager =getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
-
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
