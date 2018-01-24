@@ -44,6 +44,7 @@ public class FirebaseDatabaseHelper {
             allUserData.add(new UserProfile(Helper.CONTACT, firebaseUserEntity.getPhone()));
             allUserData.add(new UserProfile(Helper.HOBBY_INTEREST, firebaseUserEntity.getHobby()));
             allUserData.add(new UserProfile(Helper.EXPIRATION_DATE, firebaseUserEntity.getExpiration_date()));
+            allUserData.add(new UserProfile(Helper.PROFILE_URL,firebaseUserEntity.getProfile_url()));
         }
         return allUserData;
     }

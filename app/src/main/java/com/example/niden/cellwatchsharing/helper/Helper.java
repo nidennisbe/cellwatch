@@ -18,6 +18,8 @@ public class Helper {
 
     public static final String HOBBY_INTEREST = "Hobby & Interest";
 
+    public static final String PROFILE_URL = "Profile_Url";
+
     public static final int SELECT_PICTURE = 2000;
 
     public static boolean isValidEmail(String email){

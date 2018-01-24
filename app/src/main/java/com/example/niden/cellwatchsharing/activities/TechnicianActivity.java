@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
@@ -18,6 +19,7 @@ import com.example.niden.cellwatchsharing.utils.IntentUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
@@ -26,6 +28,7 @@ import static com.example.niden.cellwatchsharing.activities.MainActivity.activit
 public class TechnicianActivity extends AppCompatActivity {
     TextView textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth;
     User user = new User();
+    ImageView profileImage;
     RecyclerView recyclerView;
     Query mRef;
     FireBaseRetrieve mFirebaseRetrive = new FireBaseRetrieve();
@@ -37,14 +40,15 @@ public class TechnicianActivity extends AppCompatActivity {
        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-
+        profileImage = (ImageView)findViewById(R.id.user_profile_pic);
         textViewName = (TextView)findViewById(R.id.user_profile_name);
         textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);
         //textViewContact = (TextView)findViewById(R.id.user);
         recyclerView = (RecyclerView) findViewById(R.id.listTask);
 
 
-       // mFirebaseRetrive.displayProfileInfo(textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth);
+
+        mFirebaseRetrive.displayProfileImage(TechnicianActivity.this,textViewName,textViewBio,profileImage);
 
         mRef = FirebaseDatabase.getInstance().getReference().child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())

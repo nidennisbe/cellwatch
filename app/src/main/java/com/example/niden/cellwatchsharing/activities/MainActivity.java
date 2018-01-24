@@ -128,18 +128,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-    public void openGallary(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-            }
-        }
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
-    }//End of OpenGallary
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -153,7 +141,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }//End of BackButtonPressed
 
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     public void hideItem(MainActivity mainActivity)
     {

@@ -63,7 +63,7 @@ public class ProfileFragment extends Fragment {
         textViewHobby = (TextView)parentHolder.findViewById(R.id.tv_hobby);
         textViewDateBirth = (TextView)parentHolder.findViewById(R.id.tv_date_birth);
 
-        mFirebaseRetrive.displayProfileInfo(textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth);
+        mFirebaseRetrive.displayProfileInfo(referenceActivity,textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth,profileImage);
         imageViewEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,21 +75,9 @@ public class ProfileFragment extends Fragment {
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (ContextCompat.checkSelfPermission(referenceActivity, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                    }
-                }
-                Intent i = new Intent();
-                i.setType("image/*");
-                i.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+
             }
         });
-
-
-
-
 
 
 
@@ -98,34 +86,8 @@ public class ProfileFragment extends Fragment {
 
 
     }
-    private String getPathFromURI(Uri contentUri) {
-        String res = null;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = referenceActivity.getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
-        }
-        cursor.close();
-        return res;
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                Uri selectedImageUri = data.getData();
-                if (null != selectedImageUri) {
-                    // Get the path from the Uri
-                    String path = getPathFromURI(selectedImageUri);
-                    Log.i("IMAGE PATH TAG", "Image Path : " + path);
-                    // Set the image in ImageView
-                    profileImage.setImageURI(selectedImageUri);
 
-                }
-            }
-        }
-    }
 
     @Override
     public void onResume() {

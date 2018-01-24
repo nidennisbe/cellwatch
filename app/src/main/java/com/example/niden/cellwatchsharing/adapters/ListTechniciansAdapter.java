@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by niden on 18-Nov-17.
@@ -72,6 +73,7 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
             @Override
             protected void populateView(View v, FirebaseUserEntity model, int position) {
                 final TextView name_user = (TextView)v.findViewById(R.id.txt_name);
+
                 mRef.child(mAdapter.getRef(position).getKey()).child("info").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

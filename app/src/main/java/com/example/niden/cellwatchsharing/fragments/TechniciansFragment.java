@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -69,11 +71,17 @@ public class TechniciansFragment extends Fragment {
             @Override
             protected void populateView(View v, FirebaseUserEntity model, int position) {
                 final TextView name_user = (TextView)v.findViewById(R.id.txt_name);
+                final ImageView profile_user= (ImageView)v.findViewById(R.id.technician_profile) ;
                 mRef.child(mAdapter.getRef(position).getKey()).child("info").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
                         name_user.setText(firebaseUserEntity.getName());
+                        String url = firebaseUserEntity.getProfile_url();
+
+                        Picasso.with(activity).load(url)
+                                .resize(110, 110).centerCrop()
+                                .into(profile_user);
                     }
 
                     @Override
