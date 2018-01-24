@@ -4,6 +4,9 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+    android:layout_marginBottom="7dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:background="@drawable/toolbar_bg"
     android:elevation="3dp"
     android:orientation="vertical"
@@ -62,7 +65,7 @@
 
     </LinearLayout>
 
-   <!-- <View
+    <!-- <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_gravity="right"

@@ -10,14 +10,13 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.classes.User;
-import com.example.niden.cellwatchsharing.database.firebase;
+import com.example.niden.cellwatchsharing.classes.firebase;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;

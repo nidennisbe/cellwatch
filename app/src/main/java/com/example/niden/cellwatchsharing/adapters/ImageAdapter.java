@@ -1,29 +1,22 @@
 package com.example.niden.cellwatchsharing.adapters;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.database.ItemsData;
-
-import java.util.List;
+import com.example.niden.cellwatchsharing.database.PhotoEntityDatabase;
 
 /**
  * Created by niden on 16-Jan-18.
  */
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
-    private ItemsData[] itemsData;
+    private PhotoEntityDatabase[] itemsData;
 
-    public ImageAdapter(ItemsData[] itemsData) {
+    public ImageAdapter(PhotoEntityDatabase[] itemsData) {
         this.itemsData = itemsData;
     }
 

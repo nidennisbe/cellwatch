@@ -36,7 +36,7 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 public class TaskFragment extends Fragment {
     public FirebaseListAdapter<TaskEntityDatabase> mAdapter;
     View myView;
-    Activity activity =getActivity();
+    private Activity activity =getActivity();
     RecyclerView recyclerView;
     Query mRef;
     TextView texetViewNumberOfTask;

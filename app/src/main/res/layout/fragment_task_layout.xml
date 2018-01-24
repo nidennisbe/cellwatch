@@ -6,12 +6,11 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="60dp"
-    android:background="@drawable/style_background_diagonal"
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listTask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/shadow_border" />
+        android:layout_margin="10dp" />
 </LinearLayout>

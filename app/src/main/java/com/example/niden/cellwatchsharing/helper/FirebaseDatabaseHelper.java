@@ -17,7 +17,6 @@ import java.util.Map;
 public class FirebaseDatabaseHelper {
 
     private static final String TAG = FirebaseDatabaseHelper.class.getSimpleName();
-
     private DatabaseReference databaseReference;
 
 
@@ -38,6 +37,7 @@ public class FirebaseDatabaseHelper {
         List<UserProfile> allUserData = new ArrayList<UserProfile>();
         if(dataSnapshot.getKey().equals(uId)){
             FirebaseUserEntity firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+            assert firebaseUserEntity != null;
             allUserData.add(new UserProfile(Helper.NAME, firebaseUserEntity.getName()));
             allUserData.add(new UserProfile(Helper.BIO, firebaseUserEntity.getBio()));
             allUserData.add(new UserProfile(Helper.EMAIL, firebaseUserEntity.getEmail()));
@@ -47,5 +47,7 @@ public class FirebaseDatabaseHelper {
             allUserData.add(new UserProfile(Helper.PROFILE_URL,firebaseUserEntity.getProfile_url()));
         }
         return allUserData;
+
     }
+
 }

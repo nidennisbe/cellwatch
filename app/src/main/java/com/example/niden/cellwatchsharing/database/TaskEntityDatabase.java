@@ -22,7 +22,7 @@ public class TaskEntityDatabase implements Serializable{
     }
 
 
-    TaskEntityDatabase(String task_name, String task_class, String task_description, String task_address, String task_suburb,String task_date,String task_type, String task_technician_name) {
+    public TaskEntityDatabase(String task_name, String task_class, String task_description, String task_address, String task_suburb, String task_date, String task_type, String task_technician_name) {
         this.task_name = task_name;
         this.task_description = task_description;
         this.task_address = task_address;

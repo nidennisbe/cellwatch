@@ -4,10 +4,10 @@ package com.example.niden.cellwatchsharing.database;
  * Created by niden on 18-Jan-18.
  */
 
-public class ItemsData {
+public class PhotoEntityDatabase {
     private String imageUrl;
 
-    public ItemsData(String imageUrl) {
+    public PhotoEntityDatabase(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 

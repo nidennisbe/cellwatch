@@ -18,9 +18,8 @@ import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
-import com.example.niden.cellwatchsharing.database.PostEntityDatabase;
 import com.example.niden.cellwatchsharing.database.UserEntityDatabase;
-import com.example.niden.cellwatchsharing.database.firebase;
+import com.example.niden.cellwatchsharing.classes.firebase;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -36,16 +35,16 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class CreateTaskFragment extends Fragment {
-    View parentHolder;
+
     private Activity referenceActivity;
     private EditText txTaskName,txDescription,txAddress,txSuburb,txClass;
-    private FirebaseListAdapter<PostEntityDatabase> mAdapter;
     public static FirebaseDatabase database;
-    firebase mFirebase = new firebase();
+    private firebase mFirebase = new firebase();
+    private Button mBtnStartDate,mBtnEndDate;
+    private FirebaseListAdapter<UserEntityDatabase> mfirebaseListAdapter;
     Spinner spinner,dropDownTechnician;
-    Button mBtnStartDate,mBtnEndDate;
     DatePickerDialog datePickerDialog;
-    FirebaseListAdapter<UserEntityDatabase> mfirebaseListAdapter;
+    View parentHolder;
 
     @Nullable
     @Override
@@ -114,8 +113,6 @@ public class CreateTaskFragment extends Fragment {
                 DatePickerUtils.openEndDatePicker(referenceActivity,datePickerDialog,mBtnStartDate,mBtnEndDate);
             }
         });
-
-
 
 
 

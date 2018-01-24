@@ -16,6 +16,10 @@
             android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:elevation="3dp"
+            app:civ_shadow_radius="10"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/semiTransparentWhite"
             android:src="@drawable/ic_user_blue"
             app:civ_border_width="10dp" />
 
@@ -26,7 +30,7 @@
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:text="Name"
-            android:textColor="@color/colorTextDark"
+            android:textColor="#898989"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="63dp"
             tools:layout_editor_absoluteY="39dp" />

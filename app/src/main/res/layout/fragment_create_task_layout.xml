@@ -144,16 +144,17 @@
             android:hint="@string/hint_class"
             android:inputType="textPersonName" />
 
-        <Button
-            android:id="@+id/fragment_announcement_btn_post"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginTop="40dp"
-            android:layout_weight="3"
-            android:background="@drawable/style_button_border_only"
-            android:elevation="2dp"
-            android:text="@string/submit"
-            android:textColor="@color/colorPrimary" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/fragment_announcement_btn_post"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_weight="4"
+        android:background="@drawable/style_button_border_only"
+        android:elevation="2dp"
+        android:text="@string/submit"
+        android:textColor="@color/colorPrimary" />
 
 </LinearLayout>
