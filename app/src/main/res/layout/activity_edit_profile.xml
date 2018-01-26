@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/background_gradient"
+            android:background="#f4f4f4"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="Change Profile Photo"
                 android:textAlignment="center"
-                android:textColor="@color/cardview_light_background"
+                android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold" />
 
         </LinearLayout>
