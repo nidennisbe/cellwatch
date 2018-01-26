@@ -186,7 +186,14 @@
                         android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
                         android:ems="10"
                         android:inputType="textMultiLine" />
+
                 </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/button2"
@@ -196,12 +203,6 @@
                     android:background="@drawable/style_button_sign_in_round"
                     android:text="@string/done"
                     android:textColor="@color/cardview_light_background" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
 
             </LinearLayout>
         </LinearLayout>

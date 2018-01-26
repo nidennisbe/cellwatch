@@ -1,65 +1,55 @@
 package com.example.niden.cellwatchsharing.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.classes.FireBaseRetrieve;
+import com.example.niden.cellwatchsharing.classes.ProfileUser;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.helper.FirebaseDatabaseHelper;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 import static com.example.niden.cellwatchsharing.activities.MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
-import static com.example.niden.cellwatchsharing.helper.Helper.SELECT_PICTURE;
+import static com.example.niden.cellwatchsharing.utils.ToastUtils.displayMessageToast;
 
 
 //sixth push
 public class EditProfileActivity extends AppCompatActivity {
     private static final String TAG = EditProfileActivity.class.getSimpleName();
 
-
     //Firebase
-    Uri downloadUrl;
+    String DOWNLOAD_URL;
+    private FireBaseRetrieve mFirebaseRetrive = new FireBaseRetrieve();
+    String strName, strBio, strPhone, strHobby, strDateBirth,strProfileUrl;
     FirebaseUserEntity firebaseUserEntity;
     DatabaseReference databaseReference;
-    FirebaseStorage storage;
-    Uri filePath;
+    int RESULT_LOAD_IMAGE=1;
     StorageReference storageReference;
     private EditText editProfileName;
     private EditText editProfileBio;
     private EditText editProfileContact;
     private EditText editProfileHobby;
     private EditText editProfileBirthday;
-    FirebaseUserEntity userEntity;
     ImageView profile;
-    String task = "";
+    ProfileUser profileUser = new ProfileUser();
 
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -67,9 +57,15 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-
         setTitle(getString(R.string.toolbar_edit_profile_info));
+
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        storageReference = storage.getReferenceFromUrl("gs://cellwatchsharing.appspot.com/");
+
+
+
         profile = (ImageView)findViewById(R.id.btn_change_profile);
         editProfileName = (EditText) findViewById(R.id.profile_name);
         editProfileBio = (EditText) findViewById(R.id.profile_bio);
@@ -77,6 +73,9 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfileHobby = (EditText) findViewById(R.id.profile_expiration_date);
         editProfileBirthday = (EditText) findViewById(R.id.profile_hobby);
         Button saveEditButton = (Button) findViewById(R.id.save_edit_button);
+
+        mFirebaseRetrive.displayEditInfo(EditProfileActivity.this,editProfileName,editProfileBio,editProfileContact,editProfileHobby,editProfileBirthday,profile);
+
 
 profile.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -86,10 +85,7 @@ profile.setOnClickListener(new View.OnClickListener() {
                 requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
             }
         }
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+        GallaryUtils.openGallary(EditProfileActivity.this,RESULT_LOAD_IMAGE);
     }
 });
         saveEditButton.setOnClickListener(new View.OnClickListener() {
@@ -100,10 +96,11 @@ profile.setOnClickListener(new View.OnClickListener() {
                 String profileContact = editProfileContact.getText().toString();
                 String profileHobby = editProfileHobby.getText().toString();
                 String profileBirthday = editProfileBirthday.getText().toString();
+                //String profilePicUrl = downloadUrl.toString();
                 // update the user profile information in Firebase database.
                 if (TextUtils.isEmpty(profileName) || TextUtils.isEmpty(profileBio) || TextUtils.isEmpty(profileContact)
                         || TextUtils.isEmpty(profileHobby) || TextUtils.isEmpty(profileBirthday)) {
-                    //.displayMessageToast(EditProfileActivity.this, "All fields must be filled");
+                    displayMessageToast(EditProfileActivity.this, "All fields must be filled");
                 }
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -112,14 +109,13 @@ profile.setOnClickListener(new View.OnClickListener() {
                     startActivity(firebaseUserIntent);
                     finish();
                 } else {
-                    String userId = user.getDisplayName();
                     String id = user.getUid();
                     String profileEmail = user.getEmail();
 
-                    uploadImage();
-                    userEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby, profileBirthday, profileHobby,downloadUrl+"");
+
+                    firebaseUserEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby, profileBirthday, profileHobby,"");
                     FirebaseDatabaseHelper firebaseDatabaseHelper = new FirebaseDatabaseHelper();
-                    firebaseDatabaseHelper.createUserInFirebaseDatabase(id, userEntity);
+                    firebaseDatabaseHelper.createUserInFirebaseDatabase(id, firebaseUserEntity);
 
 
                     editProfileName.setText("");
@@ -149,51 +145,15 @@ profile.setOnClickListener(new View.OnClickListener() {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
+            if (requestCode == RESULT_LOAD_IMAGE) {
 
                 Uri filePath = data.getData();
                 Picasso.with(EditProfileActivity.this).load(data.getData()).noPlaceholder().centerCrop().fit()
                         .into((ImageView) findViewById(R.id.btn_change_profile));
+                profileUser.uploadProfilePicture(EditProfileActivity.this,filePath,storageReference,databaseReference);
             }
 
         }
     }
-    private void uploadImage() {
 
-        if(filePath != null)
-        {
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
-                            downloadUrl = taskSnapshot.getDownloadUrl();
-                          //  String DOWNLOAD_URL = downloadUrl.getPath();
-
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-        }
-    }
 }

@@ -7,16 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.database.PhotoEntityDatabase;
+import com.example.niden.cellwatchsharing.database.ProfilePhotoEntityDatabase;
 
 /**
  * Created by niden on 16-Jan-18.
  */
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
-    private PhotoEntityDatabase[] itemsData;
+    private ProfilePhotoEntityDatabase[] itemsData;
 
-    public ImageAdapter(PhotoEntityDatabase[] itemsData) {
+    public ImageAdapter(ProfilePhotoEntityDatabase[] itemsData) {
         this.itemsData = itemsData;
     }
 
@@ -32,7 +32,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.imageView.setImageResource(Integer.parseInt(itemsData[position].getImageUrl()));
+        holder.imageView.setImageResource(Integer.parseInt(itemsData[position].getProfile_url()));
     }
 
     @Override

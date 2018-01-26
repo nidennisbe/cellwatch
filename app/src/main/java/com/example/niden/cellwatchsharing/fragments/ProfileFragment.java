@@ -58,30 +58,12 @@ public class ProfileFragment extends Fragment {
                 refActivity.finish();
             }
         });
-
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
-
-
         return parentHolder;
-
-
     }
-
-
 
     @Override
     public void onResume() {
         mUser.isUserCurrentlyLogin(activity);
         super.onResume();
-
     }
-
-
 }

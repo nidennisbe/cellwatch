@@ -44,7 +44,8 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:2.2.5'
     compile 'com.github.developer-shivam:Crescento:1.2.1'
     compile 'com.mikhaellopez:circularimageview:3.0.2'
-
+    compile 'com.github.nirhart:parallaxscroll:1.0'
+    compile 'me.everything:overscroll-decor-android:1.0.4'
 }
 
 

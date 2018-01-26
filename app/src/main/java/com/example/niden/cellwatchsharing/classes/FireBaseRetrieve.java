@@ -2,6 +2,7 @@ package com.example.niden.cellwatchsharing.classes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,7 +56,7 @@ public class FireBaseRetrieve {
                 Picasso.with(context).load(strProfileUrl)
                         .resize(110, 110).centerCrop()
                         .into(profilePicture);
-//
+
             }
 
             @Override
@@ -64,6 +65,9 @@ public class FireBaseRetrieve {
             }
         });
     }
+
+
+    //Show profile Picture
 
     public void displayProfileImage(final Context context, final TextView textViewName, final TextView textViewBio, final ImageView profilePicture) {
         mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
@@ -85,6 +89,42 @@ public class FireBaseRetrieve {
                         .resize(110, 110).centerCrop()
                         .into(profilePicture);
 //
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+
+    //Showing profile information
+    public void displayEditInfo(final Context context, final EditText editProfileName, final EditText editProfileBio, final EditText editProfileContact, final EditText editProfileHobby, final EditText editProfileBirthday, final ImageView profile) {
+        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
+        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+                strName = firebaseUserEntity.getName();
+                strBio = firebaseUserEntity.getBio();
+                strPhone = firebaseUserEntity.getPhone();
+                strHobby = firebaseUserEntity.getHobby();
+                strDateBirth = firebaseUserEntity.getBirthday();
+                strProfileUrl = firebaseUserEntity.getProfile_url();
+
+                editProfileContact.setText(strPhone);
+                editProfileBio.setText(strBio);
+                editProfileName.setText(strName);
+                editProfileHobby.setText(strHobby);
+                editProfileBirthday.setText(strDateBirth);
+                Picasso.with(context).load(strProfileUrl)
+                        .resize(110, 110).centerCrop()
+                        .into(profile);
+
             }
 
             @Override

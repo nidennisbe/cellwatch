@@ -28,6 +28,7 @@ import jp.wasabeef.recyclerview.animators.ScaleInBottomAnimator;
 import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * Created by niden on 16-Nov-17.
@@ -51,10 +52,10 @@ public class TaskFragment extends Fragment {
         this.activity = getActivity();
         getActivity().setTitle(getString(R.string.toobar_tasks));
 
-
         mRef = FirebaseDatabase.getInstance().getReference().child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("tasks");
+
         ListTaskAdapter mAdapter = new ListTaskAdapter(mRef, activity,R.layout.item_task );
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
         layoutManager.setReverseLayout(true);
@@ -66,8 +67,7 @@ public class TaskFragment extends Fragment {
         recyclerView.getItemAnimator().setAddDuration(1000);
         recyclerView.getItemAnimator().setMoveDuration(1000);
         recyclerView.setAdapter(mAdapter);
-        int a = mAdapter.getItemCount();
-        Toast.makeText(activity,a+"",Toast.LENGTH_LONG).show();
+        OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         return myView;
 
 

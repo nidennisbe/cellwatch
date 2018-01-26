@@ -2,7 +2,8 @@ package com.example.niden.cellwatchsharing.helper;
 
 
 
-import com.example.niden.cellwatchsharing.activities.UserProfile;
+import com.example.niden.cellwatchsharing.database.FirebaseAddUserEntity;
+import com.example.niden.cellwatchsharing.database.UserProfile;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +45,6 @@ public class FirebaseDatabaseHelper {
             allUserData.add(new UserProfile(Helper.CONTACT, firebaseUserEntity.getPhone()));
             allUserData.add(new UserProfile(Helper.HOBBY_INTEREST, firebaseUserEntity.getHobby()));
             allUserData.add(new UserProfile(Helper.EXPIRATION_DATE, firebaseUserEntity.getExpiration_date()));
-            allUserData.add(new UserProfile(Helper.PROFILE_URL,firebaseUserEntity.getProfile_url()));
         }
         return allUserData;
 

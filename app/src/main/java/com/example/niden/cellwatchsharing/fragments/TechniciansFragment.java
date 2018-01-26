@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
@@ -24,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
 /**
  * Created by niden on 16-Nov-17.
  */
@@ -35,6 +38,7 @@ public class TechniciansFragment extends Fragment {
     private FirebaseListAdapter<FirebaseUserEntity> mTechAdapter;
     private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
     private ListView listOfTechnicians;
+
     @Nullable
     @Override
 
@@ -44,7 +48,9 @@ public class TechniciansFragment extends Fragment {
         activity.setTitle(getString(R.string.toobar_technicians));
         listOfTechnicians = (ListView) myView.findViewById(R.id.list_technician);
         displayFriendsList();
+
         return myView;
+
     }
 
 

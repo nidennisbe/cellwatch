@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
@@ -22,6 +23,7 @@ import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;
 
@@ -32,6 +34,7 @@ public class TechnicianActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Query mRef;
     FireBaseRetrieve mFirebaseRetrive = new FireBaseRetrieve();
+    RelativeLayout cover;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class TechnicianActivity extends AppCompatActivity {
         textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);
         //textViewContact = (TextView)findViewById(R.id.user);
         recyclerView = (RecyclerView) findViewById(R.id.listTask);
+        cover = (RelativeLayout)findViewById(R.id.background);
 
 
 
@@ -58,6 +62,7 @@ public class TechnicianActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new SlideInDownAnimator(new OvershootInterpolator(1f)));
@@ -66,8 +71,7 @@ public class TechnicianActivity extends AppCompatActivity {
         recyclerView.getItemAnimator().setMoveDuration(1000);
         recyclerView.setAdapter(mAdapter);
 
-
-
+        OverScrollDecoratorHelper.setUpStaticOverScroll(cover, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
 
     }
 

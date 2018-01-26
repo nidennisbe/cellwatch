@@ -1,39 +1,52 @@
 package com.example.niden.cellwatchsharing.activities;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.adapters.UploadListAdapter;
+import com.example.niden.cellwatchsharing.database.GallaryEntityDatabase;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.classes.User;
+import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class TaskDetailActivity extends AppCompatActivity {
 
-    static final int REQUEST_TAKE_PHOTO = 1;
-    static final int PICK_IMAGES = 732;
+    static final int RESULT_LOAD_IMAGE = 1;
     private String mCurrentPhotoPath;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager mLayoutManager;
@@ -43,9 +56,15 @@ public class TaskDetailActivity extends AppCompatActivity {
     DatabaseReference mMessagesDatabaseReference;
     User user = new User();
     TaskEntityDatabase taskEntityDatabase = new TaskEntityDatabase();
-    ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
+    GallaryEntityDatabase gallaryEntityDatabase;
 
 
+    private UploadListAdapter uploadListAdapter;
+
+    private StorageReference mStorage;
+
+    public List<String> fileNameList;
+    public List<String> fileDoneList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +72,10 @@ public class TaskDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_detail);
         KeyboardUtils.hideSoftKeyboard(this);
         setTitle(getString(R.string.toolbar_task_detail));
+
+
+        mStorage = FirebaseStorage.getInstance().getReference();
+        Query query= FirebaseDatabase.getInstance().getReference().child("image");
 
         imageView = (ImageView) findViewById(R.id.gallaryImage);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -62,30 +85,26 @@ public class TaskDetailActivity extends AppCompatActivity {
         etDescription = (EditText) findViewById(R.id.editTextDescription);
         etAddress = (EditText) findViewById(R.id.editTextAddress);
         etSuburb = (EditText) findViewById(R.id.editTextSuburb);
+
+
+       fileNameList = new ArrayList<>();
+       fileDoneList = new ArrayList<>();
+        uploadListAdapter = new UploadListAdapter(fileNameList, fileDoneList);
+
+        //RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new GridLayoutManager(this, 4);
-        recyclerView.setLayoutManager(mLayoutManager);
-
-
-//        mRecyclerView.setAdapter(mAdapter);
-
+        recyclerView.setAdapter(uploadListAdapter);
 
         displayTaskDetail(etTaskName, etClass, etDescription, etAddress, etSuburb);
 
 
-//        gridView.setAdapter(new ImageAdapter(this));
+
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                openCamera();
-//                Toast.makeText(getApplicationContext(), "Login failed. Please check your email and password", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setType(getString(R.string.image_type));
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), PICK_IMAGES);
+                GallaryUtils.openGallary(TaskDetailActivity.this,RESULT_LOAD_IMAGE);
+
             }
         });
     }
@@ -97,18 +116,19 @@ public class TaskDetailActivity extends AppCompatActivity {
                 .child("tasks")
         ;
 
-        mMessagesDatabaseReference.addValueEventListener(new ValueEventListener() {
+        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    taskEntityDatabase = postSnapshot.getValue(TaskEntityDatabase.class);
+
+
+                    taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
                     strTaskName = taskEntityDatabase.getTask_name();
                     strDescription = taskEntityDatabase.getTask_description();
                     strAddress = taskEntityDatabase.getTask_address();
                     strClass = taskEntityDatabase.getTask_class();
                     strSuburb = taskEntityDatabase.getTask_suburb();
 
-                }
+
                 etTaskName.setText(strTaskName);
                 etClass.setText(strClass);
                 etDescription.setText(strDescription);
@@ -126,92 +146,80 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         this.finish();
         Intent technicianActivityIntent = new Intent(this, TechnicianActivity.class);
         startActivity(technicianActivityIntent);
     }
 
-    public void openCamera() {
 
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photoFile));
-
-            }
-        }
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Save Image To Gallery
-//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE );
-//        File f = new File(mCurrentPhotoPath);
-//        Uri contentUri = Uri.fromFile(f);
-//        mediaScanIntent.setData(contentUri);
-//        this.sendBroadcast(mediaScanIntent);
-//        // Add Image Path To List
-//       itemsData.add(mCurrentPhotoPath);
-        if (requestCode == PICK_IMAGES) {
+        if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK){
 
-            if (resultCode == RESULT_OK) {
-                //data.getParcelableArrayExtra(name);
-                //If Single image selected then it will fetch from Gallery
-                if (data.getData() != null) {
+            if(data.getClipData() != null){
 
-                    Uri mImageUri = data.getData();
+                int totalItemsSelected = data.getClipData().getItemCount();
 
-                } else {
-                    if (data.getClipData() != null) {
-                        ClipData mClipData = data.getClipData();
+                for(int i = 0; i < totalItemsSelected; i++){
 
-                        for (int i = 0; i < mClipData.getItemCount(); i++) {
+                    Uri fileUri = data.getClipData().getItemAt(i).getUri();
 
-                            ClipData.Item item = mClipData.getItemAt(i);
-                            Uri uri = item.getUri();
-                            mArrayUri.add(uri);
+                    String fileName = getFileName(fileUri);
+
+                    fileNameList.add(fileName);
+                    fileDoneList.add("uploading");
+                    uploadListAdapter.notifyDataSetChanged();
+
+                    StorageReference fileToUpload = mStorage.child("Images").child(fileName);
+
+                    final int finalI = i;
+                    fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            fileDoneList.remove(finalI);
+                            fileDoneList.add(finalI, "done");
+
+                            uploadListAdapter.notifyDataSetChanged();
 
                         }
-                        Log.v("LOG_TAG", "Selected Images" + mArrayUri.size());
-                    }
+                    });
 
                 }
+
+                //Toast.makeText(MainActivity.this, "Selected Multiple Files", Toast.LENGTH_SHORT).show();
+
+            } else if (data.getData() != null){
+
+                Toast.makeText(TaskDetailActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
 
             }
 
         }
-
-        super.onActivityResult(requestCode, resultCode, data);
-
     }
 
-    public File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
-
 }
 

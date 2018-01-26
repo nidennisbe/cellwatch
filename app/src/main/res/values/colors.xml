@@ -6,5 +6,5 @@
     <color name="colorTextLight">#ffffff</color>
     <color name="colorTextDark">#000000</color>
     <color name="colorDivider">#eae6e6</color>
-    <color name="semiTransparentWhite">#40FFFFFF</color>
+    <color name="semiTransparentWhite">#40ffffff</color>
 </resources>

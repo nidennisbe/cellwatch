@@ -1,116 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="25dp"
     tools:context="com.example.niden.cellwatchsharing.activities.EditProfileActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/personal_details"
-        android:textSize="18sp" />
-
-    <ImageView
-        android:id="@+id/btn_change_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:srcCompat="@drawable/ic_gallary" />
-
-    <EditText
-        android:id="@+id/profile_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="@string/edit_profile_name"
-        android:inputType="textPersonName"
-        android:maxLines="1"
-        android:padding="12dp"
-        android:singleLine="true"
-        android:textColor="@color/colorTextDark"
-        android:textSize="12dp" />
-
-    <EditText
-        android:id="@+id/profile_bio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1"
-        android:hint="@string/edit_profile_bio"
-        android:inputType="text"
-        android:maxLines="1"
-        android:padding="12dp"
-        android:singleLine="true"
-        android:textColor="@color/colorTextDark"
-        android:textSize="12dp" />
-
-    <EditText
-        android:id="@+id/profile_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:hint="@string/edit_profile_phone"
-        android:inputType="phone"
-        android:maxLines="1"
-        android:padding="12dp"
-        android:singleLine="true"
-        android:textColor="@color/colorTextDark"
-        android:textSize="12dp" />
-
-    <EditText
-        android:id="@+id/profile_hobby"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:hint="@string/edit_profile_hobby"
-        android:inputType="text"
-        android:maxLines="1"
-        android:padding="12dp"
-        android:singleLine="true"
-        android:textColor="@color/colorTextDark"
-        android:textSize="12dp" />
-
     <LinearLayout
-        android:id="@+id/select_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/profile_expiration_date"
-            android:layout_width="0dp"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_weight="2"
-            android:hint="Expiration Date"
-            android:inputType="text"
-            android:maxLines="1"
-            android:padding="12dp"
-            android:singleLine="true"
-            android:textColor="@color/colorTextDark"
-            android:textSize="12dp" />
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/background_gradient"
+            android:orientation="vertical"
+            android:padding="10dp">
 
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/btn_change_profile"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:elevation="5dp"
+                android:src="@drawable/ic_user_blue"
+                app:civ_border_width="10dp" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change Profile Photo"
+                android:textAlignment="center"
+                android:textColor="@color/cardview_light_background"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorTextLight"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/personal_details"
+                android:textSize="18sp" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:layout_weight="1"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/profile_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="@string/edit_profile_name"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:padding="12dp"
+                        android:singleLine="true"
+                        android:layout_weight="5"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="18sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bio"
+                        android:layout_weight="1"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/profile_bio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="@string/edit_profile_bio"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:padding="12dp"
+                        android:layout_weight="5"
+                        android:singleLine="true"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="18sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phone"
+                        android:layout_weight="1"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/profile_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="@string/edit_profile_phone"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:padding="12dp"
+                        android:layout_weight="5"
+                        android:singleLine="true"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="18sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Exipation Date"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/profile_hobby"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="@string/edit_profile_hobby"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:layout_weight="5"
+                        android:padding="12dp"
+                        android:singleLine="true"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="18sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Hobby"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/profile_expiration_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="Expiration Date"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:padding="12dp"
+                        android:singleLine="true"
+                        android:layout_weight="5"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="18sp" />
+
+                </TableRow>
+            </TableLayout>
+
+            <Button
+                android:id="@+id/save_edit_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:layout_weight="1"
+                android:background="@drawable/style_button_sign_in_round"
+                android:text="@string/done"
+                android:textColor="@color/colorTextLight" />
+
+        </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/save_edit_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_weight="0.1"
-        android:background="@drawable/style_button_sign_in_round"
-        android:padding="12dp"
-        android:text="@string/save_edit"
-        android:textColor="@color/colorTextLight" />
-
-
-</LinearLayout>
+</ScrollView>
