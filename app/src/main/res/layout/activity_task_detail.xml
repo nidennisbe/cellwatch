@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/style_background_diagonal"
     tools:context="com.example.niden.cellwatchsharing.activities.TaskDetailActivity">
 
     <ScrollView
@@ -193,7 +192,8 @@
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:background="@drawable/ui_messagebox" />
 
                 <Button
                     android:id="@+id/button2"

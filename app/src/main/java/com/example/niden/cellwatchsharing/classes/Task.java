@@ -16,11 +16,11 @@ import java.util.Date;
  * Created by niden on 16-Nov-17.
  */
 
-public class firebase extends MainActivity {
+public class Task extends MainActivity {
 
-      //Add new task
+      //Insert new task
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-    public void insertTaskToFirebase(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner) {
+    public void insertTask(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner) {
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child("users")
@@ -29,7 +29,6 @@ public class firebase extends MainActivity {
                 .push()
                 .setValue(new TaskEntityDatabase(txTaskName.getText().toString(),txClass.getText().toString(),txAddress.getText().toString(),txDescription.getText().toString(),
                         txSuburb.getText().toString(),currentDateTimeString,spinner.getSelectedItem().toString(),""
-
                 ));
     }
 }

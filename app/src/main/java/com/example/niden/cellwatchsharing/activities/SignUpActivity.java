@@ -10,8 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.classes.User;
-import com.example.niden.cellwatchsharing.classes.firebase;
+import com.example.niden.cellwatchsharing.classes.Account;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
@@ -27,14 +26,14 @@ public class SignUpActivity extends AppCompatActivity{
     private EditText inputEmail, inputPassword;
     Button btnSignIn, btnSignUp, btnResetPassword;
     ProgressDialog myDialog;
-    User mUser = new User();
+    Account mAccount = new Account();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        mUser.getFirebaseAuth();
-        mUser.checkUserLogin(SignUpActivity.this);
+        mAccount.getFirebaseAuth();
+        mAccount.checkUserLogin(SignUpActivity.this);
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
@@ -70,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity{
                 }else{
                     myDialog= DialogsUtils.showProgressDialog(SignUpActivity.this,getString(R.string.sign_up_process));
                 }
-                mUser.createNewUser(SignUpActivity.this,email,password,myDialog);
+                mAccount.createNewUser(SignUpActivity.this,email,password,myDialog);
             }
         });
     }

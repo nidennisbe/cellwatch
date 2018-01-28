@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
-import com.example.niden.cellwatchsharing.classes.FireBaseRetrieve;
+import com.example.niden.cellwatchsharing.classes.Account;
 import com.example.niden.cellwatchsharing.classes.User;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 
@@ -26,10 +29,10 @@ import static com.example.niden.cellwatchsharing.activities.MainActivity.activit
 public class ProfileFragment extends Fragment {
 
     private Activity refActivity;
-    private FireBaseRetrieve mFirebaseRetrive = new FireBaseRetrieve();
-    private User mUser = new User();
+    private User mFirebaseRetrive = new User();
+    private Account mAccount = new Account();
     TextView textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth;
-    ImageView imageViewEditProfile,profileImage;
+    ImageView profileImage;
     View parentHolder;
 
     FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
@@ -39,11 +42,12 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         refActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_profile_layout,container,false);
-        mUser.isUserCurrentlyLogin(activity);
+        setHasOptionsMenu(true);
+        mAccount.isUserCurrentlyLogin(activity);
         getActivity().setTitle("Profile");
 
+
         profileImage = (ImageView)parentHolder.findViewById(R.id.profile_image) ;
-        imageViewEditProfile = (ImageView)parentHolder.findViewById(R.id.btn_edit_profile);
         textViewName = (TextView)parentHolder.findViewById(R.id.user_profile_name);
         textViewBio = (TextView)parentHolder.findViewById(R.id.user_profile_short_bio);
         textViewPhone = (TextView)parentHolder.findViewById(R.id.tv_phonenumber);
@@ -51,19 +55,25 @@ public class ProfileFragment extends Fragment {
         textViewDateBirth = (TextView)parentHolder.findViewById(R.id.tv_date_birth);
 
         mFirebaseRetrive.displayProfileInfo(refActivity,textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth,profileImage);
-        imageViewEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(refActivity, EditProfileActivity.class));
-                refActivity.finish();
-            }
-        });
         return parentHolder;
     }
 
     @Override
     public void onResume() {
-        mUser.isUserCurrentlyLogin(activity);
+        mAccount.isUserCurrentlyLogin(activity);
         super.onResume();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.profile_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        startActivity(new Intent(refActivity, EditProfileActivity.class));
+        refActivity.finish();
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -4,13 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,31 +15,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.classes.User;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
 import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
 import com.example.niden.cellwatchsharing.fragments.GallaryFragment;
 import com.example.niden.cellwatchsharing.fragments.ProfileFragment;
-import com.example.niden.cellwatchsharing.utils.IntentUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
-import static com.example.niden.cellwatchsharing.classes.User.firebaseAuth;
+import static com.example.niden.cellwatchsharing.classes.Account.firebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
     private static final int SELECT_PICTURE = 100;
     public static Activity activity;
-    User mUser = new User();
     NavigationView navigationView;
     FragmentManager fragmentManager;
     AlertDialog.Builder myAlertDialog;
@@ -54,11 +47,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("users");
+        scoresRef.keepSynced(true);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         activity = this;
-
         FragmentManager fragmentManager =getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
 
@@ -74,10 +68,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
 
 
 
@@ -104,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_logout) {
             firebaseAuth.signOut();
-// this listener will be called when there is change in firebase user session
+// this listener will be called when there is change in Task account session
             FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -112,10 +106,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             };
             ToastUtils.displayMessageToast(MainActivity.this,"Logout Successfully");
-            // user auth state is changed - user is null
+            // account auth state is changed - account is null
             // launch login activity
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
+            this.finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

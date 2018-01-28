@@ -6,9 +6,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
-import com.example.niden.cellwatchsharing.classes.firebase;
+import com.example.niden.cellwatchsharing.classes.Task;
 import com.example.niden.cellwatchsharing.database.UserEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -39,7 +40,7 @@ public class CreateTaskFragment extends Fragment {
     private Activity referenceActivity;
     private EditText txTaskName,txDescription,txAddress,txSuburb,txClass;
     public static FirebaseDatabase database;
-    private firebase mFirebase = new firebase();
+    private Task mTask = new Task();
     private Button mBtnStartDate,mBtnEndDate;
     private FirebaseListAdapter<UserEntityDatabase> mfirebaseListAdapter;
     Spinner spinner,dropDownTechnician;
@@ -51,6 +52,7 @@ public class CreateTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         referenceActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_create_task_layout, container, false);
+        setHasOptionsMenu(true);
         getActivity().setTitle("New Task");
 
         dropDownTechnician = (Spinner)parentHolder.findViewById(R.id.spinnerTechnician);
@@ -62,7 +64,7 @@ public class CreateTaskFragment extends Fragment {
         txSuburb = (EditText) parentHolder.findViewById(R.id.editTextSuburb);
         txClass = (EditText) parentHolder.findViewById(R.id.editTextClass);
         spinner = (Spinner)parentHolder.findViewById(R.id.spinnerType);
-        final Button btnPost = (Button) parentHolder.findViewById(R.id.fragment_announcement_btn_post);
+        //final Button btnPost = (Button) parentHolder.findViewById(R.id.fragment_announcement_btn_post);
 
 
         DatabaseReference mref = FirebaseDatabase.getInstance().getReference().child("task_type");
@@ -116,25 +118,8 @@ public class CreateTaskFragment extends Fragment {
 
 
 
-        btnPost.setEnabled(false);
-        btnPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mFirebase.insertTaskToFirebase(txTaskName,txClass,txDescription,txAddress,txSuburb,spinner);
-                txTaskName.setText("");
-                txAddress.setText("");
-                txDescription.setText("");
-                txSuburb.setText("");
-                txClass.setText("");
-                FragmentManager fragmentManager =getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
-            }
-        });
 
-
-
-
-        //Listener for disable and enable button item_post depend on EditText
+       /* //Listener for disable and enable button item_post depend on EditText
         txTaskName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -157,10 +142,29 @@ public class CreateTaskFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
             }
-        });
+        });*/
+
+
         return parentHolder;
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.create_task_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        mTask.insertTask(txTaskName,txClass,txDescription,txAddress,txSuburb,spinner);
+        txTaskName.setText("");
+        txAddress.setText("");
+        txDescription.setText("");
+        txSuburb.setText("");
+        txClass.setText("");
+        FragmentManager fragmentManager =getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -14,8 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.classes.FireBaseRetrieve;
-import com.example.niden.cellwatchsharing.classes.ProfileUser;
+import com.example.niden.cellwatchsharing.classes.User;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.helper.FirebaseDatabaseHelper;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
@@ -36,9 +35,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final String TAG = EditProfileActivity.class.getSimpleName();
 
     //Firebase
-    String DOWNLOAD_URL;
-    private FireBaseRetrieve mFirebaseRetrive = new FireBaseRetrieve();
-    String strName, strBio, strPhone, strHobby, strDateBirth,strProfileUrl;
     FirebaseUserEntity firebaseUserEntity;
     DatabaseReference databaseReference;
     int RESULT_LOAD_IMAGE=1;
@@ -48,8 +44,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editProfileContact;
     private EditText editProfileHobby;
     private EditText editProfileBirthday;
-    ImageView profile;
-    ProfileUser profileUser = new ProfileUser();
+    private ImageView profile;
+    private User mUser = new User();
 
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -74,7 +70,7 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfileBirthday = (EditText) findViewById(R.id.profile_hobby);
         Button saveEditButton = (Button) findViewById(R.id.save_edit_button);
 
-        mFirebaseRetrive.displayEditInfo(EditProfileActivity.this,editProfileName,editProfileBio,editProfileContact,editProfileHobby,editProfileBirthday,profile);
+        mUser.displayEditInfo(EditProfileActivity.this,editProfileName,editProfileBio,editProfileContact,editProfileHobby,editProfileBirthday,profile);
 
 
 profile.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +93,7 @@ profile.setOnClickListener(new View.OnClickListener() {
                 String profileHobby = editProfileHobby.getText().toString();
                 String profileBirthday = editProfileBirthday.getText().toString();
                 //String profilePicUrl = downloadUrl.toString();
-                // update the user profile information in Firebase database.
+                // update the account profile information in Firebase database.
                 if (TextUtils.isEmpty(profileName) || TextUtils.isEmpty(profileBio) || TextUtils.isEmpty(profileContact)
                         || TextUtils.isEmpty(profileHobby) || TextUtils.isEmpty(profileBirthday)) {
                     displayMessageToast(EditProfileActivity.this, "All fields must be filled");
@@ -150,7 +146,7 @@ profile.setOnClickListener(new View.OnClickListener() {
                 Uri filePath = data.getData();
                 Picasso.with(EditProfileActivity.this).load(data.getData()).noPlaceholder().centerCrop().fit()
                         .into((ImageView) findViewById(R.id.btn_change_profile));
-                profileUser.uploadProfilePicture(EditProfileActivity.this,filePath,storageReference,databaseReference);
+                mUser.uploadProfilePicture(EditProfileActivity.this,filePath,storageReference,databaseReference);
             }
 
         }

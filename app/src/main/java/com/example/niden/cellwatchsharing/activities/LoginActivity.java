@@ -15,8 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.classes.User;
-import com.example.niden.cellwatchsharing.classes.firebase;
+import com.example.niden.cellwatchsharing.classes.Account;
+import com.example.niden.cellwatchsharing.classes.Task;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
@@ -32,16 +32,16 @@ public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private FirebaseAuth mAuth;
     Button btnSignup, btnLogin, btnReset;
-    firebase mFirebase = new firebase();
+    Task mTask = new Task();
     ProgressDialog myDialog;
-    User mUser = new User();
+    Account mAccount = new Account();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mUser.getFirebaseAuth();
-        mUser.checkUserLogin(LoginActivity.this);
+        mAccount.getFirebaseAuth();
+        mAccount.checkUserLogin(LoginActivity.this);
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (isOnline()) {
                     //do whatever you want to do
                     myDialog = DialogsUtils.showProgressDialog(LoginActivity.this, getString(R.string.sign_in_process));
-                    mUser.loginAUser(LoginActivity.this, email, password, myDialog);
+                    mAccount.loginAUser(LoginActivity.this, email, password, myDialog);
                 }else
                 {
                     try {
@@ -119,15 +119,6 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
     public boolean isOnline() {
         ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);

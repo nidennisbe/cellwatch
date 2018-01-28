@@ -1,139 +1,173 @@
 package com.example.niden.cellwatchsharing.classes;
 
-import android.app.Activity;
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
-import com.example.niden.cellwatchsharing.activities.LoginActivity;
-import com.example.niden.cellwatchsharing.activities.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
- * Created by niden on 20-Nov-17.
+ * Created by niden on 25-Nov-17.
  */
 
-public class User extends Application  {
-    private static final String TAG = User.class.getSimpleName();
-    public static FirebaseAuth firebaseAuth;
-    public static FirebaseAuth.AuthStateListener mAuthListener;
-    public static final int ADMIN = 1;
-    public static final int TECHNICIAN = 2;
+public class User {
+
+    private String strName, strBio, strPhone, strHobby, strDateBirth, strProfileUrl;
+    private DatabaseReference mMessagesDatabaseReference;
+    private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
 
 
-
-    public FirebaseAuth getFirebaseAuth() {
-        return firebaseAuth = FirebaseAuth.getInstance();
-    }
-
-    public String getFirebaseUserAuthenticateId() {
-        String userId = null;
-        if (firebaseAuth.getCurrentUser() != null) {
-            userId = firebaseAuth.getCurrentUser().getUid();
-        }
-        return userId;
-    }
-
-    //Check if user already login open their profile
-    public void checkUserLogin(final Context context) {
-        if (firebaseAuth.getCurrentUser() != null) {
-            Intent profileIntent = new Intent(context, MainActivity.class);
-            context.startActivity(profileIntent);
-        }
-    }
-
-    //Check who is currently login
-    public void isUserCurrentlyLogin(final Context context) {
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+    //Showing profile information
+    public void displayProfileInfo(final Context context, final TextView textViewName, final TextView textViewBio, final TextView textViewPhone, final TextView textViewHobby, final TextView textViewDateBirth, final ImageView profilePicture) {
+        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
+        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (null != user) {
-                    Intent profileIntent = new Intent(context, MainActivity.class);
-                    context.startActivity(profileIntent);
-                } else {
-                    Intent loginIntent = new Intent(context, LoginActivity.class);
-                    context.startActivity(loginIntent);
-                }
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+                strName = firebaseUserEntity.getName();
+                strBio = firebaseUserEntity.getBio();
+                strPhone = firebaseUserEntity.getPhone();
+                strHobby = firebaseUserEntity.getHobby();
+                strDateBirth = firebaseUserEntity.getBirthday();
+                strProfileUrl = firebaseUserEntity.getProfile_url();
+                textViewPhone.setText(strPhone);
+                textViewBio.setText(strBio);
+                textViewName.setText(strName);
+                textViewHobby.setText(strHobby);
+                textViewDateBirth.setText(strDateBirth);
+                Picasso.with(context).load(strProfileUrl).centerCrop()
+                        .resize(110, 110).centerCrop()
+                        .into(profilePicture);
             }
-        };
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
     }
 
-    //Method for User registration
-    public void createNewUser(final Context context, String email, String password, final ProgressDialog myDialog) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(context, "Fail to Register due to." + task.getException(), Toast.LENGTH_SHORT).show();
-                            myDialog.dismiss();
-                        } else {
-//                            IntentUtils.openMainActivity(context);
-                            Intent myIntent = new Intent(context, EditProfileActivity.class);
-                            context.startActivity(myIntent);
-                            ((Activity) context).finish();
-                            //insertUserInformation();
+
+    //Show profile Picture
+
+    public void displayProfileImage(final Context context, final TextView textViewName, final TextView textViewBio, final ImageView profilePicture) {
+        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
+        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+                strName = firebaseUserEntity.getName();
+                strBio = firebaseUserEntity.getBio();
+                strProfileUrl = firebaseUserEntity.getProfile_url();
+                textViewBio.setText(strBio);
+                textViewName.setText(strName);
+                Picasso.with(context).load(strProfileUrl)
+                        .resize(110, 110).centerCrop()
+                        .into(profilePicture);
+//
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+
+    //Showing profile information
+    public void displayEditInfo(final Context context, final EditText editProfileName, final EditText editProfileBio, final EditText editProfileContact, final EditText editProfileHobby, final EditText editProfileBirthday, final ImageView profile) {
+        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
+        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+                strName = firebaseUserEntity.getName();
+                strBio = firebaseUserEntity.getBio();
+                strPhone = firebaseUserEntity.getPhone();
+                strHobby = firebaseUserEntity.getHobby();
+                strDateBirth = firebaseUserEntity.getBirthday();
+                strProfileUrl = firebaseUserEntity.getProfile_url();
+
+                editProfileContact.setText(strPhone);
+                editProfileBio.setText(strBio);
+                editProfileName.setText(strName);
+                editProfileHobby.setText(strHobby);
+                editProfileBirthday.setText(strDateBirth);
+                Picasso.with(context).load(strProfileUrl)
+                        .resize(110, 110).centerCrop()
+                        .into(profile);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+    public void uploadProfilePicture(final Context context, Uri filePath, StorageReference storageReference, final DatabaseReference databaseReference) {
+        if (filePath != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(context);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference mRefStorage = storageReference.child("images/" + UUID.randomUUID().toString());
+            mRefStorage.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
+                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                            String url = downloadUrl.toString();
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("profile_url", url);
+                            databaseReference.child("users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child("info").updateChildren(user);
                         }
-                    }
-                });
-    }
-
-    //Method for get user information and put in Database
-    private void insertUserInformation() {
-
-        final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users");
-        // Get references to the DialogsUtils of item_message.xmle.xml
-        // EditText inputEmail = (EditText) findViewById(R.id.message_text);
-        HashMap<String, Object> userData = new HashMap<>();
-        userData.put("uid:", firebaseAuth.getUid());
-        userData.put("userEmail:", firebaseAuth.getCurrentUser().getEmail());
-        mRef.push().setValue(userData);
-    }
-
-
-    //Login USER method
-    public void loginAUser(final Context context, String email, String password, final ProgressDialog myDialog) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail", task.getException());
-                            Toast.makeText(context, R.string.alert_check_emailpassword, Toast.LENGTH_SHORT).show();
-                            myDialog.dismiss();
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(context, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                        else {
-                                     myDialog.dismiss();
-                                    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-                                    final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid())
-                                            .child("userLoginTime").push().setValue(currentDateTimeString);
-                                    Intent profileIntent = new Intent(context, MainActivity.class);
-                                    context.startActivity(profileIntent);
-
-                                }
-                            };
-                        });
-
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                        }
+                    });
+        }
     }
-
-
-
 }
