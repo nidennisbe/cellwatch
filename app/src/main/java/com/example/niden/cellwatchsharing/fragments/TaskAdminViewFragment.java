@@ -1,3 +1,4 @@
+/*
 package com.example.niden.cellwatchsharing.fragments;
 
 import android.app.Activity;
@@ -21,11 +22,13 @@ import com.google.firebase.database.Query;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
+*/
 /**
  * Created by niden on 16-Nov-17.
- */
+ *//*
 
-public class TaskFragment extends Fragment {
+
+public class TaskAdminViewFragment extends Fragment {
     public ListTaskAdapter mAdapter;
     public Activity activity =getActivity();
     View myView;
@@ -68,3 +71,4 @@ public class TaskFragment extends Fragment {
 
 
 }
+*/

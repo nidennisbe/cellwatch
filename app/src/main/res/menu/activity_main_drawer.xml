@@ -7,7 +7,7 @@
 
     <group
         android:checkableBehavior="single"
-        app:itemBackground="@drawable/style_background_diagonal">
+        app:itemBackground="@color/colorTextDark">
 
         <item
             android:id="@+id/nav_profile"
@@ -32,7 +32,7 @@
             android:title="Add new task(Admin View)" />
     </group>
 
-    <item android:title="Setting">
+    <item android:iconTint="@color/cardview_light_background">
         <menu>
             <item
                 android:id="@+id/nav_about"

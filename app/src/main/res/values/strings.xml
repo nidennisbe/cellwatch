@@ -52,4 +52,5 @@
     <string name="toobar_technicians">Technicians</string>
     <string name="toobar_tasks">Tasks</string>
     <string name="create_a_new_task_for_technicians">Create a new task for technicians</string>
+    <string name="txt_submit_task">Successful Added</string>
 </resources>

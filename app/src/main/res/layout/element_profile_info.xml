@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout android:id="@+id/linearLayout"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/background"
@@ -9,8 +10,7 @@
     android:alpha="1"
     android:background="@drawable/ui_messagebox"
     android:elevation="10dp"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
     <TableRow
         android:layout_width="match_parent"

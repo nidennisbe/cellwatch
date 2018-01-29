@@ -13,9 +13,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
+import com.example.niden.cellwatchsharing.adapters.ListTechniciansAdapter;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +40,8 @@ public class TechniciansFragment extends Fragment {
     private FirebaseListAdapter<FirebaseUserEntity> mTechAdapter;
     private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
     private ListView listOfTechnicians;
+    ListTechniciansAdapter listTechniciansAdapter;
+    int count;
 
     @Nullable
     @Override
@@ -48,7 +52,6 @@ public class TechniciansFragment extends Fragment {
         activity.setTitle(getString(R.string.toobar_technicians));
         listOfTechnicians = (ListView) myView.findViewById(R.id.list_technician);
         displayFriendsList();
-
         return myView;
 
     }
@@ -61,8 +64,6 @@ public class TechniciansFragment extends Fragment {
         mTechAdapter = new FirebaseListAdapter<FirebaseUserEntity>(activity, FirebaseUserEntity.class,
                 R.layout.item_technician, mRef) {
 
-
-
             @Override
             protected void populateView(View v, FirebaseUserEntity model, int position) {
                 final TextView name_user = (TextView)v.findViewById(R.id.txt_name);
@@ -73,10 +74,10 @@ public class TechniciansFragment extends Fragment {
                         firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
                         name_user.setText(firebaseUserEntity.getName());
                         String url = firebaseUserEntity.getProfile_url();
-
                         Picasso.with(activity).load(url)
                                 .resize(110, 110).centerCrop()
                                 .into(profile_user);
+
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {

@@ -2,6 +2,7 @@ package com.example.niden.cellwatchsharing.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +36,7 @@ public class ProfileFragment extends Fragment {
     TextView textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth;
     ImageView profileImage;
     View parentHolder;
+    Button taskButton;
 
     FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
 
@@ -46,7 +49,7 @@ public class ProfileFragment extends Fragment {
         mAccount.isUserCurrentlyLogin(activity);
         getActivity().setTitle("Profile");
 
-
+        taskButton = (Button)parentHolder.findViewById(R.id.btn_num_task);
         profileImage = (ImageView)parentHolder.findViewById(R.id.profile_image) ;
         textViewName = (TextView)parentHolder.findViewById(R.id.user_profile_name);
         textViewBio = (TextView)parentHolder.findViewById(R.id.user_profile_short_bio);
@@ -55,6 +58,13 @@ public class ProfileFragment extends Fragment {
         textViewDateBirth = (TextView)parentHolder.findViewById(R.id.tv_date_birth);
 
         mFirebaseRetrive.displayProfileInfo(refActivity,textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth,profileImage);
+        taskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager =getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
+            }
+        });
         return parentHolder;
     }
 
@@ -76,4 +86,5 @@ public class ProfileFragment extends Fragment {
         refActivity.finish();
         return super.onOptionsItemSelected(item);
     }
+
 }

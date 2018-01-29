@@ -7,4 +7,5 @@
     <color name="colorTextDark">#000000</color>
     <color name="colorDivider">#eae6e6</color>
     <color name="semiTransparentWhite">#40ffffff</color>
+    <color name="toolbarColor">#c01f90fa</color>
 </resources>

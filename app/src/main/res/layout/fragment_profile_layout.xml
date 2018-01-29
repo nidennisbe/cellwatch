@@ -13,6 +13,15 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
 
+    <Button
+        android:id="@+id/btn_num_task"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/style_button_sign_in_round"
+        android:text="Task"
+        android:textColor="#ffffff" />
+
     <include
         layout="@layout/element_profile_info"
         android:layout_width="match_parent"

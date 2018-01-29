@@ -29,20 +29,14 @@ import com.squareup.picasso.Picasso;
 
 public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUserEntity,ListTechniciansAdapter.Viewholder>{
     public Activity activity;
-    DatabaseReference mRef;
-    private FirebaseListAdapter<FirebaseUserEntity> mAdapter;
-    FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
-    private ListView listOfTechnicians;
+
 
     public ListTechniciansAdapter(Query ref, Activity activity, int layout) {
         super(FirebaseUserEntity.class, layout, ListTechniciansAdapter.Viewholder.class, ref);
         this.activity = activity;
     }
 
-    @Override
-    public int getItemCount() {
-        return super.getItemCount();
-    }
+
 
     @Override
     protected void populateViewHolder(Viewholder viewHolder, FirebaseUserEntity model, int position) {
@@ -64,44 +58,6 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
         }
     }
 
-    public void displayFriendsList() {
-        mRef = FirebaseDatabase.getInstance().getReference().child("users");
-        mAdapter = new FirebaseListAdapter<FirebaseUserEntity>(activity, FirebaseUserEntity.class,
-                R.layout.item_technician, mRef) {
-
-
-            @Override
-            protected void populateView(View v, FirebaseUserEntity model, int position) {
-                final TextView name_user = (TextView)v.findViewById(R.id.txt_name);
-
-                mRef.child(mAdapter.getRef(position).getKey()).child("info").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                        name_user.setText(firebaseUserEntity.getName());
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        };
-
-
-        listOfTechnicians.setAdapter(mAdapter);
-        listOfTechnicians.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(activity, TechnicianActivity.class);
-                myIntent.putExtra("id",mAdapter.getRef(position).getKey());
-                activity.startActivity(myIntent);
-
-            }
-        });
-    }
 
     @Override
     public int getItemViewType(int position) {
@@ -113,4 +69,19 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
         return super.getItemId(position);
     }
 
+
+    @Override
+    public FirebaseUserEntity getItem(int position) {
+        return super.getItem(position);
+    }
+
+    @Override
+    public DatabaseReference getRef(int position) {
+        return super.getRef(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return super.getItemCount();
+    }
 }

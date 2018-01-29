@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.31"
-            app:srcCompat="@drawable/logo_cellwatch" />
+            app:srcCompat="@drawable/ic_cellwatch" />
 
         <TextView
             android:id="@+id/textView19"

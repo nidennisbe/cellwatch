@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="50dp"
     android:orientation="vertical"
     tools:context="com.example.niden.cellwatchsharing.activities.EditProfileActivity">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,21 +69,21 @@
                         android:id="@+id/textView16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name"
                         android:layout_weight="1"
+                        android:text="Name"
                         android:textSize="18sp" />
 
                     <EditText
                         android:id="@+id/profile_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="5"
                         android:fontFamily="sans-serif-light"
                         android:hint="@string/edit_profile_name"
                         android:inputType="textPersonName"
                         android:maxLines="1"
                         android:padding="12dp"
                         android:singleLine="true"
-                        android:layout_weight="5"
                         android:textColor="@color/colorTextDark"
                         android:textSize="18sp" />
                 </TableRow>
@@ -95,8 +96,8 @@
                         android:id="@+id/textView17"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bio"
                         android:layout_weight="1"
+                        android:text="Bio"
                         android:textSize="18sp" />
 
                     <EditText
@@ -104,12 +105,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:layout_weight="5"
                         android:fontFamily="sans-serif-light"
                         android:hint="@string/edit_profile_bio"
                         android:inputType="text"
                         android:maxLines="1"
                         android:padding="12dp"
-                        android:layout_weight="5"
                         android:singleLine="true"
                         android:textColor="@color/colorTextDark"
                         android:textSize="18sp" />
@@ -123,8 +124,8 @@
                         android:id="@+id/textView18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phone"
                         android:layout_weight="1"
+                        android:text="Phone"
                         android:textSize="18sp" />
 
                     <EditText
@@ -132,12 +133,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:layout_weight="5"
                         android:fontFamily="sans-serif-light"
                         android:hint="@string/edit_profile_phone"
                         android:inputType="phone"
                         android:maxLines="1"
                         android:padding="12dp"
-                        android:layout_weight="5"
                         android:singleLine="true"
                         android:textColor="@color/colorTextDark"
                         android:textSize="18sp" />
@@ -160,11 +161,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:layout_weight="5"
                         android:fontFamily="sans-serif-light"
                         android:hint="@string/edit_profile_hobby"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:layout_weight="5"
                         android:padding="12dp"
                         android:singleLine="true"
                         android:textColor="@color/colorTextDark"
@@ -188,30 +189,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:layout_weight="5"
                         android:fontFamily="sans-serif-light"
                         android:hint="Expiration Date"
                         android:inputType="text"
                         android:maxLines="1"
                         android:padding="12dp"
                         android:singleLine="true"
-                        android:layout_weight="5"
                         android:textColor="@color/colorTextDark"
                         android:textSize="18sp" />
 
                 </TableRow>
             </TableLayout>
 
-            <Button
-                android:id="@+id/save_edit_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:layout_weight="1"
-                android:background="@drawable/style_button_sign_in_round"
-                android:text="@string/done"
-                android:textColor="@color/colorTextLight" />
-
         </LinearLayout>
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

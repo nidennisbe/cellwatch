@@ -30,5 +30,10 @@ public class Task extends MainActivity {
                 .setValue(new TaskEntityDatabase(txTaskName.getText().toString(),txClass.getText().toString(),txAddress.getText().toString(),txDescription.getText().toString(),
                         txSuburb.getText().toString(),currentDateTimeString,spinner.getSelectedItem().toString(),""
                 ));
+        txTaskName.setText("");
+        txAddress.setText("");
+        txDescription.setText("");
+        txSuburb.setText("");
+        txClass.setText("");
     }
 }

@@ -88,24 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                     mAccount.loginAUser(LoginActivity.this, email, password, myDialog);
                 }else
                 {
-                    try {
-                        AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
-
-                        alertDialog.setTitle(getString(R.string.internet_connection));
-                        alertDialog.setMessage(getString(R.string.alert_internet_connection));
-                        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-                        alertDialog.setButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alertDialog.show();
-                    }
-                    catch(Exception e)
-                    {
-
-                    }
+                    DialogsUtils.showAlertDialogDismiss(LoginActivity.this,getString(R.string.internet_connection),getString(R.string.alert_internet_connection));
                 }
 
 

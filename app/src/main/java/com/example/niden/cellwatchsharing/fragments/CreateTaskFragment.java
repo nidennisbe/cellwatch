@@ -6,12 +6,14 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,6 +24,7 @@ import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.classes.Task;
 import com.example.niden.cellwatchsharing.database.UserEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
+import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,6 +49,7 @@ public class CreateTaskFragment extends Fragment {
     Spinner spinner,dropDownTechnician;
     DatePickerDialog datePickerDialog;
     View parentHolder;
+    int duration = Snackbar.LENGTH_LONG;
 
     @Nullable
     @Override
@@ -158,11 +162,7 @@ public class CreateTaskFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         mTask.insertTask(txTaskName,txClass,txDescription,txAddress,txSuburb,spinner);
-        txTaskName.setText("");
-        txAddress.setText("");
-        txDescription.setText("");
-        txSuburb.setText("");
-        txClass.setText("");
+        ToastUtils.showSnackbar(getView(),getString(R.string.txt_submit_task),duration);
         FragmentManager fragmentManager =getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
         return super.onOptionsItemSelected(item);

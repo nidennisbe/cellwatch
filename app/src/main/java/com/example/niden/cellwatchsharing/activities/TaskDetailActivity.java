@@ -21,6 +21,7 @@ import com.example.niden.cellwatchsharing.database.GallaryEntityDatabase;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,15 +51,12 @@ public class TaskDetailActivity extends AppCompatActivity {
     Account account = new Account();
     TaskEntityDatabase taskEntityDatabase = new TaskEntityDatabase();
     GallaryEntityDatabase gallaryEntityDatabase;
-
-
     private UploadListAdapter uploadListAdapter;
-
     private StorageReference mStorage;
-
     public List<String> fileNameList;
     public List<String> fileDoneList;
-
+    public Intent intent=getIntent();
+    public FirebaseListAdapter<TaskEntityDatabase> mTechAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +66,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
 
         mStorage = FirebaseStorage.getInstance().getReference();
-        Query query= FirebaseDatabase.getInstance().getReference().child("image");
+        Query query = FirebaseDatabase.getInstance().getReference().child("image");
 
         imageView = (ImageView) findViewById(R.id.gallaryImage);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -80,9 +78,9 @@ public class TaskDetailActivity extends AppCompatActivity {
         etSuburb = (EditText) findViewById(R.id.editTextSuburb);
 
 
-       fileNameList = new ArrayList<>();
-       fileDoneList = new ArrayList<>();
-       uploadListAdapter = new UploadListAdapter(fileNameList, fileDoneList);
+        fileNameList = new ArrayList<>();
+        fileDoneList = new ArrayList<>();
+        uploadListAdapter = new UploadListAdapter(fileNameList, fileDoneList);
 
         //RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -92,11 +90,10 @@ public class TaskDetailActivity extends AppCompatActivity {
         displayTaskDetail(etTaskName, etClass, etDescription, etAddress, etSuburb);
 
 
-
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GallaryUtils.openGallary(TaskDetailActivity.this,RESULT_LOAD_IMAGE);
+                GallaryUtils.openGallary(TaskDetailActivity.this, RESULT_LOAD_IMAGE);
 
             }
         });
@@ -106,13 +103,13 @@ public class TaskDetailActivity extends AppCompatActivity {
     public void displayTaskDetail(final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb) {
         mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
                 .child(account.getFirebaseAuth().getUid())
-                .child("tasks")
-        ;
+                .child("tasks");
 
         mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+//                strTaskName = intent.getStringExtra("name");
                 taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
                 strTaskName = taskEntityDatabase.getTask_name();
                 strDescription = taskEntityDatabase.getTask_description();
@@ -143,17 +140,16 @@ public class TaskDetailActivity extends AppCompatActivity {
     }
 
 
-
-// ACTIVITY RESULT
+    // ACTIVITY RESULT
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK){
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
 
-            if(data.getClipData() != null){
+            if (data.getClipData() != null) {
 
                 int totalItemsSelected = data.getClipData().getItemCount();
 
-                for(int i = 0; i < totalItemsSelected; i++){
+                for (int i = 0; i < totalItemsSelected; i++) {
 
                     Uri fileUri = data.getClipData().getItemAt(i).getUri();
 
@@ -181,7 +177,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
                 //Toast.makeText(MainActivity.this, "Selected Multiple Files", Toast.LENGTH_SHORT).show();
 
-            } else if (data.getData() != null){
+            } else if (data.getData() != null) {
 
                 Toast.makeText(TaskDetailActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
 
