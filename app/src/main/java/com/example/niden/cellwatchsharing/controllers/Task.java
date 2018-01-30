@@ -16,7 +16,7 @@ import java.util.Date;
  * Created by niden on 16-Nov-17.
  */
 
-public class Task extends MainActivity {
+public class Task  {
 
       //Insert new task
     private String currentDateTimeString = String.valueOf(System.currentTimeMillis());
@@ -36,4 +36,7 @@ public class Task extends MainActivity {
         txSuburb.setText("");
         txClass.setText("");
     }
+
+
+
 }

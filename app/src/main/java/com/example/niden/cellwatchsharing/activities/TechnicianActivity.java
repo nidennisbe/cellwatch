@@ -53,10 +53,10 @@ public class TechnicianActivity extends AppCompatActivity {
 
 
         mFirebaseRetrive.displayProfileImage(TechnicianActivity.this,textViewName,textViewBio,profileImage);
-
+        String unlock = getIntent().getStringExtra("key");
         mRef = FirebaseDatabase.getInstance().getReference().child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("tasks");
+                .child("tasks").child(unlock);
 
         ListTaskAdapter mAdapter = new ListTaskAdapter(mRef, activity,R.layout.item_task );
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);

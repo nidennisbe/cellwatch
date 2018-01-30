@@ -88,13 +88,7 @@ public class TechniciansFragment extends Fragment {
         };
 
         listOfTechnicians.setAdapter(mTechAdapter);
-        listOfTechnicians.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(activity, TechnicianActivity.class);
-                activity.startActivity(myIntent);
-            }
-        });
+
     }
 
 }

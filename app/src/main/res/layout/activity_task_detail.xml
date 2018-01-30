@@ -62,7 +62,7 @@
                         android:text="@string/task_name" />
 
                     <EditText
-                        android:id="@+id/editTextTaskName"
+                        android:id="@+id/et_task_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -85,7 +85,7 @@
                         android:text="@string/description" />
 
                     <EditText
-                        android:id="@+id/editTextDescription"
+                        android:id="@+id/et_task_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -109,7 +109,7 @@
                         android:text="@string/address" />
 
                     <EditText
-                        android:id="@+id/editTextAddress"
+                        android:id="@+id/et_task_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -133,7 +133,7 @@
                         android:text="@string/text_class" />
 
                     <EditText
-                        android:id="@+id/editTextClass"
+                        android:id="@+id/et_task_class"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -156,7 +156,7 @@
                         android:text="@string/suburb" />
 
                     <EditText
-                        android:id="@+id/editTextSuburb"
+                        android:id="@+id/et_task_suburb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"

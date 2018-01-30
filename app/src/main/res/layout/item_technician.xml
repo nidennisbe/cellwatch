@@ -7,9 +7,12 @@
     android:padding="10dp">
 
     <LinearLayout
+        android:id="@+id/item_click"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_editor_absoluteY="10dp">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/technician_profile"
@@ -17,11 +20,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:elevation="3dp"
-            app:civ_shadow_radius="10"
+            android:src="@drawable/ic_user_blue"
+            app:civ_border_width="10dp"
             app:civ_shadow="true"
             app:civ_shadow_color="@color/semiTransparentWhite"
-            android:src="@drawable/ic_user_blue"
-            app:civ_border_width="10dp" />
+            app:civ_shadow_radius="10" />
 
         <TextView
             android:id="@+id/txt_name"

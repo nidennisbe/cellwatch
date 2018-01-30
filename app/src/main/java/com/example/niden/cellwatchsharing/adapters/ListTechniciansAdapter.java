@@ -2,10 +2,12 @@ package com.example.niden.cellwatchsharing.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,20 +41,29 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
 
 
     @Override
-    protected void populateViewHolder(Viewholder viewHolder, FirebaseUserEntity model, int position) {
+    protected void populateViewHolder(Viewholder viewHolder, FirebaseUserEntity model, final int position) {
         viewHolder.name.setText(model.getName());
+        viewHolder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(activity, TechnicianActivity.class);
+                myIntent.putExtra("key",getRef(position).getKey());
+                activity.startActivity(myIntent);
+            }
+        });
     }
 
     public static class Viewholder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
         TextView name;
+        LinearLayout card;
 
         public Viewholder(View view) {
             super(view);
 //            imageView = (ImageView) view.findViewById(R.id.imageView);
              name = (TextView) view.findViewById(R.id.txt_name);
-
+             card = (LinearLayout)view.findViewById(R.id.item_click);
 
 
         }

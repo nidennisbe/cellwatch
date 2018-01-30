@@ -17,12 +17,11 @@ import android.widget.Toast;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.UploadListAdapter;
 import com.example.niden.cellwatchsharing.controllers.Account;
-import com.example.niden.cellwatchsharing.database.GallaryEntityDatabase;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,22 +40,18 @@ import java.util.List;
 public class TaskDetailActivity extends AppCompatActivity {
 
     static final int RESULT_LOAD_IMAGE = 1;
-    private String mCurrentPhotoPath;
     RecyclerView recyclerView;
-    RecyclerView.LayoutManager mLayoutManager;
     ImageView imageView, btnCamera;
     EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
     String strTaskName, strDescription, strAddress, strClass, strSuburb;
-    DatabaseReference mMessagesDatabaseReference;
-    Account account = new Account();
+    DatabaseReference mDataReference;
     TaskEntityDatabase taskEntityDatabase = new TaskEntityDatabase();
-    GallaryEntityDatabase gallaryEntityDatabase;
     private UploadListAdapter uploadListAdapter;
     private StorageReference mStorage;
     public List<String> fileNameList;
     public List<String> fileDoneList;
-    public Intent intent=getIntent();
-    public FirebaseListAdapter<TaskEntityDatabase> mTechAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,16 +61,16 @@ public class TaskDetailActivity extends AppCompatActivity {
 
 
         mStorage = FirebaseStorage.getInstance().getReference();
-        Query query = FirebaseDatabase.getInstance().getReference().child("image");
 
         imageView = (ImageView) findViewById(R.id.gallaryImage);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         btnCamera = (ImageView) findViewById(R.id.button_camera);
-        etTaskName = (EditText) findViewById(R.id.editTextTaskName);
-        etClass = (EditText) findViewById(R.id.editTextClass);
-        etDescription = (EditText) findViewById(R.id.editTextDescription);
-        etAddress = (EditText) findViewById(R.id.editTextAddress);
-        etSuburb = (EditText) findViewById(R.id.editTextSuburb);
+        etTaskName = (EditText) findViewById(R.id.et_task_name);
+        etClass = (EditText) findViewById(R.id.et_task_class);
+        etDescription = (EditText) findViewById(R.id.et_task_desc);
+        etAddress = (EditText) findViewById(R.id.et_task_address);
+        etSuburb = (EditText) findViewById(R.id.et_task_suburb);
+
 
 
         fileNameList = new ArrayList<>();
@@ -101,27 +96,28 @@ public class TaskDetailActivity extends AppCompatActivity {
 
 
     public void displayTaskDetail(final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb) {
-        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
-                .child(account.getFirebaseAuth().getUid())
-                .child("tasks");
+        String unlock = getIntent().getStringExtra("key");
+        mDataReference = FirebaseDatabase.getInstance().getReference("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("tasks").child(unlock);
 
-        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDataReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-//                strTaskName = intent.getStringExtra("name");
-                taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
-                strTaskName = taskEntityDatabase.getTask_name();
-                strDescription = taskEntityDatabase.getTask_description();
-                strAddress = taskEntityDatabase.getTask_address();
-                strClass = taskEntityDatabase.getTask_class();
-                strSuburb = taskEntityDatabase.getTask_suburb();
+                    taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
+                    strTaskName = taskEntityDatabase.getTask_name();
+                    strDescription = taskEntityDatabase.getTask_description();
+                    strAddress = taskEntityDatabase.getTask_address();
+                    strClass = taskEntityDatabase.getTask_class();
+                    strSuburb = taskEntityDatabase.getTask_suburb();
 
-                etTaskName.setText(strTaskName);
-                etClass.setText(strClass);
-                etDescription.setText(strDescription);
-                etAddress.setText(strAddress);
-                etSuburb.setText(strSuburb);
+                    etTaskName.setText(strTaskName);
+                    etClass.setText(strClass);
+                    etDescription.setText(strDescription);
+                    etAddress.setText(strAddress);
+                    etSuburb.setText(strSuburb);
+
 
             }
 
@@ -135,7 +131,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         this.finish();
-        Intent technicianActivityIntent = new Intent(this, TechnicianActivity.class);
+        Intent technicianActivityIntent = new Intent(this, MainActivity.class);
         startActivity(technicianActivityIntent);
     }
 
@@ -154,7 +150,6 @@ public class TaskDetailActivity extends AppCompatActivity {
                     Uri fileUri = data.getClipData().getItemAt(i).getUri();
 
                     String fileName = getFileName(fileUri);
-
                     fileNameList.add(fileName);
                     fileDoneList.add("uploading");
                     uploadListAdapter.notifyDataSetChanged();
@@ -185,6 +180,8 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         }
     }
+
+
 
 
     //GET FILE NAME

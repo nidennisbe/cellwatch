@@ -31,7 +31,7 @@ public class TaskFragment extends Fragment {
     View myView;
     RecyclerView recyclerView;
     Query mQuery;
-    TextView texetViewNumberOfTask;
+
 
 
     @Nullable

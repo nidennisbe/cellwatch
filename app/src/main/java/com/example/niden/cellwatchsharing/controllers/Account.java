@@ -29,13 +29,10 @@ import java.util.HashMap;
  * Created by niden on 20-Nov-17.
  */
 
-public class Account extends Application  {
+public class Account {
     private static final String TAG = Account.class.getSimpleName();
     public static FirebaseAuth firebaseAuth;
     public static FirebaseAuth.AuthStateListener mAuthListener;
-    public static final int ADMIN = 1;
-    public static final int TECHNICIAN = 2;
-
 
 
     public FirebaseAuth getFirebaseAuth() {
@@ -119,21 +116,21 @@ public class Account extends Application  {
                             Log.w(TAG, "signInWithEmail", task.getException());
                             Toast.makeText(context, R.string.alert_check_emailpassword, Toast.LENGTH_SHORT).show();
                             myDialog.dismiss();
-                        }
-                        else {
-                                     myDialog.dismiss();
-                             String currentDateTimeString = String.valueOf(System.currentTimeMillis());
-                                    final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid())
-                                            .child("userLoginTime").push().setValue(currentDateTimeString);
-                                    Intent profileIntent = new Intent(context, MainActivity.class);
-                                    context.startActivity(profileIntent);
+                        } else {
+                            myDialog.dismiss();
+                            String currentDateTimeString = String.valueOf(System.currentTimeMillis());
+                            final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid())
+                                    .child("userLoginTime").push().setValue(currentDateTimeString);
+                            Intent profileIntent = new Intent(context, MainActivity.class);
+                            context.startActivity(profileIntent);
 
-                                }
-                            };
-                        });
+                        }
+                    }
+
+                    ;
+                });
 
     }
-
 
 
 }
