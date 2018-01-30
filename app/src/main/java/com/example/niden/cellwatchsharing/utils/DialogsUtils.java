@@ -22,7 +22,7 @@ public class DialogsUtils {
         ProgressDialog mDialog = new ProgressDialog(context);
         mDialog.setMessage(message);
         mDialog.setCancelable(false);
-        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mDialog.show();
         return mDialog;

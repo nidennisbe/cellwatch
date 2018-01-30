@@ -10,23 +10,18 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.classes.User;
+import com.example.niden.cellwatchsharing.controllers.User;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
-import com.example.niden.cellwatchsharing.helper.FirebaseDatabaseHelper;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,8 +29,6 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
-import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;
-import static com.example.niden.cellwatchsharing.utils.ToastUtils.displayMessageToast;
 
 
 //sixth push

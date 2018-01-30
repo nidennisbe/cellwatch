@@ -4,11 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/background"
-    android:layout_marginLeft="45dp"
-    android:layout_marginRight="45dp"
-    android:layout_marginTop="50dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="20dp"
     android:alpha="1"
-    android:background="@drawable/ui_messagebox"
+    android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
     android:elevation="10dp"
     android:orientation="vertical">
 
@@ -20,7 +21,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:padding="20dp"
@@ -31,7 +32,7 @@
         <TextView
             android:id="@+id/tv_position"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:padding="20dp"
@@ -47,7 +48,7 @@
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:padding="20dp"
@@ -58,7 +59,7 @@
         <TextView
             android:id="@+id/tv_phonenumber"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:gravity="center_vertical"
@@ -83,38 +84,10 @@
         <TextView
             android:id="@+id/tv_hobby"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center_vertical"
-            android:textSize="14sp" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:padding="20dp"
-            android:text="Expiration Date"
-            android:textAlignment="textStart"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_date_birth"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:gravity="center_vertical"
-            android:textColor="@color/cardview_dark_background"
             android:textSize="14sp" />
     </TableRow>
 
@@ -129,13 +102,14 @@
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:padding="20dp"
-            android:text="Date of Birth"
+            android:text="Expiration Date"
             android:textAlignment="textStart"
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_date_birth"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:gravity="center_vertical"

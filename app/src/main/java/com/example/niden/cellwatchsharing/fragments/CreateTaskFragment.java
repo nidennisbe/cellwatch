@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -21,7 +20,7 @@ import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
-import com.example.niden.cellwatchsharing.classes.Task;
+import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.database.UserEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;

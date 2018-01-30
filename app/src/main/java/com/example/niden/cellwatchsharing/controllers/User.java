@@ -1,4 +1,4 @@
-package com.example.niden.cellwatchsharing.classes;
+package com.example.niden.cellwatchsharing.controllers;
 
 import android.app.ProgressDialog;
 import android.content.Context;

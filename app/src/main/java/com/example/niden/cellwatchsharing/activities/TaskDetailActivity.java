@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.UploadListAdapter;
-import com.example.niden.cellwatchsharing.classes.Account;
+import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.database.GallaryEntityDatabase;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;

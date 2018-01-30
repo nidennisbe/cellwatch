@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.ListTaskAdapter;
-import com.example.niden.cellwatchsharing.classes.User;
-import com.example.niden.cellwatchsharing.classes.Account;
+import com.example.niden.cellwatchsharing.controllers.User;
+import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.utils.IntentUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;

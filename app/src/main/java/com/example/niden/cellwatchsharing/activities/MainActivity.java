@@ -31,7 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-import static com.example.niden.cellwatchsharing.classes.Account.firebaseAuth;
+import static com.example.niden.cellwatchsharing.controllers.Account.firebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

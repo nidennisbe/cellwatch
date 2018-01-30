@@ -1,4 +1,4 @@
-package com.example.niden.cellwatchsharing.classes;
+package com.example.niden.cellwatchsharing.controllers;
 
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -19,7 +19,7 @@ import java.util.Date;
 public class Task extends MainActivity {
 
       //Insert new task
-    private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    private String currentDateTimeString = String.valueOf(System.currentTimeMillis());
     public void insertTask(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner) {
         FirebaseDatabase.getInstance()
                 .getReference()

@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:icon="@drawable/ic_menu_send"
-        android:iconTint="@color/cardview_light_background"
-        android:title="btn_submit"
+        android:title="DONE"
         app:showAsAction="ifRoom" />
 
 

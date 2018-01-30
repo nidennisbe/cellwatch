@@ -1,9 +1,7 @@
 package com.example.niden.cellwatchsharing.activities;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.classes.Account;
-import com.example.niden.cellwatchsharing.classes.Task;
+import com.example.niden.cellwatchsharing.controllers.Account;
+import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;

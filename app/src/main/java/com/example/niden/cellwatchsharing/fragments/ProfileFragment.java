@@ -18,8 +18,8 @@ import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
-import com.example.niden.cellwatchsharing.classes.Account;
-import com.example.niden.cellwatchsharing.classes.User;
+import com.example.niden.cellwatchsharing.controllers.Account;
+import com.example.niden.cellwatchsharing.controllers.User;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;

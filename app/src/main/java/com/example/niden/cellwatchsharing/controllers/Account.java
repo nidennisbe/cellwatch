@@ -1,4 +1,4 @@
-package com.example.niden.cellwatchsharing.classes;
+package com.example.niden.cellwatchsharing.controllers;
 
 import android.app.Activity;
 import android.app.Application;
@@ -122,7 +122,7 @@ public class Account extends Application  {
                         }
                         else {
                                      myDialog.dismiss();
-                                    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+                             String currentDateTimeString = String.valueOf(System.currentTimeMillis());
                                     final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid())
                                             .child("userLoginTime").push().setValue(currentDateTimeString);
                                     Intent profileIntent = new Intent(context, MainActivity.class);

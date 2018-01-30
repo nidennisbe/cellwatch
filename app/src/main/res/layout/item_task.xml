@@ -2,6 +2,7 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,19 +10,24 @@
     android:orientation="horizontal"
     android:padding="15dp">
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="80dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="25dp"
+    <TextView
+        android:id="@+id/txt_date_ago"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
         android:layout_weight="1"
-        android:background="@drawable/task_icon" />
+        android:gravity="center"
+        android:background="@drawable/background_gradient"
+        android:fontFamily="sans-serif-light"
+        android:padding="3dp"
+        android:text="TextView"
+        android:textColor="@color/cardview_light_background"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="25dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="vertical">
 
         <TextView
@@ -34,14 +40,6 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:text="Task ID" />
-
-        <TextView
             android:id="@+id/textViewTaskDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,6 +48,23 @@
             android:text="Date" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:fontFamily="sans-serif-light"
+        android:text="time"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="?android:attr/textCheckMarkInverse" />
 
 </LinearLayout>
 
