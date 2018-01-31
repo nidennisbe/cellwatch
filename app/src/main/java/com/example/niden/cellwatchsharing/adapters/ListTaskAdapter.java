@@ -32,7 +32,6 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
     public ListTaskAdapter(Query ref, Activity activity, int layout) {
         super(TaskEntityDatabase.class, layout, Viewholder.class, ref);
         this.activity = activity;
-
     }
 
     @Override
@@ -65,9 +64,7 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
 
     @Override
     public int getItemCount() {
-
         return mSnapshots.size();
-
     }
 
     public static class Viewholder extends RecyclerView.ViewHolder {
@@ -84,6 +81,4 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
 
         }
     }
-
-
 }

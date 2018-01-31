@@ -40,11 +40,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return itemsData.length;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView)itemView.findViewById(R.id.gallaryImage);
+            imageView = (ImageView) itemView.findViewById(R.id.gallaryImage);
         }
     }
 }

@@ -52,7 +52,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     private StorageReference mStorage;
     public List<String> fileNameList;
     public List<String> fileDoneList;
-    Zip mZip= new Zip();
+    Zip mZip = new Zip();
     String zipFileName;
 
 
@@ -73,8 +73,6 @@ public class TaskDetailActivity extends AppCompatActivity {
         etDescription = (EditText) findViewById(R.id.et_task_desc);
         etAddress = (EditText) findViewById(R.id.et_task_address);
         etSuburb = (EditText) findViewById(R.id.et_task_suburb);
-
-
 
         fileNameList = new ArrayList<>();
         fileDoneList = new ArrayList<>();
@@ -107,7 +105,6 @@ public class TaskDetailActivity extends AppCompatActivity {
     }
 
 
-
     public void displayTaskDetail(final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb) {
         String unlock = getIntent().getStringExtra("key");
         mDataReference = FirebaseDatabase.getInstance().getReference("users")
@@ -117,21 +114,18 @@ public class TaskDetailActivity extends AppCompatActivity {
         mDataReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
+                strTaskName = taskEntityDatabase.getTask_name();
+                strDescription = taskEntityDatabase.getTask_description();
+                strAddress = taskEntityDatabase.getTask_address();
+                strClass = taskEntityDatabase.getTask_class();
+                strSuburb = taskEntityDatabase.getTask_suburb();
 
-                    taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
-                    strTaskName = taskEntityDatabase.getTask_name();
-                    strDescription = taskEntityDatabase.getTask_description();
-                    strAddress = taskEntityDatabase.getTask_address();
-                    strClass = taskEntityDatabase.getTask_class();
-                    strSuburb = taskEntityDatabase.getTask_suburb();
-
-                    etTaskName.setText(strTaskName);
-                    etClass.setText(strClass);
-                    etDescription.setText(strDescription);
-                    etAddress.setText(strAddress);
-                    etSuburb.setText(strSuburb);
-
-
+                etTaskName.setText(strTaskName);
+                etClass.setText(strClass);
+                etDescription.setText(strDescription);
+                etAddress.setText(strAddress);
+                etSuburb.setText(strSuburb);
             }
 
             @Override
@@ -153,47 +147,30 @@ public class TaskDetailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
-
             if (data.getClipData() != null) {
-
                 int totalItemsSelected = data.getClipData().getItemCount();
-
                 for (int i = 0; i < totalItemsSelected; i++) {
-
                     Uri fileUri = data.getClipData().getItemAt(i).getUri();
                     final String fileName = getFileName(fileUri);
                     fileNameList.add(fileName);
                     fileDoneList.add("uploading");
                     uploadListAdapter.notifyDataSetChanged();
                     StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
-
                     final int finalI = i;
                     fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                             fileDoneList.remove(finalI);
                             fileDoneList.add(finalI, "done");
                             uploadListAdapter.notifyDataSetChanged();
-
-
                         }
                     });
-
                 }
-
-                //Toast.makeText(MainActivity.this, "Selected Multiple Files", Toast.LENGTH_SHORT).show();
-
             } else if (data.getData() != null) {
-
                 Toast.makeText(TaskDetailActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
-
             }
-
         }
     }
-
-
 
 
     //GET FILE NAME

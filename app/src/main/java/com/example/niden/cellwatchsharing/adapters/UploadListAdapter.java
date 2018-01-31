@@ -52,11 +52,8 @@ public class UploadListAdapter extends RecyclerView.Adapter<UploadListAdapter.Vi
         if(fileDone.equals("uploading")){
 
             holder.fileDoneView.setImageResource(R.mipmap.progress);
-
         } else {
-
             holder.fileDoneView.setImageResource(R.mipmap.checked);
-
         }
 
     }
@@ -69,19 +66,14 @@ public class UploadListAdapter extends RecyclerView.Adapter<UploadListAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
-
         public TextView fileNameView;
         public ImageView fileDoneView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             mView = itemView;
-
             fileNameView = (TextView) mView.findViewById(R.id.upload_filename);
             fileDoneView = (ImageView) mView.findViewById(R.id.upload_loading);
-
-
         }
 
     }

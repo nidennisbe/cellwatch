@@ -31,7 +31,7 @@ import com.squareup.picasso.Picasso;
  * Created by niden on 18-Nov-17.
  */
 
-public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUserEntity,ListTechniciansAdapter.Viewholder>{
+public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUserEntity, ListTechniciansAdapter.Viewholder> {
     public Activity activity;
 
 
@@ -41,16 +41,15 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
     }
 
 
-
     @Override
     protected void populateViewHolder(Viewholder viewHolder, FirebaseUserEntity model, final int position) {
         viewHolder.name.setText(model.getName());
         viewHolder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("myFirebase UID",getRef(position).getKey());
+                Log.e("myFirebase UID", getRef(position).getKey());
                 Intent myIntent = new Intent(activity, TaskDetailActivity.class);
-                myIntent.putExtra("key",getRef(position).getKey());
+                myIntent.putExtra("key", getRef(position).getKey());
                 activity.startActivity(myIntent);
             }
         });
@@ -65,12 +64,10 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
 
         public Viewholder(View view) {
             super(view);
-   //          imageView = (ImageView) view.findViewById(R.id.imageView);
-             name = (TextView) view.findViewById(R.id.txt_name);
-             card = (LinearLayout)view.findViewById(R.id.item_click);
-             listView = (ListView)view.findViewById(R.id.list_technician);
-
-
+            //          imageView = (ImageView) view.findViewById(R.id.imageView);
+            name = (TextView) view.findViewById(R.id.txt_name);
+            card = (LinearLayout) view.findViewById(R.id.item_click);
+            listView = (ListView) view.findViewById(R.id.list_technician);
         }
     }
 
