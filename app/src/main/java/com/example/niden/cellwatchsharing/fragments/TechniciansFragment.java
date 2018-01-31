@@ -8,26 +8,22 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
-import com.example.niden.cellwatchsharing.adapters.ListTechniciansAdapter;
+
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * Created by niden on 16-Nov-17.
@@ -39,9 +35,8 @@ public class TechniciansFragment extends Fragment {
     private Activity activity=getActivity();
     private FirebaseListAdapter<FirebaseUserEntity> mTechAdapter;
     private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
-    private ListView listOfTechnicians;
-    ListTechniciansAdapter listTechniciansAdapter;
-    int count;
+    private ListView technicianList;
+
 
     @Nullable
     @Override
@@ -50,8 +45,10 @@ public class TechniciansFragment extends Fragment {
         myView = inflater.inflate(R.layout.fragment_technicians_layout,container,false);
         activity = getActivity();
         activity.setTitle(getString(R.string.toobar_technicians));
-        listOfTechnicians = (ListView) myView.findViewById(R.id.list_technician);
+        technicianList = (ListView) myView.findViewById(R.id.list_technician);
         displayFriendsList();
+
+
         return myView;
 
     }
@@ -65,7 +62,7 @@ public class TechniciansFragment extends Fragment {
                 R.layout.item_technician, mRef) {
 
             @Override
-            protected void populateView(View v, FirebaseUserEntity model, int position) {
+            protected void populateView(View v, FirebaseUserEntity model, final int position) {
                 final TextView name_user = (TextView)v.findViewById(R.id.txt_name);
                 final ImageView profile_user= (ImageView)v.findViewById(R.id.technician_profile) ;
                 mRef.child(mTechAdapter.getRef(position).getKey()).child("info").addValueEventListener(new ValueEventListener() {
@@ -77,18 +74,33 @@ public class TechniciansFragment extends Fragment {
                         Picasso.with(activity).load(url)
                                 .resize(110, 110).centerCrop()
                                 .into(profile_user);
+                        profile_user.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent myIntent = new Intent(activity, TechnicianActivity.class);
+                                myIntent.putExtra("key",getRef(position).getKey());
+                                activity.startActivity(myIntent);
+                            }
+                        });
+
 
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
+
                 });
+
+
             }
+
         };
 
-        listOfTechnicians.setAdapter(mTechAdapter);
+        technicianList.setAdapter(mTechAdapter);
+
 
     }
+
 
 }

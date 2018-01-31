@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.UploadListAdapter;
 import com.example.niden.cellwatchsharing.controllers.Account;
+import com.example.niden.cellwatchsharing.controllers.Zip;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
@@ -50,6 +52,8 @@ public class TaskDetailActivity extends AppCompatActivity {
     private StorageReference mStorage;
     public List<String> fileNameList;
     public List<String> fileDoneList;
+    Zip mZip= new Zip();
+    String zipFileName;
 
 
     @Override
@@ -58,10 +62,10 @@ public class TaskDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_detail);
         KeyboardUtils.hideSoftKeyboard(this);
         setTitle(getString(R.string.toolbar_task_detail));
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
+        setSupportActionBar(toolbar);
 
         mStorage = FirebaseStorage.getInstance().getReference();
-
         imageView = (ImageView) findViewById(R.id.gallaryImage);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         btnCamera = (ImageView) findViewById(R.id.button_camera);
@@ -85,6 +89,15 @@ public class TaskDetailActivity extends AppCompatActivity {
         displayTaskDetail(etTaskName, etClass, etDescription, etAddress, etSuburb);
 
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(actMain);
+                TaskDetailActivity.this.finish();
+            }
+        });
+
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +106,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
     public void displayTaskDetail(final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb) {
@@ -148,13 +162,11 @@ public class TaskDetailActivity extends AppCompatActivity {
                 for (int i = 0; i < totalItemsSelected; i++) {
 
                     Uri fileUri = data.getClipData().getItemAt(i).getUri();
-
-                    String fileName = getFileName(fileUri);
+                    final String fileName = getFileName(fileUri);
                     fileNameList.add(fileName);
                     fileDoneList.add("uploading");
                     uploadListAdapter.notifyDataSetChanged();
-
-                    StorageReference fileToUpload = mStorage.child("Gallary").child(fileName);
+                    StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
 
                     final int finalI = i;
                     fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -164,6 +176,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                             fileDoneList.remove(finalI);
                             fileDoneList.add(finalI, "done");
                             uploadListAdapter.notifyDataSetChanged();
+
 
                         }
                     });

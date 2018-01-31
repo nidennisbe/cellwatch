@@ -33,6 +33,7 @@ public class TechnicianActivity extends AppCompatActivity {
     Query mRef;
     User mFirebaseRetrive = new User();
     RelativeLayout cover;
+    String mUserKey;
 
 
     @Override
@@ -42,21 +43,19 @@ public class TechnicianActivity extends AppCompatActivity {
        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-
-
         profileImage= findViewById(R.id.profile_image);
         textViewName = (TextView)findViewById(R.id.user_profile_name);
         textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);
         recyclerView = (RecyclerView) findViewById(R.id.listTask);
         cover = (RelativeLayout)findViewById(R.id.background);
+        mUserKey = getIntent().getStringExtra("key");
 
 
-
-        mFirebaseRetrive.displayProfileImage(TechnicianActivity.this,textViewName,textViewBio,profileImage);
-        String unlock = getIntent().getStringExtra("key");
-        mRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("tasks").child(unlock);
+        mFirebaseRetrive.displayProfileImage(mUserKey,TechnicianActivity.this,textViewName,textViewBio,profileImage);
+        mRef = FirebaseDatabase.getInstance().getReference()
+                .child("users")
+                .child(mUserKey)
+                .child("tasks");
 
         ListTaskAdapter mAdapter = new ListTaskAdapter(mRef, activity,R.layout.item_task );
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
@@ -74,10 +73,6 @@ public class TechnicianActivity extends AppCompatActivity {
 
     }
 
-    public void btnOnClickEditProfile(View view) {
-        Intent editProfileIntent = new Intent(this, EditProfileActivity.class);
-        startActivity(editProfileIntent);
-    }
 
     @Override
     public void onBackPressed() {

@@ -1,5 +1,7 @@
 package com.example.niden.cellwatchsharing.controllers;
 
+import android.app.Activity;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
@@ -31,7 +33,7 @@ import java.util.UUID;
  * Created by niden on 25-Nov-17.
  */
 
-public class User {
+public class User extends Application {
 
     private String strName, strBio, strPhone, strHobby, strDateBirth, strProfileUrl;
     private DatabaseReference mMessagesDatabaseReference;
@@ -72,9 +74,9 @@ public class User {
 
     //Show profile Picture
 
-    public void displayProfileImage(final Context context, final TextView textViewName, final TextView textViewBio, final ImageView profilePicture) {
+    public void displayProfileImage(final String mUserKey,final Context context, final TextView textViewName, final TextView textViewBio, final ImageView profilePicture) {
         mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
+                .child(mUserKey).child("info");
         mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -137,7 +139,7 @@ public class User {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference mRefStorage = storageReference.child("images/" + UUID.randomUUID().toString());
+            StorageReference mRefStorage = storageReference.child("profile_images/" + UUID.randomUUID().toString());
             mRefStorage.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override

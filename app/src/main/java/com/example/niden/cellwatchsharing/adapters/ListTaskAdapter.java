@@ -27,8 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase, ListTaskAdapter.Viewholder> {
     public Activity activity;
-    FirebaseListAdapter<TaskEntityDatabase> mAdapter;
-    DatabaseReference mRef;
 
     public ListTaskAdapter(Query ref, Activity activity, int layout) {
         super(TaskEntityDatabase.class, layout, Viewholder.class, ref);
@@ -52,7 +50,6 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
                 myIntent.putExtra("key",getRef(position).getKey());
                 activity.startActivity(myIntent);
 
-
             }
         });
     }
@@ -70,7 +67,7 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
     @Override
     public int getItemCount() {
 
-        return super.getItemCount();
+        return mSnapshots.size();
 
     }
 

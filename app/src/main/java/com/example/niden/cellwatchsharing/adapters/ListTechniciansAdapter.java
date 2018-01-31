@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.activities.TaskDetailActivity;
 import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -43,10 +45,11 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
     @Override
     protected void populateViewHolder(Viewholder viewHolder, FirebaseUserEntity model, final int position) {
         viewHolder.name.setText(model.getName());
-        viewHolder.card.setOnClickListener(new View.OnClickListener() {
+        viewHolder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(activity, TechnicianActivity.class);
+                Log.e("myFirebase UID",getRef(position).getKey());
+                Intent myIntent = new Intent(activity, TaskDetailActivity.class);
                 myIntent.putExtra("key",getRef(position).getKey());
                 activity.startActivity(myIntent);
             }
@@ -58,12 +61,14 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
         ImageView imageView;
         TextView name;
         LinearLayout card;
+        ListView listView;
 
         public Viewholder(View view) {
             super(view);
-//            imageView = (ImageView) view.findViewById(R.id.imageView);
+   //          imageView = (ImageView) view.findViewById(R.id.imageView);
              name = (TextView) view.findViewById(R.id.txt_name);
              card = (LinearLayout)view.findViewById(R.id.item_click);
+             listView = (ListView)view.findViewById(R.id.list_technician);
 
 
         }

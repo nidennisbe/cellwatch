@@ -124,6 +124,7 @@ public class Account {
                             Intent profileIntent = new Intent(context, MainActivity.class);
                             context.startActivity(profileIntent);
 
+
                         }
                     }
 

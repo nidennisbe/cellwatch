@@ -55,7 +55,10 @@
             android:theme="@style/AppTheme.NoActionBar"  />
 
 
-        <activity android:name=".activities.TaskDetailActivity"></activity>
+        <activity android:name=".activities.TaskDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+        />
     </application>
 
 </manifest>

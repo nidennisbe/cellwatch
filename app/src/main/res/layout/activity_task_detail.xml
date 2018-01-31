@@ -6,8 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.example.niden.cellwatchsharing.activities.TaskDetailActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/toolbar_bg"
+        android:elevation="5dp"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        android:theme="@style/AppTheme.Toolbar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
         android:layout_height="match_parent">
 
         <LinearLayout
