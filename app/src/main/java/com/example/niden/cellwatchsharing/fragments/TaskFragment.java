@@ -47,6 +47,7 @@ public class TaskFragment extends Fragment {
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("tasks");
 
+
         mAdapter = new ListTaskAdapter(mQuery, activity,R.layout.item_task );
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
         layoutManager.setReverseLayout(true);

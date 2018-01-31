@@ -6,13 +6,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
 import com.example.niden.cellwatchsharing.activities.LoginActivity;
 import com.example.niden.cellwatchsharing.activities.MainActivity;
+import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -107,14 +111,14 @@ public class Account {
 
 
     //Login USER method
-    public void loginAUser(final Context context, String email, String password, final ProgressDialog myDialog) {
+    public void loginAUser(final ScrollView v, final Context context, String email, String password, final ProgressDialog myDialog) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail", task.getException());
-                            Toast.makeText(context, R.string.alert_check_emailpassword, Toast.LENGTH_SHORT).show();
+                            ToastUtils.showSnackbar(v,context.getString(R.string.alert_check_emailpassword), Snackbar.LENGTH_LONG);
                             myDialog.dismiss();
                         } else {
                             myDialog.dismiss();
@@ -123,6 +127,7 @@ public class Account {
                                     .child("userLoginTime").push().setValue(currentDateTimeString);
                             Intent profileIntent = new Intent(context, MainActivity.class);
                             context.startActivity(profileIntent);
+                            ((Activity) context).finish();
 
 
                         }

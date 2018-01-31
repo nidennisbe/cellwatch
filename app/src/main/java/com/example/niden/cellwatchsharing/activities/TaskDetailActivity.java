@@ -60,7 +60,6 @@ public class TaskDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
-        KeyboardUtils.hideSoftKeyboard(this);
         setTitle(getString(R.string.toolbar_task_detail));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
         setSupportActionBar(toolbar);

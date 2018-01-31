@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="50dp"
@@ -12,197 +13,192 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="30dp"
+        android:background="#f4f4f4"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <LinearLayout
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/btn_change_profile"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:elevation="5dp"
+            android:src="@drawable/ic_user_blue"
+            app:civ_border_width="10dp" />
+
+        <TextView
+            android:id="@+id/textView14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:background="#f4f4f4"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:text="Change Profile Photo"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/btn_change_profile"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:elevation="5dp"
-                android:src="@drawable/ic_user_blue"
-                app:civ_border_width="10dp" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Change Profile Photo"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTextLight"
+        android:orientation="vertical"
+        android:padding="15dp">
 
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorTextLight"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/personal_details"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="@string/personal_details"
-                android:textSize="18sp" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <TableLayout
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TableRow
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Name"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/profile_name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="@string/edit_profile_name"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="18sp" />
+            </TableRow>
 
-                    <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Name"
-                        android:textSize="18sp" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                    <EditText
-                        android:id="@+id/profile_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="5"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="@string/edit_profile_name"
-                        android:inputType="textPersonName"
-                        android:maxLines="1"
-                        android:padding="12dp"
-                        android:singleLine="true"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="18sp" />
-                </TableRow>
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Bio"
+                    android:textSize="18sp" />
 
-                <TableRow
+                <EditText
+                    android:id="@+id/profile_bio"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="5"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="@string/edit_profile_bio"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="18sp" />
+            </TableRow>
 
-                    <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Bio"
-                        android:textSize="18sp" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                    <EditText
-                        android:id="@+id/profile_bio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_weight="5"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="@string/edit_profile_bio"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:padding="12dp"
-                        android:singleLine="true"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="18sp" />
-                </TableRow>
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Phone"
+                    android:textSize="18sp" />
 
-                <TableRow
+                <EditText
+                    android:id="@+id/profile_phone"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="5"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="@string/edit_profile_phone"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="18sp" />
+            </TableRow>
 
-                    <TextView
-                        android:id="@+id/textView18"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Phone"
-                        android:textSize="18sp" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                    <EditText
-                        android:id="@+id/profile_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="5"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="@string/edit_profile_phone"
-                        android:inputType="phone"
-                        android:maxLines="1"
-                        android:padding="12dp"
-                        android:singleLine="true"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="18sp" />
-                </TableRow>
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Exipation Date"
+                    android:textSize="18sp" />
 
-                <TableRow
+                <EditText
+                    android:id="@+id/profile_hobby"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="5"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="@string/edit_profile_hobby"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="18sp" />
+            </TableRow>
 
-                    <TextView
-                        android:id="@+id/textView21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Exipation Date"
-                        android:textSize="18sp" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                    <EditText
-                        android:id="@+id/profile_hobby"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="5"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="@string/edit_profile_hobby"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:padding="12dp"
-                        android:singleLine="true"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="18sp" />
-                </TableRow>
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hobby"
+                    android:textSize="18sp" />
 
-                <TableRow
+                <EditText
+                    android:id="@+id/profile_expiration_date"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="5"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Expiration Date"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/textView20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Hobby"
-                        android:textSize="18sp" />
+            </TableRow>
+        </TableLayout>
 
-                    <EditText
-                        android:id="@+id/profile_expiration_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="5"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="Expiration Date"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:padding="12dp"
-                        android:singleLine="true"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="18sp" />
-
-                </TableRow>
-            </TableLayout>
-
-        </LinearLayout>
     </LinearLayout>
+
 
 </LinearLayout>

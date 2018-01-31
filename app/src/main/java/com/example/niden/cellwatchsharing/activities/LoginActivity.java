@@ -8,9 +8,12 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.Account;
@@ -29,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private EditText inputEmail, inputPassword;
     private FirebaseAuth mAuth;
+    ScrollView scrollView;
     Button btnSignup, btnLogin, btnReset;
     Task mTask = new Task();
     ProgressDialog myDialog;
@@ -46,7 +50,14 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup = (Button) findViewById(R.id.btn_signup);
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
+        scrollView = (ScrollView)findViewById(R.id.layout_parent_scroll);
 
+        scrollView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtils.hideSoftKeyboard(v,LoginActivity.this);
+            }
+        });
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtils.hideSoftKeyboard(LoginActivity.this);
+                KeyboardUtils.hideSoftKeyboard(v,LoginActivity.this);
                 final String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
                 //Validation
@@ -83,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (isOnline()) {
                     //do whatever you want to do
                     myDialog = DialogsUtils.showProgressDialog(LoginActivity.this, getString(R.string.sign_in_process));
-                    mAccount.loginAUser(LoginActivity.this, email, password, myDialog);
+                    mAccount.loginAUser(scrollView,LoginActivity.this, email, password, myDialog);
                 }else
                 {
                     DialogsUtils.showAlertDialogDismiss(LoginActivity.this,getString(R.string.internet_connection),getString(R.string.alert_internet_connection));

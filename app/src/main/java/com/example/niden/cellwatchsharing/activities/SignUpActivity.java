@@ -3,6 +3,8 @@ package com.example.niden.cellwatchsharing.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity{
     Button btnSignIn, btnSignUp, btnResetPassword;
     ProgressDialog myDialog;
     Account mAccount = new Account();
+    CoordinatorLayout parentLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,14 @@ public class SignUpActivity extends AppCompatActivity{
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
+        parentLayout = (CoordinatorLayout) findViewById(R.id.layout_parent);
 
+        parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtils.hideSoftKeyboard(v,SignUpActivity.this);
+            }
+        });
 
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity{
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtils.hideSoftKeyboard(SignUpActivity.this);
+                KeyboardUtils.hideSoftKeyboard(v,SignUpActivity.this);
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(email)) {

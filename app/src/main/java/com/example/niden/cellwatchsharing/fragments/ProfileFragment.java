@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
+import com.example.niden.cellwatchsharing.adapters.ListTaskAdapter;
 import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.controllers.User;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
@@ -49,14 +50,7 @@ public class ProfileFragment extends Fragment {
         mAccount.isUserCurrentlyLogin(activity);
         getActivity().setTitle("Profile");
 
-        taskButton = (Button)parentHolder.findViewById(R.id.btn_num_task);
-        profileImage = (ImageView)parentHolder.findViewById(R.id.profile_image) ;
-        textViewName = (TextView)parentHolder.findViewById(R.id.user_profile_name);
-        textViewBio = (TextView)parentHolder.findViewById(R.id.user_profile_short_bio);
-        textViewPhone = (TextView)parentHolder.findViewById(R.id.tv_phonenumber);
-        textViewHobby = (TextView)parentHolder.findViewById(R.id.tv_hobby);
-        textViewDateBirth = (TextView)parentHolder.findViewById(R.id.tv_date_birth);
-
+        viewHolder ();
         mFirebaseRetrive.displayProfileInfo(refActivity,textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth,profileImage);
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +79,18 @@ public class ProfileFragment extends Fragment {
         startActivity(new Intent(refActivity, EditProfileActivity.class));
         refActivity.finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void viewHolder () {
+
+        taskButton = (Button)parentHolder.findViewById(R.id.btn_num_task);
+        profileImage = (ImageView)parentHolder.findViewById(R.id.profile_image) ;
+        textViewName = (TextView)parentHolder.findViewById(R.id.user_profile_name);
+        textViewBio = (TextView)parentHolder.findViewById(R.id.user_profile_short_bio);
+        textViewPhone = (TextView)parentHolder.findViewById(R.id.tv_phonenumber);
+        textViewHobby = (TextView)parentHolder.findViewById(R.id.tv_hobby);
+        textViewDateBirth = (TextView)parentHolder.findViewById(R.id.tv_date_birth);
+
     }
 
 }

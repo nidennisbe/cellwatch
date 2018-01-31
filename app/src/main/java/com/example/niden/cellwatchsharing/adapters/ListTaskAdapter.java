@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.TaskDetailActivity;
@@ -46,6 +47,7 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.zoom_in));
+                Toast.makeText(activity, getItemCount()+"", Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(activity, TaskDetailActivity.class);
                 myIntent.putExtra("key",getRef(position).getKey());
                 activity.startActivity(myIntent);
@@ -60,9 +62,6 @@ public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase,
         return super.getItem(position);
     }
 
-    public String getKey(int position) {
-        return mSnapshots.get(position).getKey();
-    }
 
     @Override
     public int getItemCount() {

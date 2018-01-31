@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,7 +34,7 @@ import com.squareup.picasso.Picasso;
 public class TechniciansFragment extends Fragment {
     private DatabaseReference mRef;
     View myView;
-    private Activity activity=getActivity();
+    private Activity activity = getActivity();
     private FirebaseListAdapter<FirebaseUserEntity> mTechAdapter;
     private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
     private ListView technicianList;
@@ -42,9 +44,10 @@ public class TechniciansFragment extends Fragment {
     @Override
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.fragment_technicians_layout,container,false);
+        myView = inflater.inflate(R.layout.fragment_technicians_layout, container, false);
         activity = getActivity();
         activity.setTitle(getString(R.string.toobar_technicians));
+        setHasOptionsMenu(true);
         technicianList = (ListView) myView.findViewById(R.id.list_technician);
         displayFriendsList();
 
@@ -54,8 +57,6 @@ public class TechniciansFragment extends Fragment {
     }
 
 
-
-
     public void displayFriendsList() {
         mRef = FirebaseDatabase.getInstance().getReference().child("users");
         mTechAdapter = new FirebaseListAdapter<FirebaseUserEntity>(activity, FirebaseUserEntity.class,
@@ -63,8 +64,8 @@ public class TechniciansFragment extends Fragment {
 
             @Override
             protected void populateView(View v, FirebaseUserEntity model, final int position) {
-                final TextView name_user = (TextView)v.findViewById(R.id.txt_name);
-                final ImageView profile_user= (ImageView)v.findViewById(R.id.technician_profile) ;
+                final TextView name_user = (TextView) v.findViewById(R.id.txt_name);
+                final ImageView profile_user = (ImageView) v.findViewById(R.id.technician_profile);
                 mRef.child(mTechAdapter.getRef(position).getKey()).child("info").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -78,29 +79,24 @@ public class TechniciansFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 Intent myIntent = new Intent(activity, TechnicianActivity.class);
-                                myIntent.putExtra("key",getRef(position).getKey());
+                                myIntent.putExtra("key", getRef(position).getKey());
                                 activity.startActivity(myIntent);
                             }
                         });
 
-
-                    }
-                    @Override
+                    }                    @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
-
                 });
-
-
             }
-
         };
-
         technicianList.setAdapter(mTechAdapter);
-
-
     }
 
-
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 }

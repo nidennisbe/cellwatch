@@ -16,12 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.User;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.helper.FirebaseDatabaseHelper;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
+import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,6 +54,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private ImageView profile;
     private User mUser = new User();
     public CoordinatorLayout coordinatorLayout;
+    LinearLayout parentLayout;
 
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -75,7 +78,14 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfileContact = (EditText) findViewById(R.id.profile_phone);
         editProfileHobby = (EditText) findViewById(R.id.profile_expiration_date);
         editProfileBirthday = (EditText) findViewById(R.id.profile_hobby);
+        parentLayout = (LinearLayout)findViewById(R.id.layout_parent);
 
+        parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtils.hideSoftKeyboard(v,EditProfileActivity.this);
+            }
+        });
 
         mUser.displayEditInfo(EditProfileActivity.this, editProfileName, editProfileBio, editProfileContact, editProfileHobby, editProfileBirthday, profile);
 

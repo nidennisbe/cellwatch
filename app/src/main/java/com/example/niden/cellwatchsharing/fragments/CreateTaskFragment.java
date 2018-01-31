@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.database.UserEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
+import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +51,7 @@ public class CreateTaskFragment extends Fragment {
     DatePickerDialog datePickerDialog;
     View parentHolder;
     int duration = Snackbar.LENGTH_LONG;
+    LinearLayout parentLayout;
 
     @Nullable
     @Override
@@ -67,7 +70,14 @@ public class CreateTaskFragment extends Fragment {
         txSuburb = (EditText) parentHolder.findViewById(R.id.editTextSuburb);
         txClass = (EditText) parentHolder.findViewById(R.id.editTextClass);
         spinner = (Spinner)parentHolder.findViewById(R.id.spinnerType);
-        //final Button btnPost = (Button) parentHolder.findViewById(R.id.fragment_announcement_btn_post);
+        parentLayout = (LinearLayout)parentHolder.findViewById(R.id.layout_parent);
+
+        parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtils.hideSoftKeyboard(v,referenceActivity);
+            }
+        });
 
 
         DatabaseReference mref = FirebaseDatabase.getInstance().getReference().child("task_type");
