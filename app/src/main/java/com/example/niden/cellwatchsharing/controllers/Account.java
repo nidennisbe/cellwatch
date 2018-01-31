@@ -87,7 +87,6 @@ public class Account {
                             Toast.makeText(context, "Fail to Register due to." + task.getException(), Toast.LENGTH_SHORT).show();
                             myDialog.dismiss();
                         } else {
-//                            IntentUtils.openMainActivity(context);
                             Intent myIntent = new Intent(context, EditProfileActivity.class);
                             context.startActivity(myIntent);
                             ((Activity) context).finish();
@@ -99,7 +98,6 @@ public class Account {
 
     //Method for get account information and put in Database
     private void insertUserInformation() {
-
         final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users");
         // Get references to the DialogsUtils of item_message.xmle.xml
         // EditText inputEmail = (EditText) findViewById(R.id.message_text);
@@ -128,8 +126,6 @@ public class Account {
                             Intent profileIntent = new Intent(context, MainActivity.class);
                             context.startActivity(profileIntent);
                             ((Activity) context).finish();
-
-
                         }
                     }
 

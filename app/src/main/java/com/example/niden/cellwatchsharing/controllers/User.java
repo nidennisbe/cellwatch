@@ -33,7 +33,7 @@ import java.util.UUID;
  * Created by niden on 25-Nov-17.
  */
 
-public class User extends Application {
+public class User  {
 
     private String strName, strBio, strPhone, strHobby, strDateBirth, strProfileUrl;
     private DatabaseReference mMessagesDatabaseReference;
@@ -47,13 +47,7 @@ public class User extends Application {
         mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                strName = firebaseUserEntity.getName();
-                strBio = firebaseUserEntity.getBio();
-                strPhone = firebaseUserEntity.getPhone();
-                strHobby = firebaseUserEntity.getHobby();
-                strDateBirth = firebaseUserEntity.getBirthday();
-                strProfileUrl = firebaseUserEntity.getProfile_url();
+                getUserInfo(dataSnapshot);
                 textViewPhone.setText(strPhone);
                 textViewBio.setText(strBio);
                 textViewName.setText(strName);
@@ -90,7 +84,6 @@ public class User extends Application {
                 Picasso.with(context).load(strProfileUrl)
                         .resize(110, 110).centerCrop()
                         .into(profilePicture);
-//
             }
 
             @Override
@@ -108,14 +101,7 @@ public class User extends Application {
         mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                strName = firebaseUserEntity.getName();
-                strBio = firebaseUserEntity.getBio();
-                strPhone = firebaseUserEntity.getPhone();
-                strHobby = firebaseUserEntity.getHobby();
-                strDateBirth = firebaseUserEntity.getBirthday();
-                strProfileUrl = firebaseUserEntity.getProfile_url();
-
+                getUserInfo(dataSnapshot);
                 editProfileContact.setText(strPhone);
                 editProfileBio.setText(strBio);
                 editProfileName.setText(strName);
@@ -171,5 +157,15 @@ public class User extends Application {
                         }
                     });
         }
+    }
+    private void getUserInfo(DataSnapshot dataSnapshot) {
+        firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+        strName = firebaseUserEntity.getName();
+        strBio = firebaseUserEntity.getBio();
+        strPhone = firebaseUserEntity.getPhone();
+        strHobby = firebaseUserEntity.getHobby();
+        strDateBirth = firebaseUserEntity.getBirthday();
+        strProfileUrl = firebaseUserEntity.getProfile_url();
+
     }
 }

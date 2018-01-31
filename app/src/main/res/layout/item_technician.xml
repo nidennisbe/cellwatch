@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="110dp"
     android:padding="10dp">
 
     <LinearLayout
@@ -34,7 +34,7 @@
             android:fontFamily="sans-serif-light"
             android:text="Name"
             android:textColor="#898989"
-            android:textSize="24sp"
+            android:textSize="18sp"
             tools:layout_editor_absoluteX="63dp"
             tools:layout_editor_absoluteY="39dp" />
 
