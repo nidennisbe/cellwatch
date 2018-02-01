@@ -50,10 +50,7 @@ public class TechniciansFragment extends Fragment {
         setHasOptionsMenu(true);
         technicianList = (ListView) myView.findViewById(R.id.list_technician);
         displayFriendsList();
-
-
         return myView;
-
     }
 
 
@@ -72,9 +69,13 @@ public class TechniciansFragment extends Fragment {
                         firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
                         name_user.setText(firebaseUserEntity.getName());
                         String url = firebaseUserEntity.getProfile_url();
-                        Picasso.with(activity).load(url)
-                                .resize(110, 110).centerCrop()
-                                .into(profile_user);
+                        if (url.isEmpty()) {
+                            profile_user.setImageResource(R.drawable.ic_user_blue);
+                        } else {
+                            Picasso.with(activity).load(url)
+                                    .resize(110, 110).centerCrop()
+                                    .into(profile_user);
+                        }
                         profile_user.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -84,7 +85,9 @@ public class TechniciansFragment extends Fragment {
                             }
                         });
 
-                    }                    @Override
+                    }
+
+                    @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }

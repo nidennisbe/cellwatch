@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import com.example.niden.cellwatchsharing.controllers.Zip;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
+import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +37,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -63,16 +66,8 @@ public class TaskDetailActivity extends AppCompatActivity {
         setTitle(getString(R.string.toolbar_task_detail));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
         setSupportActionBar(toolbar);
-
         mStorage = FirebaseStorage.getInstance().getReference();
-        imageView = (ImageView) findViewById(R.id.gallaryImage);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        btnCamera = (ImageView) findViewById(R.id.button_camera);
-        etTaskName = (EditText) findViewById(R.id.et_task_name);
-        etClass = (EditText) findViewById(R.id.et_task_class);
-        etDescription = (EditText) findViewById(R.id.et_task_desc);
-        etAddress = (EditText) findViewById(R.id.et_task_address);
-        etSuburb = (EditText) findViewById(R.id.et_task_suburb);
+        bindingViews();
 
         fileNameList = new ArrayList<>();
         fileDoneList = new ArrayList<>();
@@ -102,6 +97,17 @@ public class TaskDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void bindingViews() {
+        imageView = (ImageView) findViewById(R.id.gallaryImage);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        btnCamera = (ImageView) findViewById(R.id.button_camera);
+        etTaskName = (EditText) findViewById(R.id.et_task_name);
+        etClass = (EditText) findViewById(R.id.et_task_class);
+        etDescription = (EditText) findViewById(R.id.et_task_desc);
+        etAddress = (EditText) findViewById(R.id.et_task_address);
+        etSuburb = (EditText) findViewById(R.id.et_task_suburb);
     }
 
 
@@ -155,6 +161,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                     fileNameList.add(fileName);
                     fileDoneList.add("uploading");
                     uploadListAdapter.notifyDataSetChanged();
+
                     StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
                     final int finalI = i;
                     fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -165,6 +172,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                             uploadListAdapter.notifyDataSetChanged();
                         }
                     });
+                    ToastUtils.showSnackbar(recyclerView, "Upload completed", Snackbar.LENGTH_LONG);
                 }
             } else if (data.getData() != null) {
                 Toast.makeText(TaskDetailActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
@@ -195,5 +203,6 @@ public class TaskDetailActivity extends AppCompatActivity {
         }
         return result;
     }
+
 }
 

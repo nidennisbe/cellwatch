@@ -9,8 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.activities.LoginActivity;
-import com.example.niden.cellwatchsharing.activities.MainActivity;
 
 /**
  * Created by niden on 19-Nov-17.
@@ -23,7 +21,7 @@ public class DialogsUtils {
         ProgressDialog mDialog = new ProgressDialog(context);
         mDialog.setMessage(message);
         mDialog.setCancelable(false);
-        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mDialog.show();
         return mDialog;
@@ -50,13 +48,12 @@ public class DialogsUtils {
     }//END OF AlertDialog
 
 
-    public static AlertDialog.Builder showAlertDialogDismiss(final Context context, String title, String message){
+    public static void showAlertDialogDismiss(final Context context, String title, String message){
         AlertDialog.Builder mAlertDialog= new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
         mAlertDialog.setTitle(title);
         mAlertDialog.setMessage(message);
         mAlertDialog.setCancelable(false);
         mAlertDialog.setNegativeButton("Okay",null);
         mAlertDialog.show();
-        return mAlertDialog;
     }//END OF AlertDialog
 }

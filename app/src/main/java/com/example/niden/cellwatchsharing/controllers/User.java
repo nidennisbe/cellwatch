@@ -1,7 +1,5 @@
 package com.example.niden.cellwatchsharing.controllers;
 
-import android.app.Activity;
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
@@ -11,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,26 +35,36 @@ import java.util.UUID;
 public class User  {
 
     private String strName, strBio, strPhone, strHobby, strDateBirth, strProfileUrl;
-    private DatabaseReference mMessagesDatabaseReference;
+    private DatabaseReference mRefUserInfo;
     private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
+    private Account mAccount = new Account();
 
 
     //Showing profile information
     public void displayProfileInfo(final Context context, final TextView textViewName, final TextView textViewBio, final TextView textViewPhone, final TextView textViewHobby, final TextView textViewDateBirth, final ImageView profilePicture) {
-        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
-        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mRefUserInfo = FirebaseDatabase.getInstance().getReference("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("info");
+        mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                getUserInfo(dataSnapshot);
-                textViewPhone.setText(strPhone);
-                textViewBio.setText(strBio);
-                textViewName.setText(strName);
-                textViewHobby.setText(strHobby);
-                textViewDateBirth.setText(strDateBirth);
-                Picasso.with(context).load(strProfileUrl).centerCrop()
-                        .resize(110, 110).centerCrop()
-                        .into(profilePicture);
+                if (dataSnapshot.exists()) {
+                    getUserInfo(dataSnapshot);
+                    textViewPhone.setText(strPhone);
+                    textViewBio.setText(strBio);
+                    textViewName.setText(strName);
+                    textViewHobby.setText(strHobby);
+                    textViewDateBirth.setText(strDateBirth);
+                    if (strProfileUrl.isEmpty()) {
+                        profilePicture.setImageResource(R.drawable.ic_user_blue);
+                    }else {
+                        Picasso.with(context).load(strProfileUrl).centerCrop()
+                                .resize(110, 110).centerCrop()
+                                .into(profilePicture);
+                    }
+                }
+
+
             }
 
             @Override
@@ -69,21 +78,26 @@ public class User  {
     //Show profile Picture
 
     public void displayProfileImage(final String mUserKey,final Context context, final TextView textViewName, final TextView textViewBio, final ImageView profilePicture) {
-        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+        mRefUserInfo = FirebaseDatabase.getInstance().getReference("users")
                 .child(mUserKey).child("info");
-        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                strName = firebaseUserEntity.getName();
-                strBio = firebaseUserEntity.getBio();
-                strProfileUrl = firebaseUserEntity.getProfile_url();
-                textViewBio.setText(strBio);
-                textViewName.setText(strName);
-                Picasso.with(context).load(strProfileUrl)
-                        .resize(110, 110).centerCrop()
-                        .into(profilePicture);
+                if (dataSnapshot.exists()) {
+                    getUserInfo(dataSnapshot);
+                    strName = firebaseUserEntity.getName();
+                    strBio = firebaseUserEntity.getBio();
+                    strProfileUrl = firebaseUserEntity.getProfile_url();
+                    textViewBio.setText(strBio);
+                    textViewName.setText(strName);
+                    if (strProfileUrl.isEmpty()) {
+                        profilePicture.setImageResource(R.drawable.ic_user_blue);
+                    }else {
+                        Picasso.with(context).load(strProfileUrl).centerCrop()
+                                .resize(110, 110).centerCrop()
+                                .into(profilePicture);
+                    }
+                }
             }
 
             @Override
@@ -96,20 +110,26 @@ public class User  {
 
     //Showing profile information
     public void displayEditInfo(final Context context, final EditText editProfileName, final EditText editProfileBio, final EditText editProfileContact, final EditText editProfileHobby, final EditText editProfileBirthday, final ImageView profile) {
-        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+        mRefUserInfo = FirebaseDatabase.getInstance().getReference("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
-        mMessagesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                getUserInfo(dataSnapshot);
-                editProfileContact.setText(strPhone);
-                editProfileBio.setText(strBio);
-                editProfileName.setText(strName);
-                editProfileHobby.setText(strHobby);
-                editProfileBirthday.setText(strDateBirth);
-                Picasso.with(context).load(strProfileUrl)
-                        .resize(110, 110).centerCrop()
-                        .into(profile);
+                if (dataSnapshot.exists()) {
+                    getUserInfo(dataSnapshot);
+                    editProfileContact.setText(strPhone);
+                    editProfileBio.setText(strBio);
+                    editProfileName.setText(strName);
+                    editProfileHobby.setText(strHobby);
+                    editProfileBirthday.setText(strDateBirth);
+                    if (strProfileUrl.isEmpty()) {
+                        profile.setImageResource(R.drawable.ic_user_blue);
+                    }else {
+                        Picasso.with(context).load(strProfileUrl).centerCrop()
+                                .resize(110, 110).centerCrop()
+                                .into(profile);
+                    }
+                }
             }
 
             @Override
@@ -166,6 +186,5 @@ public class User  {
         strHobby = firebaseUserEntity.getHobby();
         strDateBirth = firebaseUserEntity.getBirthday();
         strProfileUrl = firebaseUserEntity.getProfile_url();
-
     }
 }

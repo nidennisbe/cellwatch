@@ -1,5 +1,6 @@
 package com.example.niden.cellwatchsharing.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,24 +31,22 @@ public class SignUpActivity extends AppCompatActivity{
     ProgressDialog myDialog;
     Account mAccount = new Account();
     CoordinatorLayout parentLayout;
+    private Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        mActivity=this;
         mAccount.getFirebaseAuth();
-        mAccount.checkUserLogin(SignUpActivity.this);
+        mAccount.checkUserLogin(mActivity);
+        bindingViews();
 
-        btnSignIn = (Button) findViewById(R.id.sign_in_button);
-        btnSignUp = (Button) findViewById(R.id.sign_up_button);
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        parentLayout = (CoordinatorLayout) findViewById(R.id.layout_parent);
 
         parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtils.hideSoftKeyboard(v,SignUpActivity.this);
+                KeyboardUtils.hideSoftKeyboard(v,mActivity);
             }
         });
 
@@ -56,32 +55,40 @@ public class SignUpActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                startActivity(new Intent(mActivity, LoginActivity.class));
             }
         });
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtils.hideSoftKeyboard(v,SignUpActivity.this);
+                KeyboardUtils.hideSoftKeyboard(v,mActivity);
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(email)) {
-                    ToastUtils.displayMessageToast(SignUpActivity.this,getString(R.string.validation_email));
+                    ToastUtils.displayMessageToast(mActivity,getString(R.string.validation_email));
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    ToastUtils.displayMessageToast(SignUpActivity.this,getString(R.string.validation_password));
+                    ToastUtils.displayMessageToast(mActivity,getString(R.string.validation_password));
                     return;
                 }
                 if (password.length() < 6) {
-                    ToastUtils.displayMessageToast(SignUpActivity.this,getString(R.string.alert_short_password));
+                    ToastUtils.displayMessageToast(mActivity,getString(R.string.alert_short_password));
                     return;
                 }else{
-                    myDialog= DialogsUtils.showProgressDialog(SignUpActivity.this,getString(R.string.sign_up_process));
+                    myDialog= DialogsUtils.showProgressDialog(mActivity,getString(R.string.sign_up_process));
                 }
-                mAccount.createNewUser(SignUpActivity.this,email,password,myDialog);
+                mAccount.createNewUser(mActivity,email,password,myDialog);
             }
         });
+    }
+
+    private void bindingViews(){
+        btnSignIn = (Button) findViewById(R.id.sign_in_button);
+        btnSignUp = (Button) findViewById(R.id.sign_up_button);
+        inputEmail = (EditText) findViewById(R.id.email);
+        inputPassword = (EditText) findViewById(R.id.password);
+        parentLayout = (CoordinatorLayout) findViewById(R.id.layout_parent);
     }
 
 

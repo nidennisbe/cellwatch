@@ -12,13 +12,14 @@ public class FirebaseUserEntity {
     private String hobby;
     private String expiration_date;
     private String profile_url;
+    private int user_type;
 
 
 
     public FirebaseUserEntity(){
     }
 
-    public FirebaseUserEntity(String uId, String email, String name, String bio, String phone, String birthday, String hobby, String expiration_date,String profile_url) {
+    public FirebaseUserEntity(String uId, String email, String name, String bio, String phone, String birthday, String hobby, String expiration_date,String profile_url,int user_type) {
         this.uId = uId;
         this.email = email;
         this.name = name;
@@ -28,6 +29,7 @@ public class FirebaseUserEntity {
         this.hobby = hobby;
         this.expiration_date = expiration_date;
         this.profile_url = profile_url;
+        this.user_type = user_type;
 
     }
 
@@ -104,5 +106,9 @@ public class FirebaseUserEntity {
 
     public void setProfile_url(String profile_url) {
         this.profile_url = profile_url;
+    }
+
+    public int getUser_type() {
+        return user_type;
     }
 }

@@ -26,8 +26,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         View itemLayoutView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_image_selection, null);
 
-        ViewHolder viewHolder = new ViewHolder(itemLayoutView);
-        return viewHolder;
+        return new ViewHolder(itemLayoutView);
     }
 
     @Override
@@ -40,10 +39,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return itemsData.length;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imageView;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.gallaryImage);
         }

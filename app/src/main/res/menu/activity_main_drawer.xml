@@ -21,7 +21,7 @@
         <item
             android:id="@+id/nav_circles"
             android:icon="@drawable/ic_circles"
-            android:title="Technicians(Admin View)" />
+            android:title="Technicians" />
         <item
             android:id="@+id/nav_task"
             android:icon="@drawable/ic_news"
@@ -29,7 +29,7 @@
         <item
             android:id="@+id/nav_anouncement"
             android:icon="@android:drawable/ic_menu_add"
-            android:title="Add new task(Admin View)" />
+            android:title="Create new task" />
     </group>
 
     <item android:iconTint="@color/cardview_light_background">

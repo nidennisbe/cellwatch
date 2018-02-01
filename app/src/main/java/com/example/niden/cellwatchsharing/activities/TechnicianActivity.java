@@ -42,12 +42,8 @@ public class TechnicianActivity extends AppCompatActivity {
         setContentView(R.layout.activity_technician);
        /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
+        bindingViews();
 
-        profileImage= findViewById(R.id.profile_image);
-        textViewName = (TextView)findViewById(R.id.user_profile_name);
-        textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);
-        recyclerView = (RecyclerView) findViewById(R.id.listTask);
-        cover = (RelativeLayout)findViewById(R.id.background);
         mUserKey = getIntent().getStringExtra("key");
 
 
@@ -84,6 +80,14 @@ public class TechnicianActivity extends AppCompatActivity {
     protected void onRestart() {
         account.checkUserLogin(activity);
         super.onRestart();
+    }
+
+    private void bindingViews(){
+        profileImage= findViewById(R.id.profile_image);
+        textViewName = (TextView)findViewById(R.id.user_profile_name);
+        textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);
+        recyclerView = (RecyclerView) findViewById(R.id.listTask);
+        cover = (RelativeLayout)findViewById(R.id.background);
     }
 
 

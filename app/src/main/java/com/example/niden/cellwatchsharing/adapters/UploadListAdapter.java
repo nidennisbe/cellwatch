@@ -23,8 +23,8 @@ import java.util.List;
 public class UploadListAdapter extends RecyclerView.Adapter<UploadListAdapter.ViewHolder>{
 
 
-    public List<String> fileNameList;
-    public List<String> fileDoneList;
+    private List<String> fileNameList;
+    private List<String> fileDoneList;
 
     public UploadListAdapter(List<String> fileNameList, List<String>fileDoneList){
 
@@ -63,13 +63,13 @@ public class UploadListAdapter extends RecyclerView.Adapter<UploadListAdapter.Vi
         return fileNameList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
-        public TextView fileNameView;
-        public ImageView fileDoneView;
+        TextView fileNameView;
+        ImageView fileDoneView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             fileNameView = (TextView) mView.findViewById(R.id.upload_filename);

@@ -27,18 +27,17 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 public class TaskFragment extends Fragment {
     public ListTaskAdapter mAdapter;
-    public Activity activity =getActivity();
+    public Activity activity = getActivity();
     View myView;
     RecyclerView recyclerView;
     Query mQuery;
-
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, Bundle savedInstanceState) {
 
-        myView = inflater.inflate(R.layout.fragment_task_layout,container,false);
+        myView = inflater.inflate(R.layout.fragment_task_layout, container, false);
         recyclerView = (RecyclerView) myView.findViewById(R.id.listTask);
         this.activity = getActivity();
         getActivity().setTitle(getString(R.string.toobar_tasks));
@@ -47,9 +46,8 @@ public class TaskFragment extends Fragment {
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("tasks");
 
-
-        mAdapter = new ListTaskAdapter(mQuery, activity,R.layout.item_task );
-        LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
+        mAdapter = new ListTaskAdapter(mQuery, activity, R.layout.item_task);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
@@ -61,11 +59,7 @@ public class TaskFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         return myView;
-
-
-
     }
-
 
 
 }

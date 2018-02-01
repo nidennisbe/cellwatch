@@ -16,8 +16,6 @@ import java.util.TimeZone;
 
     public class TSConverterUtils {
 
-
-
     public static String getDateFormat(long timestamp) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(timestamp);

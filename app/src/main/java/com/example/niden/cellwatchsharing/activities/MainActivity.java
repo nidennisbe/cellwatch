@@ -12,12 +12,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
@@ -27,11 +30,11 @@ import com.example.niden.cellwatchsharing.fragments.ProfileFragment;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-
-import static com.example.niden.cellwatchsharing.controllers.Account.firebaseAuth;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,23 +44,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     FragmentManager fragmentManager;
     AlertDialog.Builder myAlertDialog;
-
+    public static final int ADMIN = 1;
+    public static final int TECHNICIAN = 0;
+    String TAG ="11";
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    public  FirebaseAuth firebaseAuth;
+    DatabaseReference scoresRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("users");
+        activity = this;
+        firebaseAuth=FirebaseAuth.getInstance();
+        checkUserType();
+        scoresRef = FirebaseDatabase.getInstance().getReference("users");
         scoresRef.keepSynced(true);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        activity = this;
         FragmentManager fragmentManager =getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
 
-
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -65,14 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-
 
 
     @Override
@@ -104,10 +107,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                 }
             };
-            ToastUtils.displayMessageToast(MainActivity.this,"Logout Successfully");
+            ToastUtils.displayMessageToast(activity,"Logout Successfully");
             // account auth state is changed - account is null
             // launch login activity
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            startActivity(new Intent(activity, LoginActivity.class));
             this.finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -124,25 +127,85 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            myAlertDialog= DialogsUtils.showAlertDialog(MainActivity.this,"Quit app","Do you want to exit now?");
+            myAlertDialog= DialogsUtils.showAlertDialog(activity,getString(R.string.exit_app_dialog_title),getString(R.string.exit_app_desc));
         }
-
-
     }//End of BackButtonPressed
 
 
+
+
+    public void adminNavItem()
+    {
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_task).setVisible(false);
+        nav_Menu.findItem(R.id.nav_profile).setVisible(false);
+    }
+
+    public void technicianNavItem()
+    {
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_circles).setVisible(false);
+        nav_Menu.findItem(R.id.nav_anouncement).setVisible(false);
+    }
+
+    private void checkUserType() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) { // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + firebaseUser.getUid());
+                    FirebaseDatabase.getInstance().getReference().child("users").child(firebaseUser.getUid()).child("info").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                FirebaseUserEntity user = dataSnapshot.getValue(FirebaseUserEntity.class);
+                                int type = user.getUser_type();
+                                switch (type) {
+                                    case TECHNICIAN:
+                                        technicianNavItem();
+                                        Toast.makeText(activity, "TECHNICIAN VIEW", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case ADMIN:
+                                        adminNavItem();
+                                        Toast.makeText(activity, "ADMIN VIEW", Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                } else { // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    //Activity Lifecycles
+    @Override
+    protected void onStart() {
+        super.onStart();
+        scoresRef.keepSynced(true);
+        firebaseAuth.addAuthStateListener(mAuthListener);
+    }
     @Override
     protected void onResume() {
         super.onResume();
     }
-
-    public void hideItem(MainActivity mainActivity)
-    {
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        Menu nav_Menu = navigationView.getMenu();
-        nav_Menu.findItem(R.id.nav_anouncement).setVisible(false);
-        nav_Menu.findItem(R.id.nav_task).setVisible(false);
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseAuth.removeAuthStateListener(mAuthListener);
     }
-
-
+    //End Activity Lifecycles
 }

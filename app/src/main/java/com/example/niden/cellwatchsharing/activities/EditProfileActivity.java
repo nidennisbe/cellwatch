@@ -1,5 +1,6 @@
 package com.example.niden.cellwatchsharing.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -41,10 +42,10 @@ import static com.example.niden.cellwatchsharing.utils.ToastUtils.displayMessage
 public class EditProfileActivity extends AppCompatActivity {
     private static final String TAG = EditProfileActivity.class.getSimpleName();
 
+    int RESULT_LOAD_IMAGE = 1;
     //Firebase
     FirebaseUserEntity firebaseUserEntity;
     DatabaseReference databaseReference;
-    int RESULT_LOAD_IMAGE = 1;
     StorageReference storageReference;
     private EditText editProfileName;
     private EditText editProfileBio;
@@ -55,6 +56,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private User mUser = new User();
     public CoordinatorLayout coordinatorLayout;
     LinearLayout parentLayout;
+    Activity mActivity;
 
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -62,6 +64,7 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_secondary);
+        mActivity=this;
         setTitle(getString(R.string.toolbar_edit_profile_info));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
         setSupportActionBar(toolbar);
@@ -70,7 +73,6 @@ public class EditProfileActivity extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = storage.getReferenceFromUrl("gs://cellwatchsharing.appspot.com/");
-
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cor_layout);
         profile = (ImageView) findViewById(R.id.btn_change_profile);
         editProfileName = (EditText) findViewById(R.id.profile_name);
@@ -78,18 +80,16 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfileContact = (EditText) findViewById(R.id.profile_phone);
         editProfileHobby = (EditText) findViewById(R.id.profile_expiration_date);
         editProfileBirthday = (EditText) findViewById(R.id.profile_hobby);
-        parentLayout = (LinearLayout)findViewById(R.id.layout_parent);
+        parentLayout = (LinearLayout) findViewById(R.id.layout_parent);
+
 
         parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtils.hideSoftKeyboard(v,EditProfileActivity.this);
+                KeyboardUtils.hideSoftKeyboard(v, mActivity);
             }
         });
-
-        mUser.displayEditInfo(EditProfileActivity.this, editProfileName, editProfileBio, editProfileContact, editProfileHobby, editProfileBirthday, profile);
-
-
+        mUser.displayEditInfo(mActivity, editProfileName, editProfileBio, editProfileContact, editProfileHobby, editProfileBirthday, profile);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,16 +98,16 @@ public class EditProfileActivity extends AppCompatActivity {
                         requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
                     }
                 }
-                GallaryUtils.openGallary(EditProfileActivity.this, RESULT_LOAD_IMAGE);
+                GallaryUtils.openGallary(mActivity, RESULT_LOAD_IMAGE);
             }
         });
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
+                Intent actMain = new Intent(mActivity, MainActivity.class);
                 startActivity(actMain);
-                EditProfileActivity.this.finish();
+                mActivity.finish();
             }
         });
 
@@ -115,7 +115,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
+        Intent actMain = new Intent(mActivity, MainActivity.class);
         this.finish();
         startActivity(actMain);
     }
@@ -124,12 +124,11 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode==RESULT_LOAD_IMAGE) {
-                Uri filePath = data.getData();
-                Picasso.with(EditProfileActivity.this).load(data.getData()).noPlaceholder().centerCrop().fit()
-                        .into((ImageView) findViewById(R.id.btn_change_profile));
-                mUser.uploadProfilePicture(EditProfileActivity.this, filePath, storageReference, databaseReference);
-
+        if (resultCode == RESULT_OK && requestCode == RESULT_LOAD_IMAGE) {
+            Uri filePath = data.getData();
+            Picasso.with(mActivity).load(data.getData()).noPlaceholder().centerCrop().fit()
+                    .into((ImageView) findViewById(R.id.btn_change_profile));
+            mUser.uploadProfilePicture(mActivity, filePath, storageReference, databaseReference);
         }
     }
 
@@ -151,35 +150,28 @@ public class EditProfileActivity extends AppCompatActivity {
         String profileContact = editProfileContact.getText().toString();
         String profileHobby = editProfileHobby.getText().toString();
         String profileBirthday = editProfileBirthday.getText().toString();
-        //String profilePicUrl = downloadUrl.toString();
-        // update the account profile information in Firebase database.
+
+        // update the account profile information in Firebase database.\
         if (TextUtils.isEmpty(profileName) || TextUtils.isEmpty(profileBio) || TextUtils.isEmpty(profileContact)
                 || TextUtils.isEmpty(profileHobby) || TextUtils.isEmpty(profileBirthday)) {
-            displayMessageToast(EditProfileActivity.this, "All fields must be filled");
+            displayMessageToast(mActivity, "All fields must be filled");
         }
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-            Intent firebaseUserIntent = new Intent(EditProfileActivity.this, LoginActivity.class);
+            Intent firebaseUserIntent = new Intent(mActivity, LoginActivity.class);
             startActivity(firebaseUserIntent);
             finish();
         } else {
             String id = user.getUid();
             String profileEmail = user.getEmail();
 
-            firebaseUserEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby, profileBirthday, profileHobby, "");
+            firebaseUserEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby, profileBirthday, profileHobby, "", 0);
             FirebaseDatabaseHelper firebaseDatabaseHelper = new FirebaseDatabaseHelper();
             firebaseDatabaseHelper.createUserInFirebaseDatabase(id, firebaseUserEntity);
-
-
-            editProfileName.setText("");
-            editProfileBio.setText("");
-            editProfileContact.setText("");
-            editProfileHobby.setText("");
-            editProfileBirthday.setText("");
-            EditProfileActivity.this.finish();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(mActivity, MainActivity.class);
             startActivity(intent);
+            mActivity.finish();
         }
         ToastUtils.showSnackbar(coordinatorLayout, "Saved Complete", Snackbar.LENGTH_LONG);
     }
