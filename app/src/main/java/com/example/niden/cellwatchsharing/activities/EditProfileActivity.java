@@ -58,7 +58,6 @@ public class EditProfileActivity extends AppCompatActivity {
     Activity mActivity;
     FirebaseDatabaseHelper firebaseDatabaseHelper = new FirebaseDatabaseHelper();
 
-    private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,19 +67,11 @@ public class EditProfileActivity extends AppCompatActivity {
         setTitle(getString(R.string.toolbar_edit_profile_info));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
         setSupportActionBar(toolbar);
-
+        bindingView();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = storage.getReferenceFromUrl("gs://cellwatchsharing.appspot.com/");
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cor_layout);
-        profile = (ImageView) findViewById(R.id.btn_change_profile);
-        editProfileName = (EditText) findViewById(R.id.profile_name);
-        editProfileBio = (EditText) findViewById(R.id.profile_bio);
-        editProfileContact = (EditText) findViewById(R.id.profile_phone);
-        editProfileHobby = (EditText) findViewById(R.id.ed_profile_hobby);
-        editProfileExp = (EditText) findViewById(R.id.ed_profile_exp_date);
-        parentLayout = (LinearLayout) findViewById(R.id.layout_parent);
 
 
         parentLayout.setOnClickListener(new View.OnClickListener() {
@@ -176,5 +167,15 @@ public class EditProfileActivity extends AppCompatActivity {
             mActivity.finish();
         }
         ToastUtils.showSnackbar(coordinatorLayout, "Saved Complete", Snackbar.LENGTH_LONG);
+    }
+    private void bindingView(){
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cor_layout);
+        profile = (ImageView) findViewById(R.id.btn_change_profile);
+        editProfileName = (EditText) findViewById(R.id.profile_name);
+        editProfileBio = (EditText) findViewById(R.id.profile_bio);
+        editProfileContact = (EditText) findViewById(R.id.profile_phone);
+        editProfileHobby = (EditText) findViewById(R.id.ed_profile_hobby);
+        editProfileExp = (EditText) findViewById(R.id.ed_profile_exp_date);
+        parentLayout = (LinearLayout) findViewById(R.id.layout_parent);
     }
 }

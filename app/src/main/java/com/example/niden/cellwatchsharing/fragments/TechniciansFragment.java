@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
 
+import com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -26,17 +29,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
+
 /**
  * Created by niden on 16-Nov-17.
  */
 
 public class TechniciansFragment extends Fragment {
-    public DatabaseReference mRef;
     View myView;
-    private Activity activity = getActivity();
-    private FirebaseListAdapter<FirebaseUserEntity> mTechAdapter;
-    private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
-    ListView technicianList;
+    Activity activity = getActivity();
+    RecyclerTechniciansAdapter recyclerTechniciansAdapter;
+    RecyclerView technicianList;
 
 
 
@@ -48,56 +51,16 @@ public class TechniciansFragment extends Fragment {
         activity = getActivity();
         activity.setTitle(getString(R.string.toobar_technicians));
         setHasOptionsMenu(true);
-        technicianList = (ListView) myView.findViewById(R.id.list_technician);
+        technicianList = (RecyclerView) myView.findViewById(R.id.list_technician);
 
-        mRef = FirebaseDatabase.getInstance().getReference().child("users");
-        mTechAdapter = new FirebaseListAdapter<FirebaseUserEntity>(activity, FirebaseUserEntity.class,
-                R.layout.item_technician, mRef) {
-
-            @Override
-            protected void populateView(View v, FirebaseUserEntity model, final int position) {
-                final TextView name_user = (TextView) v.findViewById(R.id.txt_name);
-                final ImageView profile_user = (ImageView) v.findViewById(R.id.technician_profile);
-
-
-                mRef.child(mTechAdapter.getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                        name_user.setText(firebaseUserEntity.getName());
-                        String url = firebaseUserEntity.getProfile_url();
-                        if (url.isEmpty()) {
-                            profile_user.setImageResource(R.drawable.ic_user_blue);
-                        } else {
-                            Picasso.with(activity).load(url)
-                                    .resize(110, 110).centerCrop()
-                                    .into(profile_user);
-                        }
-                        profile_user.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent myIntent = new Intent(activity, TechnicianActivity.class);
-                                myIntent.putExtra("key", getRef(position).getKey());
-                                activity.startActivity(myIntent);
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        };
-        technicianList.setAdapter(mTechAdapter);
+        recyclerTechniciansAdapter = new RecyclerTechniciansAdapter(QUERY_TECHNICIAN,activity,R.layout.item_technician);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        technicianList.setHasFixedSize(true);
+        technicianList.setLayoutManager(layoutManager);
+        technicianList.setAdapter(recyclerTechniciansAdapter);
         return myView;
-
-    }
-
-
-    public void displayFriendsList() {
 
     }
 

@@ -37,7 +37,6 @@ public class ProfileFragment extends Fragment {
     View parentHolder;
     TextView taskButton;
 
-    FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
 
     @Nullable
     @Override

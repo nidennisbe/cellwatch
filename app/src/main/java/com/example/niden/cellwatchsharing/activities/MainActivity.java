@@ -36,6 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
@@ -57,9 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         activity = this;
         firebaseAuth=FirebaseAuth.getInstance();
         checkUserType();
-        scoresRef = FirebaseDatabase.getInstance().getReference("users");
-        scoresRef.keepSynced(true);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        QUERY_TECHNICIAN.keepSynced(true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FragmentManager fragmentManager =getFragmentManager();
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        scoresRef.keepSynced(true);
+        QUERY_TECHNICIAN.keepSynced(true);
         firebaseAuth.addAuthStateListener(mAuthListener);
     }
     @Override

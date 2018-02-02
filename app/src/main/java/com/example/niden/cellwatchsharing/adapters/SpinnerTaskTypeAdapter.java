@@ -24,12 +24,8 @@ public class SpinnerTaskTypeAdapter extends FirebaseListAdapter<String> {
 
     @Override
     protected void populateView(View v, String model, int position) {
-         TextView textview = (TextView)v.findViewById(android.R.id.text1);
-         textview.setText(model);
-
+        TextView textview = (TextView) v.findViewById(android.R.id.text1);
+        textview.setText(model);
     }
 
-
-    public class Viewholder {
-    }
 }

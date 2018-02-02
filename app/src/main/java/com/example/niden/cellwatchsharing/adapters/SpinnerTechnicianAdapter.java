@@ -33,8 +33,8 @@ public class SpinnerTechnicianAdapter extends FirebaseListAdapter<FirebaseUserEn
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     FirebaseUserEntity firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                    TextView textView= (TextView) v.findViewById(android.R.id.text1);
-                    Spinner spinner = (Spinner)v.findViewById(R.id.spinnerTechnician);
+                    TextView textView = (TextView) v.findViewById(android.R.id.text1);
+                    Spinner spinner = (Spinner) v.findViewById(R.id.spinnerTechnician);
                     textView.setText(model.getName());
                 }
 

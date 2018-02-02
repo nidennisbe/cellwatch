@@ -28,7 +28,7 @@ public class TechnicianActivity extends AppCompatActivity {
     ImageView profileImage;
     RecyclerView recyclerView;
     Query mRef;
-    UserProfile mFirebaseRetrive = new UserProfile();
+    UserProfile mUserProfile = new UserProfile();
     RelativeLayout cover;
     String mUserKey;
 
@@ -42,7 +42,7 @@ public class TechnicianActivity extends AppCompatActivity {
         bindingViews();
 
         mUserKey = getIntent().getStringExtra("key");
-        mFirebaseRetrive.displayProfileImage(mUserKey,TechnicianActivity.this,textViewName,textViewBio,profileImage);
+        mUserProfile.displayProfileImage(mUserKey,TechnicianActivity.this,textViewName,textViewBio,profileImage);
         mRef = FirebaseDatabase.getInstance().getReference()
                 .child("users")
                 .child(mUserKey)
