@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ALL_TASK_INDIVIDUAL;
+
 /**
  * Created by niden on 16-Nov-17.
  */
@@ -33,8 +35,6 @@ public class TaskFragment extends Fragment {
     public Activity activity = getActivity();
     View myView;
     RecyclerView recyclerView;
-    Query mQuery;
-
 
     @Nullable
     @Override
@@ -45,11 +45,8 @@ public class TaskFragment extends Fragment {
         this.activity = getActivity();
         getActivity().setTitle(getString(R.string.toobar_tasks));
 
-        mQuery = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("tasks");
 
-        mAdapter = new ListTaskAdapter(mQuery, activity, R.layout.item_task);
+        mAdapter = new ListTaskAdapter(QUERY_ALL_TASK_INDIVIDUAL, activity, R.layout.item_task);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);

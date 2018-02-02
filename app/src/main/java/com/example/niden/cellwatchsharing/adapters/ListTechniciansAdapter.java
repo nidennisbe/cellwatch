@@ -33,6 +33,7 @@ import com.squareup.picasso.Picasso;
 
 public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUserEntity, ListTechniciansAdapter.Viewholder> {
     public Activity activity;
+    public final static String ID_KEY="key";
 
 
     public ListTechniciansAdapter(Query ref, Activity activity, int layout) {
@@ -47,9 +48,8 @@ public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUser
         viewHolder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("myFirebase UID", getRef(position).getKey());
                 Intent myIntent = new Intent(activity, TaskDetailActivity.class);
-                myIntent.putExtra("key", getRef(position).getKey());
+                myIntent.putExtra(ID_KEY, getRef(position).getKey());
                 activity.startActivity(myIntent);
             }
         });

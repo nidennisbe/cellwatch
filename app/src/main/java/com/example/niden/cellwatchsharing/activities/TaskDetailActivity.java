@@ -44,6 +44,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import static com.example.niden.cellwatchsharing.adapters.ListTechniciansAdapter.ID_KEY;
+
 public class TaskDetailActivity extends AppCompatActivity {
 
     static final int RESULT_LOAD_IMAGE = 1;
@@ -114,7 +116,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
 
     public void displayTaskDetail(final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb) {
-        String taskKey = getIntent().getStringExtra("key");
+        String taskKey = getIntent().getStringExtra(ID_KEY);
         mDataReference = FirebaseDatabase.getInstance().getReference("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("tasks").child(taskKey);

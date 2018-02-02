@@ -17,15 +17,18 @@ import java.util.Date;
  */
 
 public class Task  {
+    private final String DIR_USER="users";
+    private final String DIR_TASK="tasks";
+    private String currentDateTimeString = String.valueOf(System.currentTimeMillis());
 
       //Insert new task
-    private String currentDateTimeString = String.valueOf(System.currentTimeMillis());
+
     public void insertTask(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner) {
         FirebaseDatabase.getInstance()
                 .getReference()
-                .child("users")
+                .child(DIR_USER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("tasks")
+                .child(DIR_TASK)
                 .push()
                 .setValue(new TaskEntityDatabase(txTaskName.getText().toString(),txClass.getText().toString(),txAddress.getText().toString(),txDescription.getText().toString(),
                         txSuburb.getText().toString(),currentDateTimeString,spinner.getSelectedItem().toString(),""

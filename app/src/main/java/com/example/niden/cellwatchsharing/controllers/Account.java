@@ -37,6 +37,8 @@ public class Account {
     private static final String TAG = Account.class.getSimpleName();
     private  FirebaseAuth firebaseAuth;
     public  FirebaseAuth.AuthStateListener mAuthListener;
+    private final String DIR_USER="users";
+    private final String DIR_CLOCKIN_INFO="clock_in_info";
 
 
     public FirebaseAuth getFirebaseAuth() {
@@ -82,9 +84,8 @@ public class Account {
                 .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         if (!task.isSuccessful()) {
-                            Toast.makeText(context, "Fail to Register due to." + task.getException(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, ""+ task.getException(), Toast.LENGTH_SHORT).show();
                             myDialog.dismiss();
                         } else {
                             Intent myIntent = new Intent(context, EditProfileActivity.class);
@@ -103,14 +104,13 @@ public class Account {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail", task.getException());
                             ToastUtils.showSnackbar(v,context.getString(R.string.alert_check_emailpassword), Snackbar.LENGTH_LONG);
                             myDialog.dismiss();
                         } else {
                             myDialog.dismiss();
                             String currentDateTimeString = String.valueOf(System.currentTimeMillis());
-                            final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid())
-                                    .child("userLoginTime").push().setValue(currentDateTimeString);
+                            final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child(DIR_USER).child(firebaseAuth.getCurrentUser().getUid())
+                                    .child(DIR_CLOCKIN_INFO).push().setValue(currentDateTimeString);
                             Intent profileIntent = new Intent(context, MainActivity.class);
                             context.startActivity(profileIntent);
                             ((Activity) context).finish();

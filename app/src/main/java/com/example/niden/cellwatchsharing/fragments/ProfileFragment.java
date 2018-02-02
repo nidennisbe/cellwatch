@@ -33,7 +33,7 @@ public class ProfileFragment extends Fragment {
     private Activity refActivity;
     private User mFirebaseRetrive = new User();
     private Account mAccount = new Account();
-    TextView textViewName,textViewBio,textViewPhone,textViewHobby, textViewExpDate;
+    TextView textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate;
     ImageView profileImage;
     View parentHolder;
     TextView taskButton;
@@ -44,18 +44,18 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         refActivity = getActivity();
-        parentHolder = inflater.inflate(R.layout.fragment_profile_layout,container,false);
+        parentHolder = inflater.inflate(R.layout.fragment_profile_layout, container, false);
         setHasOptionsMenu(true);
         mAccount.isUserCurrentlyLogin(activity);
         getActivity().setTitle("Profile");
         bindingViews();
 
-        mFirebaseRetrive.displayProfileInfo(refActivity,textViewName,textViewBio,textViewPhone,textViewHobby, textViewExpDate,profileImage);
+        mFirebaseRetrive.displayProfileInfo(refActivity, textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate, profileImage);
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager =getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
             }
         });
         return parentHolder;
@@ -63,13 +63,13 @@ public class ProfileFragment extends Fragment {
 
 
     private void bindingViews() {
-        taskButton = (TextView)parentHolder.findViewById(R.id.btn_num_task);
-        profileImage = (ImageView)parentHolder.findViewById(R.id.profile_image) ;
-        textViewName = (TextView)parentHolder.findViewById(R.id.user_profile_name);
-        textViewBio = (TextView)parentHolder.findViewById(R.id.user_profile_short_bio);
-        textViewPhone = (TextView)parentHolder.findViewById(R.id.tv_phonenumber);
-        textViewHobby = (TextView)parentHolder.findViewById(R.id.prof_tv_hobby);
-        textViewExpDate = (TextView)parentHolder.findViewById(R.id.prof_tv_exp_date);
+        taskButton = (TextView) parentHolder.findViewById(R.id.btn_num_task);
+        profileImage = (ImageView) parentHolder.findViewById(R.id.profile_image);
+        textViewName = (TextView) parentHolder.findViewById(R.id.user_profile_name);
+        textViewBio = (TextView) parentHolder.findViewById(R.id.user_profile_short_bio);
+        textViewPhone = (TextView) parentHolder.findViewById(R.id.tv_phonenumber);
+        textViewHobby = (TextView) parentHolder.findViewById(R.id.prof_tv_hobby);
+        textViewExpDate = (TextView) parentHolder.findViewById(R.id.prof_tv_exp_date);
 
     }
 

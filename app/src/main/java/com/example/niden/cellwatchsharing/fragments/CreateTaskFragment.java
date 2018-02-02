@@ -17,20 +17,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.adapters.SpinnerTaskTypeAdapter;
+import com.example.niden.cellwatchsharing.adapters.SpinnerTechnicianAdapter;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
-import com.firebase.ui.database.FirebaseListAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TASK_TYPE;
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
+
 
 
 /**
@@ -45,13 +44,13 @@ public class CreateTaskFragment extends Fragment {
     public static FirebaseDatabase database;
     private Task mTask = new Task();
     private Button mBtnStartDate,mBtnEndDate;
-    private FirebaseListAdapter<FirebaseUserEntity> mFirebaseListAdapter;
-    Spinner spinner,dropDownTechnician;
-    DatePickerDialog datePickerDialog;
-    View parentHolder;
+    private Spinner spinner,dropDownTechnician;
+    private DatePickerDialog datePickerDialog;
+    private View parentHolder;
     int duration = Snackbar.LENGTH_LONG;
-    LinearLayout parentLayout;
-    DatabaseReference mRefType,mRefUser;
+    private LinearLayout parentLayout;
+    SpinnerTaskTypeAdapter mSpinnerTaskTypeAdapter;
+    SpinnerTechnicianAdapter mSpinnerTechAdapter;
 
     @Nullable
     @Override
@@ -62,49 +61,19 @@ public class CreateTaskFragment extends Fragment {
         getActivity().setTitle("New Task");
         bindingViews();
 
-
         parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 KeyboardUtils.hideSoftKeyboard(v,referenceActivity);
             }
         });
+        //SETUP SPINNER FOR SELECTING TYPE OF TASK
+        mSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity,String.class,android.R.layout.simple_list_item_1,QUERY_TASK_TYPE);
+        spinner.setAdapter(mSpinnerTaskTypeAdapter);
 
-
-        mRefType = FirebaseDatabase.getInstance().getReference().child("task_type");
-        FirebaseListAdapter<String> firebaseListAdapter = new FirebaseListAdapter<String>(referenceActivity,String.class,android.R.layout.simple_list_item_1,mRefType) {
-            @Override
-            protected void populateView(View v, String model, int position) {
-                ((TextView)v.findViewById(android.R.id.text1)).setText(model);
-
-            }
-        };
-        spinner.setAdapter(firebaseListAdapter);
-
-
-
-        mRefUser = FirebaseDatabase.getInstance().getReference().child("users");
-        mFirebaseListAdapter = new FirebaseListAdapter<FirebaseUserEntity>(referenceActivity, FirebaseUserEntity.class, android.R.layout.simple_list_item_1, mRefUser) {
-            @Override
-            protected void populateView(final View v, FirebaseUserEntity model, int position) {
-                mRefUser.child(mFirebaseListAdapter.getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            FirebaseUserEntity firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                            ((TextView) v.findViewById(android.R.id.text1)).setText(firebaseUserEntity.getName());
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        };
-        dropDownTechnician.setAdapter(mFirebaseListAdapter);
-
-
+        //SETUP SPINNER FOR SELECTING TECHNICIAN
+        mSpinnerTechAdapter = new SpinnerTechnicianAdapter(referenceActivity,FirebaseUserEntity.class,android.R.layout.simple_list_item_1,QUERY_TECHNICIAN);
+        dropDownTechnician.setAdapter(mSpinnerTechAdapter);
 
         mBtnStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,32 +88,6 @@ public class CreateTaskFragment extends Fragment {
                 DatePickerUtils.openEndDatePicker(referenceActivity,datePickerDialog,mBtnStartDate,mBtnEndDate);
             }
         });
-
-
-       /* //Listener for disable and enable button item_post depend on EditText
-        txTaskName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                if (charSequence.toString().trim().length() == 0) {
-                    btnPost.setEnabled(false);
-                    btnPost.setBackgroundResource(R.drawable.style_button_border_only);
-                    btnPost.setTextColor(getResources().getColor(R.color.colorPrimary));
-                } else {
-                    btnPost.setEnabled(true);
-                    btnPost.setBackgroundResource(R.color.colorPrimary);
-                    btnPost.setTextColor(getResources().getColor(R.color.colorTextLight));
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });*/
         return parentHolder;
     }
 

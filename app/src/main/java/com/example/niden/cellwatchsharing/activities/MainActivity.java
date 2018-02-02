@@ -39,14 +39,12 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
-    private static final int SELECT_PICTURE = 100;
     public static final String ADMIN = "admin";
     public static final String TECHNICIAN = "technician";
     public static Activity activity;
     NavigationView navigationView;
     FragmentManager fragmentManager;
     AlertDialog.Builder myAlertDialog;
-
     String TAG ="11";
     private FirebaseAuth.AuthStateListener mAuthListener;
     public  FirebaseAuth firebaseAuth;

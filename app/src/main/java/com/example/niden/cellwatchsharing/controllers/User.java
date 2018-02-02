@@ -38,11 +38,14 @@ public class User  {
     private DatabaseReference mRefUserInfo;
     private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
     private Account mAccount = new Account();
+    public static final String DIR_USER="users";
+    public static final String DIR_STORAGE_PROFILE_PHOTO="user_profile_image/";
+
 
 
     //Showing profile information
     public void displayProfileInfo(final Context context, final TextView textViewName, final TextView textViewBio, final TextView textViewPhone, final TextView textViewExpDate, final TextView textViewHobby, final ImageView profilePicture) {
-        mRefUserInfo = FirebaseDatabase.getInstance().getReference("users")
+        mRefUserInfo = FirebaseDatabase.getInstance().getReference(DIR_USER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -63,13 +66,10 @@ public class User  {
                                 .into(profilePicture);
                     }
                 }
-
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
+
             }
         });
     }
@@ -78,7 +78,7 @@ public class User  {
     //Show profile Picture
 
     public void displayProfileImage(final String mUserKey,final Context context, final TextView textViewName, final TextView textViewBio, final ImageView profilePicture) {
-        mRefUserInfo = FirebaseDatabase.getInstance().getReference("users")
+        mRefUserInfo = FirebaseDatabase.getInstance().getReference(DIR_USER)
                 .child(mUserKey);
         mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -99,10 +99,9 @@ public class User  {
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
+
             }
         });
     }
@@ -110,7 +109,7 @@ public class User  {
 
     //Showing profile information
     public void displayEditInfo(final Context context, final EditText editProfileName, final EditText editProfileBio, final EditText editProfileContact, final EditText editProfileHobby, final EditText editProfileExpDate, final ImageView profile) {
-        mRefUserInfo = FirebaseDatabase.getInstance().getReference("users")
+        mRefUserInfo = FirebaseDatabase.getInstance().getReference(DIR_USER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -131,10 +130,8 @@ public class User  {
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
             }
         });
     }
@@ -145,7 +142,7 @@ public class User  {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference mRefStorage = storageReference.child("profile_images/" + UUID.randomUUID().toString());
+            StorageReference mRefStorage = storageReference.child(DIR_STORAGE_PROFILE_PHOTO+ UUID.randomUUID().toString());
             mRefStorage.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -156,7 +153,7 @@ public class User  {
                             String url = downloadUrl.toString();
                             Map<String, Object> user = new HashMap<>();
                             user.put("profile_url", url);
-                            databaseReference.child("users")
+                            databaseReference.child(DIR_USER)
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(user);
                         }
                     })
@@ -164,7 +161,6 @@ public class User  {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(context, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -172,7 +168,7 @@ public class User  {
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                            progressDialog.setMessage("Uploaded" + (int) progress + "%");
                         }
                     });
         }

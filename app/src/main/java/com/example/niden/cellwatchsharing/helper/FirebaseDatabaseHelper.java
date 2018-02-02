@@ -2,16 +2,12 @@ package com.example.niden.cellwatchsharing.helper;
 
 
 
-import com.example.niden.cellwatchsharing.database.UserProfile;
+
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 public class FirebaseDatabaseHelper {
