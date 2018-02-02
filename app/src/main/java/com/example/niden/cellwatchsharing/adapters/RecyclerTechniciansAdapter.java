@@ -2,42 +2,31 @@ package com.example.niden.cellwatchsharing.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.TaskDetailActivity;
-import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by niden on 18-Nov-17.
  */
 
-public class ListTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUserEntity, ListTechniciansAdapter.Viewholder> {
+public class RecyclerTechniciansAdapter extends FirebaseRecyclerAdapter<FirebaseUserEntity, RecyclerTechniciansAdapter.Viewholder> {
     public Activity activity;
     public final static String ID_KEY="key";
 
 
-    public ListTechniciansAdapter(Query ref, Activity activity, int layout) {
-        super(FirebaseUserEntity.class, layout, ListTechniciansAdapter.Viewholder.class, ref);
+    public RecyclerTechniciansAdapter(Query ref, Activity activity, int layout) {
+        super(FirebaseUserEntity.class, layout, RecyclerTechniciansAdapter.Viewholder.class, ref);
         this.activity = activity;
     }
 

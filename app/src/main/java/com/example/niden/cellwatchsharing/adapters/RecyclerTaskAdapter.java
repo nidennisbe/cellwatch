@@ -13,23 +13,18 @@ import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.TaskDetailActivity;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.TSConverterUtils;
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.github.marlonlom.utilities.timeago.TimeAgo;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by niden on 21-Nov-17.
  */
 
-public class ListTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase, ListTaskAdapter.Viewholder> {
+public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase, RecyclerTaskAdapter.Viewholder> {
     public Activity activity;
 
-    public ListTaskAdapter(Query ref, Activity activity, int layout) {
+    public RecyclerTaskAdapter(Query ref, Activity activity, int layout) {
         super(TaskEntityDatabase.class, layout, Viewholder.class, ref);
         this.activity = activity;
     }

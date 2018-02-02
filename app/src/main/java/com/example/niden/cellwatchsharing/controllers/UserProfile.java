@@ -32,7 +32,7 @@ import java.util.UUID;
  * Created by niden on 25-Nov-17.
  */
 
-public class User  {
+public class UserProfile {
 
     private String strName, strBio, strPhone, strHobby, strExpDate, strProfileUrl;
     private DatabaseReference mRefUserInfo;

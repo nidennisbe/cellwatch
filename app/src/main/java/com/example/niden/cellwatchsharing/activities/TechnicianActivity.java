@@ -1,22 +1,19 @@
 package com.example.niden.cellwatchsharing.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.adapters.ListTaskAdapter;
-import com.example.niden.cellwatchsharing.controllers.User;
+import com.example.niden.cellwatchsharing.adapters.RecyclerTaskAdapter;
+import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.utils.IntentUtils;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
@@ -31,7 +28,7 @@ public class TechnicianActivity extends AppCompatActivity {
     ImageView profileImage;
     RecyclerView recyclerView;
     Query mRef;
-    User mFirebaseRetrive = new User();
+    UserProfile mFirebaseRetrive = new UserProfile();
     RelativeLayout cover;
     String mUserKey;
 
@@ -51,7 +48,7 @@ public class TechnicianActivity extends AppCompatActivity {
                 .child(mUserKey)
                 .child("tasks");
 
-        ListTaskAdapter mAdapter = new ListTaskAdapter(mRef, activity,R.layout.item_task );
+        RecyclerTaskAdapter mAdapter = new RecyclerTaskAdapter(mRef, activity,R.layout.item_task );
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);

@@ -12,14 +12,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
 import com.example.niden.cellwatchsharing.controllers.Account;
-import com.example.niden.cellwatchsharing.controllers.User;
+import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;
@@ -31,7 +30,7 @@ import static com.example.niden.cellwatchsharing.activities.MainActivity.activit
 public class ProfileFragment extends Fragment {
 
     private Activity refActivity;
-    private User mFirebaseRetrive = new User();
+    private UserProfile mUserProfile = new UserProfile();
     private Account mAccount = new Account();
     TextView textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate;
     ImageView profileImage;
@@ -50,7 +49,7 @@ public class ProfileFragment extends Fragment {
         getActivity().setTitle("Profile");
         bindingViews();
 
-        mFirebaseRetrive.displayProfileInfo(refActivity, textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate, profileImage);
+        mUserProfile.displayProfileInfo(refActivity, textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate, profileImage);
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

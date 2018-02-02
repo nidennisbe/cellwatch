@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.controllers.User;
+import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.helper.FirebaseDatabaseHelper;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
@@ -52,7 +52,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editProfileHobby;
     private EditText editProfileExp;
     private ImageView profile;
-    private User mUser = new User();
+    private UserProfile mUserProfile = new UserProfile();
     public CoordinatorLayout coordinatorLayout;
     LinearLayout parentLayout;
     Activity mActivity;
@@ -89,7 +89,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 KeyboardUtils.hideSoftKeyboard(v, mActivity);
             }
         });
-        mUser.displayEditInfo(mActivity, editProfileName, editProfileBio, editProfileContact, editProfileHobby, editProfileExp, profile);
+        mUserProfile.displayEditInfo(mActivity, editProfileName, editProfileBio, editProfileContact, editProfileHobby, editProfileExp, profile);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +128,7 @@ public class EditProfileActivity extends AppCompatActivity {
             Uri filePath = data.getData();
             Picasso.with(mActivity).load(data.getData()).noPlaceholder().centerCrop().fit()
                     .into((ImageView) findViewById(R.id.btn_change_profile));
-            mUser.uploadProfilePicture(mActivity, filePath, storageReference, databaseReference);
+            mUserProfile.uploadProfilePicture(mActivity, filePath, storageReference, databaseReference);
         }
     }
 

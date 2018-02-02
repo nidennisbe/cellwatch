@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null) { // User is signed in
+                if (firebaseUser != null) { // UserProfile is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + firebaseUser.getUid());
                     FirebaseDatabase.getInstance().getReference().child("users").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     });
 
-                } else { // User is signed out
+                } else { // UserProfile is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
             }

@@ -29,7 +29,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 
 public class TaskAdminViewFragment extends Fragment {
-    public ListTaskAdapter mAdapter;
+    public RecyclerTaskAdapter mAdapter;
     public Activity activity =getActivity();
     View myView;
     RecyclerView recyclerView;
@@ -50,7 +50,7 @@ public class TaskAdminViewFragment extends Fragment {
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("tasks");
 
-        mAdapter = new ListTaskAdapter(mQuery, activity,R.layout.item_task );
+        mAdapter = new RecyclerTaskAdapter(mQuery, activity,R.layout.item_task );
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
