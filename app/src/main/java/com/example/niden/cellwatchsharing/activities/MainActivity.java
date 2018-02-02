@@ -39,14 +39,12 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
-    private static final int SELECT_PICTURE = 100;
     public static final String ADMIN = "admin";
     public static final String TECHNICIAN = "technician";
     public static Activity activity;
     NavigationView navigationView;
     FragmentManager fragmentManager;
     AlertDialog.Builder myAlertDialog;
-
     String TAG ="11";
     private FirebaseAuth.AuthStateListener mAuthListener;
     public  FirebaseAuth firebaseAuth;
@@ -154,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null) { // User is signed in
+                if (firebaseUser != null) { // UserProfile is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + firebaseUser.getUid());
                     FirebaseDatabase.getInstance().getReference().child("users").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     });
 
-                } else { // User is signed out
+                } else { // UserProfile is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
             }

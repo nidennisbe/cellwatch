@@ -1,6 +1,5 @@
 package com.example.niden.cellwatchsharing.adapters;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,25 +8,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
-import com.example.niden.cellwatchsharing.database.GallaryEntityDatabase;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by akshayejh on 19/12/17.
  */
 
-public class UploadListAdapter extends RecyclerView.Adapter<UploadListAdapter.ViewHolder>{
+public class ImageUploadLRecyclerAdapter extends RecyclerView.Adapter<ImageUploadLRecyclerAdapter.ViewHolder>{
 
 
     private List<String> fileNameList;
     private List<String> fileDoneList;
 
-    public UploadListAdapter(List<String> fileNameList, List<String>fileDoneList){
+    public ImageUploadLRecyclerAdapter(List<String> fileNameList, List<String>fileDoneList){
 
         this.fileDoneList = fileDoneList;
         this.fileNameList = fileNameList;

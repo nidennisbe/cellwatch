@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,20 +16,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.adapters.UploadListAdapter;
-import com.example.niden.cellwatchsharing.controllers.Account;
+import com.example.niden.cellwatchsharing.adapters.ImageUploadLRecyclerAdapter;
 import com.example.niden.cellwatchsharing.controllers.Zip;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
-import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
-import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -44,6 +39,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
+
 public class TaskDetailActivity extends AppCompatActivity {
 
     static final int RESULT_LOAD_IMAGE = 1;
@@ -53,7 +50,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     String strTaskName, strDescription, strAddress, strClass, strSuburb;
     DatabaseReference mDataReference;
     TaskEntityDatabase taskEntityDatabase = new TaskEntityDatabase();
-    private UploadListAdapter uploadListAdapter;
+    private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
     private StorageReference mStorage;
     public List<String> fileNameList;
     public List<String> fileDoneList;
@@ -73,12 +70,12 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         fileNameList = new ArrayList<>();
         fileDoneList = new ArrayList<>();
-        uploadListAdapter = new UploadListAdapter(fileNameList, fileDoneList);
+        imageUploadLRecyclerAdapter = new ImageUploadLRecyclerAdapter(fileNameList, fileDoneList);
 
         //RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(uploadListAdapter);
+        recyclerView.setAdapter(imageUploadLRecyclerAdapter);
 
         displayTaskDetail(etTaskName, etClass, etDescription, etAddress, etSuburb);
 
@@ -114,7 +111,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
 
     public void displayTaskDetail(final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb) {
-        String taskKey = getIntent().getStringExtra("key");
+        String taskKey = getIntent().getStringExtra(ID_KEY);
         mDataReference = FirebaseDatabase.getInstance().getReference("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("tasks").child(taskKey);
@@ -164,7 +161,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                     final String fileName = getFileName(fileUri);
                     fileNameList.add(fileName);
                     fileDoneList.add("uploading");
-                    uploadListAdapter.notifyDataSetChanged();
+                    imageUploadLRecyclerAdapter.notifyDataSetChanged();
 
                     final StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
                     final int finalI = i;
@@ -178,7 +175,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                             }
                             fileDoneList.remove(finalI);
                             fileDoneList.add(finalI, "done");
-                            uploadListAdapter.notifyDataSetChanged();
+                            imageUploadLRecyclerAdapter.notifyDataSetChanged();
                         }
                     });
 

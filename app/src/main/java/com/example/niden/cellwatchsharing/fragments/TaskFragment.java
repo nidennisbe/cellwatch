@@ -10,31 +10,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.adapters.ListTaskAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.example.niden.cellwatchsharing.adapters.RecyclerTaskAdapter;
 
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ALL_TASK_INDIVIDUAL;
 
 /**
  * Created by niden on 16-Nov-17.
  */
 
 public class TaskFragment extends Fragment {
-    public ListTaskAdapter mAdapter;
+    public RecyclerTaskAdapter mAdapter;
     public Activity activity = getActivity();
     View myView;
     RecyclerView recyclerView;
-    Query mQuery;
-
 
     @Nullable
     @Override
@@ -45,11 +38,8 @@ public class TaskFragment extends Fragment {
         this.activity = getActivity();
         getActivity().setTitle(getString(R.string.toobar_tasks));
 
-        mQuery = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("tasks");
 
-        mAdapter = new ListTaskAdapter(mQuery, activity, R.layout.item_task);
+        mAdapter = new RecyclerTaskAdapter(QUERY_ALL_TASK_INDIVIDUAL, activity, R.layout.item_task);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
