@@ -1,4 +1,4 @@
-package com.example.niden.cellwatchsharing.activities;
+package com.example.niden.cellwatchsharing.database;
 
 public class UserProfile {
 

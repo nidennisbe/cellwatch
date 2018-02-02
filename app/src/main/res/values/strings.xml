@@ -34,7 +34,25 @@
     <string name="edit_profile_phone">Phone number</string>
     <string name="edit_profile_hobby">Hobby</string>
     <string name="select_date">Date</string>
-    <string name="save_edit">Save</string>
     <string name="sign_up"><u>Sign up</u></string>
     <string name="title_activity_maps">Map</string>
+    <string name="validation_email">You must enter you Email</string>
+    <string name="validation_password">You must enter your password</string>
+    <string name="sign_in_process">Signing in...</string>
+    <string name="internet_connection">Internet Connection</string>
+    <string name="alert_internet_connection">Please check your internet connectivity and try again</string>
+    <string name="ok">OK</string>
+    <string name="toolbar_edit_profile_info">Edit Profile Information</string>
+    <string name="alert_short_password">Password is too short, Enter at least 6 digits</string>
+    <string name="sign_up_process">Signing up...</string>
+    <string name="toolbar_task_detail">Task Detail</string>
+    <string name="image_type">image/*</string>
+    <string name="select_picture">Select Picture</string>
+    <string name="alert_check_emailpassword">Login failed. Please check your email and password</string>
+    <string name="toobar_technicians">Technicians</string>
+    <string name="toobar_tasks">Tasks</string>
+    <string name="create_a_new_task_for_technicians">Create a new task for technicians</string>
+    <string name="txt_submit_task">Successful Added</string>
+    <string name="exit_app_desc">Do you want to exit now?</string>
+    <string name="exit_app_dialog_title">Quit app</string>
 </resources>

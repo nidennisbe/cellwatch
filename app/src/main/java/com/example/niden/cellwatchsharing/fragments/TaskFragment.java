@@ -13,47 +13,44 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.activities.MainActivity;
 import com.example.niden.cellwatchsharing.adapters.ListTaskAdapter;
-import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
-import jp.wasabeef.recyclerview.animators.ScaleInBottomAnimator;
-import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * Created by niden on 16-Nov-17.
  */
 
 public class TaskFragment extends Fragment {
-    public FirebaseListAdapter<TaskEntityDatabase> mAdapter;
+    public ListTaskAdapter mAdapter;
+    public Activity activity = getActivity();
     View myView;
-    Activity activity =getActivity();
     RecyclerView recyclerView;
-    Query mRef;
-    TextView texetViewNumberOfTask;
+    Query mQuery;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, Bundle savedInstanceState) {
 
-        myView = inflater.inflate(R.layout.fragment_task_layout,container,false);
+        myView = inflater.inflate(R.layout.fragment_task_layout, container, false);
         recyclerView = (RecyclerView) myView.findViewById(R.id.listTask);
         this.activity = getActivity();
-        getActivity().setTitle("Tasks");
+        getActivity().setTitle(getString(R.string.toobar_tasks));
 
-
-        mRef = FirebaseDatabase.getInstance().getReference().child("users")
+        mQuery = FirebaseDatabase.getInstance().getReference().child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("tasks");
-        ListTaskAdapter mAdapter = new ListTaskAdapter(mRef, activity,R.layout.item_task );
-        LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
+
+        mAdapter = new ListTaskAdapter(mQuery, activity, R.layout.item_task);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
@@ -63,10 +60,9 @@ public class TaskFragment extends Fragment {
         recyclerView.getItemAnimator().setAddDuration(1000);
         recyclerView.getItemAnimator().setMoveDuration(1000);
         recyclerView.setAdapter(mAdapter);
-
+        OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         return myView;
     }
-
 
 
 }

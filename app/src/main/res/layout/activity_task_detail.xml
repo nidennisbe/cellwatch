@@ -4,11 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/style_background_diagonal"
     tools:context="com.example.niden.cellwatchsharing.activities.TaskDetailActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/toolbar_bg"
+        android:elevation="5dp"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        android:theme="@style/AppTheme.Toolbar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -27,9 +38,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:layout_weight="1"
-                    android:text="TASK DETAIL"
+                    android:text="@string/task_detail"
                     android:textSize="30sp"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     tools:layout_editor_absoluteX="88dp"
                     tools:layout_editor_absoluteY="0dp" />
 
@@ -60,10 +72,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Task Name" />
+                        android:text="@string/task_name" />
 
                     <EditText
-                        android:id="@+id/editTextTaskName"
+                        android:id="@+id/et_task_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -83,10 +95,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Description" />
+                        android:text="@string/description" />
 
                     <EditText
-                        android:id="@+id/editTextDescription"
+                        android:id="@+id/et_task_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -107,10 +119,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Address" />
+                        android:text="@string/address" />
 
                     <EditText
-                        android:id="@+id/editTextAddress"
+                        android:id="@+id/et_task_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -131,10 +143,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Class" />
+                        android:text="@string/text_class" />
 
                     <EditText
-                        android:id="@+id/editTextClass"
+                        android:id="@+id/et_task_class"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -154,10 +166,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Suburb" />
+                        android:text="@string/suburb" />
 
                     <EditText
-                        android:id="@+id/editTextSuburb"
+                        android:id="@+id/et_task_suburb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -177,7 +189,7 @@
                         android:id="@+id/textView13"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Comment" />
+                        android:text="@string/comment" />
 
                     <EditText
                         android:id="@+id/editText"
@@ -186,7 +198,15 @@
                         android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
                         android:ems="10"
                         android:inputType="textMultiLine" />
+
                 </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/ui_messagebox" />
 
                 <Button
                     android:id="@+id/button2"
@@ -194,14 +214,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/style_button_sign_in_round"
-                    android:text="Done"
+                    android:text="@string/done"
                     android:textColor="@color/cardview_light_background" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
 
             </LinearLayout>
         </LinearLayout>

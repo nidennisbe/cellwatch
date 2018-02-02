@@ -1,4 +1,4 @@
-package com.example.niden.cellwatchsharing.classes;
+package com.example.niden.cellwatchsharing.controllers;
 
 import android.app.Activity;
 import android.app.Application;
@@ -6,12 +6,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
 import com.example.niden.cellwatchsharing.activities.LoginActivity;
 import com.example.niden.cellwatchsharing.activities.MainActivity;
+import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -28,13 +33,10 @@ import java.util.HashMap;
  * Created by niden on 20-Nov-17.
  */
 
-public class User extends Application  {
-    private static final String TAG = User.class.getSimpleName();
-    public static FirebaseAuth firebaseAuth;
-    public static FirebaseAuth.AuthStateListener mAuthListener;
-    public static final int ADMIN = 1;
-    public static final int TECHNICIAN = 2;
-
+public class Account {
+    private static final String TAG = Account.class.getSimpleName();
+    private  FirebaseAuth firebaseAuth;
+    public  FirebaseAuth.AuthStateListener mAuthListener;
 
 
     public FirebaseAuth getFirebaseAuth() {
@@ -49,7 +51,7 @@ public class User extends Application  {
         return userId;
     }
 
-    //Check if user already login open their profile
+    //Check if account already login open their profile
     public void checkUserLogin(final Context context) {
         if (firebaseAuth.getCurrentUser() != null) {
             Intent profileIntent = new Intent(context, MainActivity.class);
@@ -74,7 +76,7 @@ public class User extends Application  {
         };
     }
 
-    //Method for User registration
+    //Method for Account registration
     public void createNewUser(final Context context, String email, String password, final ProgressDialog myDialog) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
@@ -85,53 +87,41 @@ public class User extends Application  {
                             Toast.makeText(context, "Fail to Register due to." + task.getException(), Toast.LENGTH_SHORT).show();
                             myDialog.dismiss();
                         } else {
-//                            IntentUtils.openMainActivity(context);
                             Intent myIntent = new Intent(context, EditProfileActivity.class);
                             context.startActivity(myIntent);
                             ((Activity) context).finish();
-                            //insertUserInformation();
                         }
                     }
                 });
     }
 
-    //Method for get user information and put in Database
-    private void insertUserInformation() {
-
-        final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users");
-        // Get references to the DialogsUtils of item_message.xmle.xml
-        // EditText inputEmail = (EditText) findViewById(R.id.message_text);
-        HashMap<String, Object> userData = new HashMap<>();
-        userData.put("uid:", firebaseAuth.getUid());
-        userData.put("userEmail:", firebaseAuth.getCurrentUser().getEmail());
-        mRef.push().setValue(userData);
-    }
-
 
     //Login USER method
-    public void loginAUser(final Context context, String email, String password, final ProgressDialog myDialog) {
+    public void loginAUser(final ScrollView v, final Context context, String email, String password, final ProgressDialog myDialog) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail", task.getException());
-                            Toast.makeText(context, "Login failed. Please check your email and password", Toast.LENGTH_SHORT).show();
+                            ToastUtils.showSnackbar(v,context.getString(R.string.alert_check_emailpassword), Snackbar.LENGTH_LONG);
                             myDialog.dismiss();
+                        } else {
+                            myDialog.dismiss();
+                            String currentDateTimeString = String.valueOf(System.currentTimeMillis());
+                            final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid())
+                                    .child("userLoginTime").push().setValue(currentDateTimeString);
+                            Intent profileIntent = new Intent(context, MainActivity.class);
+                            context.startActivity(profileIntent);
+                            ((Activity) context).finish();
                         }
-                        else {
-                                     myDialog.dismiss();
-                                    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-                                    final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid())
-                                            .child("userLoginTime").push().setValue(currentDateTimeString);
-                                    Intent profileIntent = new Intent(context, MainActivity.class);
-                                    context.startActivity(profileIntent);
+                    }
 
-                                }
-                            };
-                        });
+                    ;
+                });
 
     }
+
 
 
 

@@ -7,7 +7,7 @@
 
     <group
         android:checkableBehavior="single"
-        app:itemBackground="@drawable/style_background_diagonal">
+        app:itemBackground="@color/colorTextDark">
 
         <item
             android:id="@+id/nav_profile"
@@ -21,7 +21,7 @@
         <item
             android:id="@+id/nav_circles"
             android:icon="@drawable/ic_circles"
-            android:title="Technicians(Admin View)" />
+            android:title="Technicians" />
         <item
             android:id="@+id/nav_task"
             android:icon="@drawable/ic_news"
@@ -29,10 +29,10 @@
         <item
             android:id="@+id/nav_anouncement"
             android:icon="@android:drawable/ic_menu_add"
-            android:title="Add new task(Admin View)" />
+            android:title="Create new task" />
     </group>
 
-    <item android:title="Setting">
+    <item android:iconTint="@color/cardview_light_background">
         <menu>
             <item
                 android:id="@+id/nav_about"

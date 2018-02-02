@@ -5,49 +5,50 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.ListTaskAdapter;
-import com.example.niden.cellwatchsharing.classes.FireBaseRetrieve;
-import com.example.niden.cellwatchsharing.classes.User;
+import com.example.niden.cellwatchsharing.controllers.User;
+import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.utils.IntentUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;
 
 public class TechnicianActivity extends AppCompatActivity {
     TextView textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth;
-    User user = new User();
+    Account account = new Account();
+    ImageView profileImage;
     RecyclerView recyclerView;
     Query mRef;
-    FireBaseRetrieve mFirebaseRetrive = new FireBaseRetrieve();
+    User mFirebaseRetrive = new User();
+    RelativeLayout cover;
+    String mUserKey;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_technician);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setTitle("Technicians list");
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
+        bindingViews();
 
-        textViewName = (TextView)findViewById(R.id.user_profile_name);
-        textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);
-        //textViewContact = (TextView)findViewById(R.id.user);
-        recyclerView = (RecyclerView) findViewById(R.id.listTask);
-
-
-       // mFirebaseRetrive.displayProfileInfo(textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth);
-
-        mRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        mUserKey = getIntent().getStringExtra("key");
+        mFirebaseRetrive.displayProfileImage(mUserKey,TechnicianActivity.this,textViewName,textViewBio,profileImage);
+        mRef = FirebaseDatabase.getInstance().getReference()
+                .child("users")
+                .child(mUserKey)
                 .child("tasks");
 
         ListTaskAdapter mAdapter = new ListTaskAdapter(mRef, activity,R.layout.item_task );
@@ -61,16 +62,10 @@ public class TechnicianActivity extends AppCompatActivity {
         recyclerView.getItemAnimator().setAddDuration(1000);
         recyclerView.getItemAnimator().setMoveDuration(1000);
         recyclerView.setAdapter(mAdapter);
-
-
-
+        OverScrollDecoratorHelper.setUpStaticOverScroll(cover, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
 
     }
 
-    public void btnOnClickEditProfile(View view) {
-        Intent editProfileIntent = new Intent(this, EditProfileActivity.class);
-        startActivity(editProfileIntent);
-    }
 
     @Override
     public void onBackPressed() {
@@ -80,8 +75,16 @@ public class TechnicianActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        user.checkUserLogin(activity);
+        account.checkUserLogin(activity);
         super.onRestart();
+    }
+
+    private void bindingViews(){
+        profileImage= findViewById(R.id.profile_image);
+        textViewName = (TextView)findViewById(R.id.user_profile_name);
+        textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);
+        recyclerView = (RecyclerView) findViewById(R.id.listTask);
+        cover = (RelativeLayout)findViewById(R.id.background);
     }
 
 

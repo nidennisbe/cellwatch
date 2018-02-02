@@ -1,229 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    xmlns:attribute="http://schemas.android.com/apk/res-auto">
+    tools:context="com.example.niden.cellwatchsharing.activities.TechnicianActivity">
 
-    <RelativeLayout
+
+    <include layout="@layout/element_profile_cover"
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <developer.shivam.crescento.CrescentoImageView
-            android:id="@+id/header_cover_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_above="@id/header_cover_image"
-            attribute:crescentoTintColor="#a27cd4"
-            attribute:crescentoTintMode="automatic"
-            attribute:curvature="40dp"
-            attribute:gradientDirection="top_to_bottom"
-            attribute:gradientEndColor="#54d7ff"
-            attribute:gradientStartColor="#2FACFE"
-            attribute:gravity="top"
-            attribute:tintMode="src_over" />
-
-        <ImageButton
-            android:id="@+id/user_profile_photo"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_below="@+id/header_cover_image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-60dp"
-            android:background="@drawable/style_circle_profile"
-            android:elevation="1dp"
-            android:padding="20dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_user_blue" />
-
-        <TextView
-            android:id="@+id/user_profile_short_bio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/user_profile_name"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginTop="12dp"
-            android:textColor="#fff"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/user_profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_edit_profile"
-            android:layout_centerHorizontal="true"
-            android:textColor="#fff"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/btn_edit_profile"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="16dp"
-            android:src="@android:drawable/ic_menu_edit" />
-
-        <RelativeLayout
-            android:id="@+id/profile_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/header_cover_image"
-            android:background="@color/cardview_light_background"
-            android:paddingBottom="24dp"></RelativeLayout>
-
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+        android:elevation="5dp"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_layout"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="50dp"
-            android:alpha="1"
-            android:background="@drawable/ui_messagebox"
-            android:elevation="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Completed"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/btn_num_task"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:padding="20dp"
-                    android:text="Postition"
-                    android:textAlignment="textStart"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/tv_position"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:padding="20dp"
-                    android:text="Phone Number"
-                    android:textAlignment="textStart"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/tv_phonenumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:padding="20dp"
-                    android:text="Hobby"
-                    android:textAlignment="textStart"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/tv_hobby"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:padding="20dp"
-                    android:text="Expiration Date"
-                    android:textAlignment="textStart"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/tv_date_birth"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:padding="20dp"
-                    android:text="Date of Birth"
-                    android:textAlignment="textStart"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorTextLight"
+                android:text="7"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp" />
         </LinearLayout>
 
-    </RelativeLayout>
-</ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Pending"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/btn_num_task1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorTextLight"
+                android:text="5"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Uncomplete"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/btn_num_task2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorTextLight"
+                android:text="12"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/element_profile_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

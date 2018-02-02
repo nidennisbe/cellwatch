@@ -6,22 +6,25 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
-import com.example.niden.cellwatchsharing.database.PostEntityDatabase;
-import com.example.niden.cellwatchsharing.database.UserEntityDatabase;
-import com.example.niden.cellwatchsharing.database.firebase;
+import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
+import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
+import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,68 +39,70 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class CreateTaskFragment extends Fragment {
-    View parentHolder;
+
     private Activity referenceActivity;
     private EditText txTaskName,txDescription,txAddress,txSuburb,txClass;
-    private FirebaseListAdapter<PostEntityDatabase> mAdapter;
     public static FirebaseDatabase database;
-    firebase mFirebase = new firebase();
+    private Task mTask = new Task();
+    private Button mBtnStartDate,mBtnEndDate;
+    private FirebaseListAdapter<FirebaseUserEntity> mFirebaseListAdapter;
     Spinner spinner,dropDownTechnician;
-    Button mBtnStartDate,mBtnEndDate;
     DatePickerDialog datePickerDialog;
-    FirebaseListAdapter<UserEntityDatabase> mfirebaseListAdapter;
+    View parentHolder;
+    int duration = Snackbar.LENGTH_LONG;
+    LinearLayout parentLayout;
+    DatabaseReference mRefType,mRefUser;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         referenceActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_create_task_layout, container, false);
+        setHasOptionsMenu(true);
         getActivity().setTitle("New Task");
-
-        dropDownTechnician = (Spinner)parentHolder.findViewById(R.id.spinnerTechnician);
-        mBtnStartDate= (Button)parentHolder.findViewById(R.id.btnStartDate);
-        mBtnEndDate = (Button)parentHolder.findViewById(R.id.btnEndDate);
-        txTaskName = (EditText) parentHolder.findViewById(R.id.editTextTaskName);
-        txAddress = (EditText) parentHolder.findViewById(R.id.editTextAddress);
-        txDescription = (EditText) parentHolder.findViewById(R.id.editTextDescription);
-        txSuburb = (EditText) parentHolder.findViewById(R.id.editTextSuburb);
-        txClass = (EditText) parentHolder.findViewById(R.id.editTextClass);
-        spinner = (Spinner)parentHolder.findViewById(R.id.spinnerType);
-        final Button btnPost = (Button) parentHolder.findViewById(R.id.fragment_announcement_btn_post);
+        bindingViews();
 
 
-        DatabaseReference mref = FirebaseDatabase.getInstance().getReference().child("task_type");
+        parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtils.hideSoftKeyboard(v,referenceActivity);
+            }
+        });
 
-        FirebaseListAdapter<String> firebaseListAdapter = new FirebaseListAdapter<String>(referenceActivity,String.class,android.R.layout.simple_list_item_1,mref) {
+
+        mRefType = FirebaseDatabase.getInstance().getReference().child("task_type");
+        FirebaseListAdapter<String> firebaseListAdapter = new FirebaseListAdapter<String>(referenceActivity,String.class,android.R.layout.simple_list_item_1,mRefType) {
             @Override
             protected void populateView(View v, String model, int position) {
                 ((TextView)v.findViewById(android.R.id.text1)).setText(model);
+
             }
         };
         spinner.setAdapter(firebaseListAdapter);
 
 
 
-        final DatabaseReference mrefTechnician = FirebaseDatabase.getInstance().getReference().child("users");
-        mfirebaseListAdapter= new FirebaseListAdapter<UserEntityDatabase>(referenceActivity, UserEntityDatabase.class, android.R.layout.simple_list_item_1, mrefTechnician) {
+        mRefUser = FirebaseDatabase.getInstance().getReference().child("users");
+        mFirebaseListAdapter = new FirebaseListAdapter<FirebaseUserEntity>(referenceActivity, FirebaseUserEntity.class, android.R.layout.simple_list_item_1, mRefUser) {
             @Override
-            protected void populateView(final View v, final UserEntityDatabase model, int position) {
-                mrefTechnician.child(mfirebaseListAdapter.getRef(position).getKey()).child("info").addValueEventListener(new ValueEventListener() {
+            protected void populateView(final View v, FirebaseUserEntity model, int position) {
+                mRefUser.child(mFirebaseListAdapter.getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                       FirebaseUserEntity firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                        ((TextView) v.findViewById(android.R.id.text1)).setText(firebaseUserEntity.getName());
+                        if (dataSnapshot.exists()) {
+                            FirebaseUserEntity firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+                            ((TextView) v.findViewById(android.R.id.text1)).setText(firebaseUserEntity.getName());
+                        }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
-
             }
         };
-        dropDownTechnician.setAdapter(mfirebaseListAdapter);
+        dropDownTechnician.setAdapter(mFirebaseListAdapter);
 
 
 
@@ -116,28 +121,7 @@ public class CreateTaskFragment extends Fragment {
         });
 
 
-
-
-
-        btnPost.setEnabled(false);
-        btnPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mFirebase.insertTaskToFirebase(txTaskName,txClass,txDescription,txAddress,txSuburb,spinner);
-                txTaskName.setText("");
-                txAddress.setText("");
-                txDescription.setText("");
-                txSuburb.setText("");
-                txClass.setText("");
-                FragmentManager fragmentManager =getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
-            }
-        });
-
-
-
-
-        //Listener for disable and enable button item_post depend on EditText
+       /* //Listener for disable and enable button item_post depend on EditText
         txTaskName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -160,10 +144,35 @@ public class CreateTaskFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
             }
-        });
+        });*/
         return parentHolder;
-
     }
 
+    private void bindingViews(){
+        dropDownTechnician = (Spinner)parentHolder.findViewById(R.id.spinnerTechnician);
+        mBtnStartDate= (Button)parentHolder.findViewById(R.id.btnStartDate);
+        mBtnEndDate = (Button)parentHolder.findViewById(R.id.btnEndDate);
+        txTaskName = (EditText) parentHolder.findViewById(R.id.editTextTaskName);
+        txAddress = (EditText) parentHolder.findViewById(R.id.editTextAddress);
+        txDescription = (EditText) parentHolder.findViewById(R.id.editTextDescription);
+        txSuburb = (EditText) parentHolder.findViewById(R.id.editTextSuburb);
+        txClass = (EditText) parentHolder.findViewById(R.id.editTextClass);
+        spinner = (Spinner)parentHolder.findViewById(R.id.spinnerType);
+        parentLayout = (LinearLayout)parentHolder.findViewById(R.id.layout_parent);
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.create_task_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        mTask.insertTask(txTaskName,txClass,txDescription,txAddress,txSuburb,spinner);
+        ToastUtils.showSnackbar(getView(),getString(R.string.txt_submit_task),duration);
+        FragmentManager fragmentManager =getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
+        return super.onOptionsItemSelected(item);
+    }
 }

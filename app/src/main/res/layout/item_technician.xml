@@ -3,31 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
-    android:padding="20dp">
+    android:layout_height="120dp"
+    android:padding="10dp">
 
     <LinearLayout
+        android:id="@+id/item_click"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_editor_absoluteY="10dp">
 
-        <QuickContactBadge
-            android:id="@+id/quickContactBadge2"
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/technician_profile"
             android:layout_width="250dp"
-            android:layout_height="80dp"
+            android:layout_height="220dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_user_blue" />
+            android:elevation="3dp"
+            android:src="@drawable/ic_user_blue"
+            app:civ_border_width="10dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/semiTransparentWhite"
+            app:civ_shadow_radius="10" />
 
         <TextView
             android:id="@+id/txt_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:padding="15dp"
             android:text="Name"
-            android:textColor="@color/colorTextDark"
-            android:textSize="30sp"
+            android:textColor="#898989"
+            android:textSize="18sp"
+            android:textStyle="bold"
             tools:layout_editor_absoluteX="63dp"
             tools:layout_editor_absoluteY="39dp" />
+
+        <ImageView
+            android:id="@+id/status"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/presence_online" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

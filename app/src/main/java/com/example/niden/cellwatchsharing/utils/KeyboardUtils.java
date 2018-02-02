@@ -2,6 +2,7 @@ package com.example.niden.cellwatchsharing.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,11 +13,8 @@ import android.widget.EditText;
 
 public class KeyboardUtils {
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
-        }
+    public static void hideSoftKeyboard(View view,Context context) {
+        InputMethodManager in = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
