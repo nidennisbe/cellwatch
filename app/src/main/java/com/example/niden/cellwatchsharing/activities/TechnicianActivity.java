@@ -45,8 +45,6 @@ public class TechnicianActivity extends AppCompatActivity {
         bindingViews();
 
         mUserKey = getIntent().getStringExtra("key");
-
-
         mFirebaseRetrive.displayProfileImage(mUserKey,TechnicianActivity.this,textViewName,textViewBio,profileImage);
         mRef = FirebaseDatabase.getInstance().getReference()
                 .child("users")
@@ -57,7 +55,6 @@ public class TechnicianActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new SlideInDownAnimator(new OvershootInterpolator(1f)));

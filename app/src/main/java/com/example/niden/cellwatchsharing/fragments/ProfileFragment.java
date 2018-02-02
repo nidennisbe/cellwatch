@@ -33,10 +33,10 @@ public class ProfileFragment extends Fragment {
     private Activity refActivity;
     private User mFirebaseRetrive = new User();
     private Account mAccount = new Account();
-    TextView textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth;
+    TextView textViewName,textViewBio,textViewPhone,textViewHobby, textViewExpDate;
     ImageView profileImage;
     View parentHolder;
-    Button taskButton;
+    TextView taskButton;
 
     FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
 
@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment {
         getActivity().setTitle("Profile");
         bindingViews();
 
-        mFirebaseRetrive.displayProfileInfo(refActivity,textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth,profileImage);
+        mFirebaseRetrive.displayProfileInfo(refActivity,textViewName,textViewBio,textViewPhone,textViewHobby, textViewExpDate,profileImage);
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,13 +63,13 @@ public class ProfileFragment extends Fragment {
 
 
     private void bindingViews() {
-        taskButton = (Button)parentHolder.findViewById(R.id.btn_num_task);
+        taskButton = (TextView)parentHolder.findViewById(R.id.btn_num_task);
         profileImage = (ImageView)parentHolder.findViewById(R.id.profile_image) ;
         textViewName = (TextView)parentHolder.findViewById(R.id.user_profile_name);
         textViewBio = (TextView)parentHolder.findViewById(R.id.user_profile_short_bio);
         textViewPhone = (TextView)parentHolder.findViewById(R.id.tv_phonenumber);
-        textViewHobby = (TextView)parentHolder.findViewById(R.id.tv_hobby);
-        textViewDateBirth = (TextView)parentHolder.findViewById(R.id.tv_date_birth);
+        textViewHobby = (TextView)parentHolder.findViewById(R.id.prof_tv_hobby);
+        textViewExpDate = (TextView)parentHolder.findViewById(R.id.prof_tv_exp_date);
 
     }
 

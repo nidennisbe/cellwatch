@@ -33,7 +33,7 @@ public class TaskAdminViewFragment extends Fragment {
     public Activity activity =getActivity();
     View myView;
     RecyclerView recyclerView;
-    Query mQuery;
+    DatabaseRef mQuery;
     TextView texetViewNumberOfTask;
 
 

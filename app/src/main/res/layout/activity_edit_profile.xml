@@ -149,23 +149,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Exipation Date"
+                    android:text="Hobby"
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/profile_hobby"
-                    android:layout_width="match_parent"
+                    android:id="@+id/ed_profile_hobby"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_weight="5"
                     android:fontFamily="sans-serif-light"
-                    android:hint="@string/edit_profile_hobby"
-                    android:inputType="text"
+                    android:textColor="@color/colorTextDark"
                     android:maxLines="1"
                     android:padding="12dp"
-                    android:singleLine="true"
-                    android:textColor="@color/colorTextDark"
-                    android:textSize="18sp" />
+                    android:hint="Hobby" />
+
+
             </TableRow>
 
             <TableRow
@@ -177,17 +175,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Hobby"
+                    android:text="Expiration Date"
                     android:textSize="18sp" />
 
+
                 <EditText
-                    android:id="@+id/profile_expiration_date"
+                    android:id="@+id/ed_profile_exp_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_weight="5"
                     android:fontFamily="sans-serif-light"
-                    android:hint="Expiration Date"
+                    android:hint="Expiration"
                     android:inputType="text"
                     android:maxLines="1"
                     android:padding="12dp"

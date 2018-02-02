@@ -8,34 +8,28 @@ public class FirebaseUserEntity {
     private String name;
     private String bio;
     private String phone;
-    private String birthday;
     private String hobby;
     private String expiration_date;
     private String profile_url;
-    private int user_type;
+    private String user_type;
 
 
 
     public FirebaseUserEntity(){
     }
 
-    public FirebaseUserEntity(String uId, String email, String name, String bio, String phone, String birthday, String hobby, String expiration_date,String profile_url,int user_type) {
+    public FirebaseUserEntity(String uId, String email, String name, String bio, String phone, String hobby, String expiration_date,String profile_url,String user_type) {
         this.uId = uId;
         this.email = email;
         this.name = name;
         this.bio = bio;
         this.phone = phone;
-        this.birthday = birthday;
         this.hobby = hobby;
         this.expiration_date = expiration_date;
         this.profile_url = profile_url;
         this.user_type = user_type;
-
     }
 
-    public FirebaseUserEntity(String profile_url) {
-        this.profile_url = profile_url;
-}
 
     public String getId() {
         return uId;
@@ -57,9 +51,6 @@ public class FirebaseUserEntity {
         return phone;
     }
 
-    public String getBirthday() {
-        return birthday;
-    }
 
     public String getHobby() {
         return hobby;
@@ -85,9 +76,6 @@ public class FirebaseUserEntity {
         this.phone = phone;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
@@ -108,7 +96,7 @@ public class FirebaseUserEntity {
         this.profile_url = profile_url;
     }
 
-    public int getUser_type() {
+    public String getUser_type() {
         return user_type;
     }
 }

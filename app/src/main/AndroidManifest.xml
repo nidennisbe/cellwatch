@@ -52,7 +52,8 @@
             android:name=".activities.EditProfileActivity"
             android:label="@string/title_activity_technician"
             android:windowSoftInputMode="stateHidden|adjustResize"
-            android:theme="@style/AppTheme.NoActionBar"  />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
 
 
         <activity android:name=".activities.TaskDetailActivity"

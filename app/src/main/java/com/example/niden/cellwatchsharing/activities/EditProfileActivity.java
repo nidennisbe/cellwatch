@@ -35,7 +35,6 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
-import static com.example.niden.cellwatchsharing.utils.ToastUtils.displayMessageToast;
 
 
 //sixth push
@@ -51,12 +50,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editProfileBio;
     private EditText editProfileContact;
     private EditText editProfileHobby;
-    private EditText editProfileBirthday;
+    private EditText editProfileExp;
     private ImageView profile;
     private User mUser = new User();
     public CoordinatorLayout coordinatorLayout;
     LinearLayout parentLayout;
     Activity mActivity;
+    FirebaseDatabaseHelper firebaseDatabaseHelper = new FirebaseDatabaseHelper();
 
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -78,8 +78,8 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfileName = (EditText) findViewById(R.id.profile_name);
         editProfileBio = (EditText) findViewById(R.id.profile_bio);
         editProfileContact = (EditText) findViewById(R.id.profile_phone);
-        editProfileHobby = (EditText) findViewById(R.id.profile_expiration_date);
-        editProfileBirthday = (EditText) findViewById(R.id.profile_hobby);
+        editProfileHobby = (EditText) findViewById(R.id.ed_profile_hobby);
+        editProfileExp = (EditText) findViewById(R.id.ed_profile_exp_date);
         parentLayout = (LinearLayout) findViewById(R.id.layout_parent);
 
 
@@ -89,7 +89,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 KeyboardUtils.hideSoftKeyboard(v, mActivity);
             }
         });
-        mUser.displayEditInfo(mActivity, editProfileName, editProfileBio, editProfileContact, editProfileHobby, editProfileBirthday, profile);
+        mUser.displayEditInfo(mActivity, editProfileName, editProfileBio, editProfileContact, editProfileHobby, editProfileExp, profile);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,12 +149,15 @@ public class EditProfileActivity extends AppCompatActivity {
         String profileBio = editProfileBio.getText().toString();
         String profileContact = editProfileContact.getText().toString();
         String profileHobby = editProfileHobby.getText().toString();
-        String profileBirthday = editProfileBirthday.getText().toString();
+        String profileExpDate = editProfileExp.getText().toString();
+
+
 
         // update the account profile information in Firebase database.\
-        if (TextUtils.isEmpty(profileName) || TextUtils.isEmpty(profileBio) || TextUtils.isEmpty(profileContact)
-                || TextUtils.isEmpty(profileHobby) || TextUtils.isEmpty(profileBirthday)) {
-            displayMessageToast(mActivity, "All fields must be filled");
+        if (TextUtils.isEmpty(profileName) && TextUtils.isEmpty(profileBio) && TextUtils.isEmpty(profileContact)
+                && TextUtils.isEmpty(profileHobby) && TextUtils.isEmpty(profileExpDate)) {
+            ToastUtils.showSnackbar(coordinatorLayout, "Please fill in all the fields", Snackbar.LENGTH_LONG);
+            return;
         }
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -166,8 +169,7 @@ public class EditProfileActivity extends AppCompatActivity {
             String id = user.getUid();
             String profileEmail = user.getEmail();
 
-            firebaseUserEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby, profileBirthday, profileHobby, "", 0);
-            FirebaseDatabaseHelper firebaseDatabaseHelper = new FirebaseDatabaseHelper();
+            firebaseUserEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby,  profileExpDate,"" , "technician");
             firebaseDatabaseHelper.createUserInFirebaseDatabase(id, firebaseUserEntity);
             Intent intent = new Intent(mActivity, MainActivity.class);
             startActivity(intent);

@@ -35,8 +35,8 @@ import java.util.HashMap;
 
 public class Account {
     private static final String TAG = Account.class.getSimpleName();
-    public static FirebaseAuth firebaseAuth;
-    public static FirebaseAuth.AuthStateListener mAuthListener;
+    private  FirebaseAuth firebaseAuth;
+    public  FirebaseAuth.AuthStateListener mAuthListener;
 
 
     public FirebaseAuth getFirebaseAuth() {
@@ -90,21 +90,9 @@ public class Account {
                             Intent myIntent = new Intent(context, EditProfileActivity.class);
                             context.startActivity(myIntent);
                             ((Activity) context).finish();
-                            //insertUserInformation();
                         }
                     }
                 });
-    }
-
-    //Method for get account information and put in Database
-    private void insertUserInformation() {
-        final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users");
-        // Get references to the DialogsUtils of item_message.xmle.xml
-        // EditText inputEmail = (EditText) findViewById(R.id.message_text);
-        HashMap<String, Object> userData = new HashMap<>();
-        userData.put("uid:", firebaseAuth.getUid());
-        userData.put("userEmail:", firebaseAuth.getCurrentUser().getEmail());
-        mRef.push().setValue(userData);
     }
 
 

@@ -40,12 +40,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
     private static final int SELECT_PICTURE = 100;
+    public static final String ADMIN = "admin";
+    public static final String TECHNICIAN = "technician";
     public static Activity activity;
     NavigationView navigationView;
     FragmentManager fragmentManager;
     AlertDialog.Builder myAlertDialog;
-    public static final int ADMIN = 1;
-    public static final int TECHNICIAN = 0;
+
     String TAG ="11";
     private FirebaseAuth.AuthStateListener mAuthListener;
     public  FirebaseAuth firebaseAuth;
@@ -155,12 +156,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) { // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + firebaseUser.getUid());
-                    FirebaseDatabase.getInstance().getReference().child("users").child(firebaseUser.getUid()).child("info").addListenerForSingleValueEvent(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference().child("users").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 FirebaseUserEntity user = dataSnapshot.getValue(FirebaseUserEntity.class);
-                                int type = user.getUser_type();
+                                String type = user.getUser_type();
                                 switch (type) {
                                     case TECHNICIAN:
                                         technicianNavItem();
@@ -168,6 +169,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         break;
                                     case ADMIN:
                                         adminNavItem();
+                                        fragmentManager =getFragmentManager();
+                                        fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();
                                         Toast.makeText(activity, "ADMIN VIEW", Toast.LENGTH_SHORT).show();
                                         break;
                                 }

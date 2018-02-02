@@ -1,49 +1,60 @@
 package com.example.niden.cellwatchsharing.controllers;
 
-import android.util.Log;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import android.os.Environment;
+
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.util.Zip4jConstants;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 /**
  * Created by niden on 31-Jan-18.
  */
 
 public class Zip {
+    public static final File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
+            "yourAppFoler");
 
-    public void zipProcess(List<String> files, String zipFile) throws IOException {
-        int BUFFER_SIZE = 2048;
-        BufferedInputStream origin = null;
-        ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(zipFile)));
-        try {
-            byte data[] = new byte[BUFFER_SIZE];
+    public String zipper(List<String> allFiles, String zipFileName) throws IOException, ZipException {
+        //String timeStampOfZipFile =new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());mediaStorageDir.mkdirs();
+       String zippath = mediaStorageDir.getAbsolutePath() + "/" + zipFileName+ "GG" +  ".zip";
 
-            for (int i = 0; i < files.size(); i++) {
-                FileInputStream fi = new FileInputStream(files.get(i));
-                origin = new BufferedInputStream(fi, BUFFER_SIZE);
-                try {
-                    ZipEntry entry = new ZipEntry(files.get(i).substring(files.get(i).lastIndexOf("/") + 1));
-                    out.putNextEntry(entry);
-                    int count;
-                    while ((count = origin.read(data, 0, BUFFER_SIZE)) != -1) {
-                        out.write(data, 0, count);
-                    }
-                }
-                finally {
-                    origin.close();
+            if (new File(zippath).exists())
+            {
+                new File(zippath).delete();
+            }
+           // new File(zipFileName).delete(); // Delete if exists
+
+            ZipFile zipFile = new ZipFile(zippath);
+
+        ZipParameters zipParameters = new ZipParameters();
+            zipParameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
+            zipParameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
+            zipParameters.setPassword("Reset");
+
+            if (allFiles.size() > 0)
+            {
+                for (String fileName : allFiles)
+                {
+
+                    File file = new File(fileName);
+                    zipFile.addFile(file,zipParameters);
+
                 }
             }
-        }
-        finally {
-            out.close();
-        }
+
+
+
+
+        return zippath;
     }
+
+
 }

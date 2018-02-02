@@ -23,7 +23,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -32,12 +31,13 @@ import com.squareup.picasso.Picasso;
  */
 
 public class TechniciansFragment extends Fragment {
-    private DatabaseReference mRef;
+    public DatabaseReference mRef;
     View myView;
     private Activity activity = getActivity();
     private FirebaseListAdapter<FirebaseUserEntity> mTechAdapter;
     private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
-    private ListView technicianList;
+    ListView technicianList;
+
 
 
     @Nullable
@@ -49,12 +49,7 @@ public class TechniciansFragment extends Fragment {
         activity.setTitle(getString(R.string.toobar_technicians));
         setHasOptionsMenu(true);
         technicianList = (ListView) myView.findViewById(R.id.list_technician);
-        displayFriendsList();
-        return myView;
-    }
 
-
-    public void displayFriendsList() {
         mRef = FirebaseDatabase.getInstance().getReference().child("users");
         mTechAdapter = new FirebaseListAdapter<FirebaseUserEntity>(activity, FirebaseUserEntity.class,
                 R.layout.item_technician, mRef) {
@@ -63,7 +58,9 @@ public class TechniciansFragment extends Fragment {
             protected void populateView(View v, FirebaseUserEntity model, final int position) {
                 final TextView name_user = (TextView) v.findViewById(R.id.txt_name);
                 final ImageView profile_user = (ImageView) v.findViewById(R.id.technician_profile);
-                mRef.child(mTechAdapter.getRef(position).getKey()).child("info").addValueEventListener(new ValueEventListener() {
+
+
+                mRef.child(mTechAdapter.getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
@@ -95,7 +92,15 @@ public class TechniciansFragment extends Fragment {
             }
         };
         technicianList.setAdapter(mTechAdapter);
+        return myView;
+
     }
+
+
+    public void displayFriendsList() {
+
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

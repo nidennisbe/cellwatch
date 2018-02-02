@@ -9,7 +9,7 @@ import android.provider.MediaStore;
 import java.io.File;
 import java.io.IOException;
 
-import static com.example.niden.cellwatchsharing.helper.Helper.SELECT_PICTURE;
+
 
 /**
  * Created by niden on 25-Jan-18.

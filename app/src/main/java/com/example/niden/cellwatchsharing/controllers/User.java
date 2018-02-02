@@ -34,17 +34,17 @@ import java.util.UUID;
 
 public class User  {
 
-    private String strName, strBio, strPhone, strHobby, strDateBirth, strProfileUrl;
+    private String strName, strBio, strPhone, strHobby, strExpDate, strProfileUrl;
     private DatabaseReference mRefUserInfo;
     private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
     private Account mAccount = new Account();
 
 
     //Showing profile information
-    public void displayProfileInfo(final Context context, final TextView textViewName, final TextView textViewBio, final TextView textViewPhone, final TextView textViewHobby, final TextView textViewDateBirth, final ImageView profilePicture) {
+    public void displayProfileInfo(final Context context, final TextView textViewName, final TextView textViewBio, final TextView textViewPhone, final TextView textViewExpDate, final TextView textViewHobby, final ImageView profilePicture) {
         mRefUserInfo = FirebaseDatabase.getInstance().getReference("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("info");
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -54,7 +54,7 @@ public class User  {
                     textViewBio.setText(strBio);
                     textViewName.setText(strName);
                     textViewHobby.setText(strHobby);
-                    textViewDateBirth.setText(strDateBirth);
+                    textViewExpDate.setText(strExpDate);
                     if (strProfileUrl.isEmpty()) {
                         profilePicture.setImageResource(R.drawable.ic_user_blue);
                     }else {
@@ -79,7 +79,7 @@ public class User  {
 
     public void displayProfileImage(final String mUserKey,final Context context, final TextView textViewName, final TextView textViewBio, final ImageView profilePicture) {
         mRefUserInfo = FirebaseDatabase.getInstance().getReference("users")
-                .child(mUserKey).child("info");
+                .child(mUserKey);
         mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -109,9 +109,9 @@ public class User  {
 
 
     //Showing profile information
-    public void displayEditInfo(final Context context, final EditText editProfileName, final EditText editProfileBio, final EditText editProfileContact, final EditText editProfileHobby, final EditText editProfileBirthday, final ImageView profile) {
+    public void displayEditInfo(final Context context, final EditText editProfileName, final EditText editProfileBio, final EditText editProfileContact, final EditText editProfileHobby, final EditText editProfileExpDate, final ImageView profile) {
         mRefUserInfo = FirebaseDatabase.getInstance().getReference("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("info");
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -121,7 +121,7 @@ public class User  {
                     editProfileBio.setText(strBio);
                     editProfileName.setText(strName);
                     editProfileHobby.setText(strHobby);
-                    editProfileBirthday.setText(strDateBirth);
+                    editProfileExpDate.setText(strExpDate);
                     if (strProfileUrl.isEmpty()) {
                         profile.setImageResource(R.drawable.ic_user_blue);
                     }else {
@@ -157,8 +157,7 @@ public class User  {
                             Map<String, Object> user = new HashMap<>();
                             user.put("profile_url", url);
                             databaseReference.child("users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .child("info").updateChildren(user);
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(user);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -184,7 +183,7 @@ public class User  {
         strBio = firebaseUserEntity.getBio();
         strPhone = firebaseUserEntity.getPhone();
         strHobby = firebaseUserEntity.getHobby();
-        strDateBirth = firebaseUserEntity.getBirthday();
+        strExpDate = firebaseUserEntity.getExpiration_date();
         strProfileUrl = firebaseUserEntity.getProfile_url();
     }
 }

@@ -64,21 +64,7 @@ public class SignUpActivity extends AppCompatActivity{
                 KeyboardUtils.hideSoftKeyboard(v,mActivity);
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-                if (TextUtils.isEmpty(email)) {
-                    ToastUtils.displayMessageToast(mActivity,getString(R.string.validation_email));
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    ToastUtils.displayMessageToast(mActivity,getString(R.string.validation_password));
-                    return;
-                }
-                if (password.length() < 6) {
-                    ToastUtils.displayMessageToast(mActivity,getString(R.string.alert_short_password));
-                    return;
-                }else{
-                    myDialog= DialogsUtils.showProgressDialog(mActivity,getString(R.string.sign_up_process));
-                }
-                mAccount.createNewUser(mActivity,email,password,myDialog);
+                fieldsValidation(email,password);
             }
         });
     }
@@ -89,6 +75,24 @@ public class SignUpActivity extends AppCompatActivity{
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         parentLayout = (CoordinatorLayout) findViewById(R.id.layout_parent);
+    }
+
+    private void fieldsValidation(String email,String password){
+        if (TextUtils.isEmpty(email)) {
+            ToastUtils.displayMessageToast(mActivity,getString(R.string.validation_email));
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            ToastUtils.displayMessageToast(mActivity,getString(R.string.validation_password));
+            return;
+        }
+        if (password.length() < 6) {
+            ToastUtils.displayMessageToast(mActivity,getString(R.string.alert_short_password));
+            return;
+        }else{
+            myDialog= DialogsUtils.showProgressDialog(mActivity,getString(R.string.sign_up_process));
+        }
+        mAccount.createNewUser(mActivity,email,password,myDialog);
     }
 
 

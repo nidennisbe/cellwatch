@@ -37,6 +37,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
+import net.lingala.zip4j.exception.ZipException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -112,26 +114,28 @@ public class TaskDetailActivity extends AppCompatActivity {
 
 
     public void displayTaskDetail(final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb) {
-        String unlock = getIntent().getStringExtra("key");
+        String taskKey = getIntent().getStringExtra("key");
         mDataReference = FirebaseDatabase.getInstance().getReference("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("tasks").child(unlock);
+                .child("tasks").child(taskKey);
 
         mDataReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
-                strTaskName = taskEntityDatabase.getTask_name();
-                strDescription = taskEntityDatabase.getTask_description();
-                strAddress = taskEntityDatabase.getTask_address();
-                strClass = taskEntityDatabase.getTask_class();
-                strSuburb = taskEntityDatabase.getTask_suburb();
+                if (dataSnapshot.exists()) {
+                    taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
+                    strTaskName = taskEntityDatabase.getTask_name();
+                    strDescription = taskEntityDatabase.getTask_description();
+                    strAddress = taskEntityDatabase.getTask_address();
+                    strClass = taskEntityDatabase.getTask_class();
+                    strSuburb = taskEntityDatabase.getTask_suburb();
 
-                etTaskName.setText(strTaskName);
-                etClass.setText(strClass);
-                etDescription.setText(strDescription);
-                etAddress.setText(strAddress);
-                etSuburb.setText(strSuburb);
+                    etTaskName.setText(strTaskName);
+                    etClass.setText(strClass);
+                    etDescription.setText(strDescription);
+                    etAddress.setText(strAddress);
+                    etSuburb.setText(strSuburb);
+                }
             }
 
             @Override
@@ -162,17 +166,22 @@ public class TaskDetailActivity extends AppCompatActivity {
                     fileDoneList.add("uploading");
                     uploadListAdapter.notifyDataSetChanged();
 
-                    StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
+                    final StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
                     final int finalI = i;
                     fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            try {
+                                mZip.zipper(fileNameList,fileName);
+                            } catch (IOException | ZipException e) {
+                                e.printStackTrace();
+                            }
                             fileDoneList.remove(finalI);
                             fileDoneList.add(finalI, "done");
                             uploadListAdapter.notifyDataSetChanged();
                         }
                     });
-                    ToastUtils.showSnackbar(recyclerView, "Upload completed", Snackbar.LENGTH_LONG);
+
                 }
             } else if (data.getData() != null) {
                 Toast.makeText(TaskDetailActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();

@@ -36,13 +36,14 @@
                 android:text="Completed"
                 android:textSize="12sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_num_task"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/colorTextLight"
                 android:text="7"
+                android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -62,13 +63,14 @@
                 android:text="Pending"
                 android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/btn_num_task"
+            <TextView
+                android:id="@+id/btn_num_task1"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/colorTextLight"
                 android:text="5"
+                android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -87,13 +89,14 @@
                 android:text="Uncomplete"
                 android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/btn_num_task"
+            <TextView
+                android:id="@+id/btn_num_task2"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/colorTextLight"
                 android:text="12"
+                android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
         </LinearLayout>

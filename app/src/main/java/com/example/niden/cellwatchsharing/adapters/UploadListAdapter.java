@@ -14,6 +14,7 @@ import com.example.niden.cellwatchsharing.database.GallaryEntityDatabase;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
