@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
-import com.example.niden.cellwatchsharing.helper.FirebaseDatabaseHelper;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
@@ -52,11 +51,10 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editProfileHobby;
     private EditText editProfileExp;
     private ImageView profile;
-    private UserProfile mUserProfile = new UserProfile();
+    UserProfile mUserProfile = new UserProfile();
     public CoordinatorLayout coordinatorLayout;
     LinearLayout parentLayout;
     Activity mActivity;
-    FirebaseDatabaseHelper firebaseDatabaseHelper = new FirebaseDatabaseHelper();
 
 
     @Override
@@ -161,7 +159,7 @@ public class EditProfileActivity extends AppCompatActivity {
             String profileEmail = user.getEmail();
 
             firebaseUserEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby,  profileExpDate,"" , "technician");
-            firebaseDatabaseHelper.createUserInFirebaseDatabase(id, firebaseUserEntity);
+            mUserProfile.saveUserProfileInfo(id, firebaseUserEntity);
             Intent intent = new Intent(mActivity, MainActivity.class);
             startActivity(intent);
             mActivity.finish();

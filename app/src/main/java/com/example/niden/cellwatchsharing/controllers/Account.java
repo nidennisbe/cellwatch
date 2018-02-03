@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -98,7 +99,7 @@ public class Account {
 
 
     //Login USER method
-    public void loginAUser(final ScrollView v, final Context context, String email, String password, final ProgressDialog myDialog) {
+    public void loginAUser(final LinearLayout v, final Context context, String email, String password, final ProgressDialog myDialog) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
                     @Override

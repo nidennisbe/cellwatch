@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -44,25 +45,27 @@ public class RecyclerTechniciansAdapter extends FirebaseRecyclerAdapter<Firebase
         mTechRef.child(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                FirebaseUserEntity firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                viewHolder.name_user.setText(firebaseUserEntity.getName());
-                String url = firebaseUserEntity.getProfile_url();
-                if (url.isEmpty()) {
-                    viewHolder.profile_user.setImageResource(R.drawable.ic_user_blue);
-                } else {
-                    Picasso.with(activity).load(url)
-                            .resize(110, 110).centerCrop()
-                            .into( viewHolder.profile_user);
-                }
-                viewHolder.profile_user.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent myIntent = new Intent(activity, TechnicianActivity.class);
-                        myIntent.putExtra("key", getRef(position).getKey());
-                        activity.startActivity(myIntent);
+                if (dataSnapshot.exists()) {
+                    viewHolder.name_user.setText(model.getName());
+                    viewHolder.textTypeUser.setText(model.getUser_type());
+                    String url = model.getProfile_url();
+                    if (url.isEmpty()) {
+                        viewHolder.profile_user.setImageResource(R.drawable.ic_user_blue);
+                    } else {
+                        Picasso.with(activity).load(url)
+                                .resize(110, 110).centerCrop()
+                                .into(viewHolder.profile_user);
                     }
-                });
-
+                    viewHolder.card.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            v.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.zoom_in));
+                            Intent myIntent = new Intent(activity, TechnicianActivity.class);
+                            myIntent.putExtra(ID_KEY, getRef(position).getKey());
+                            activity.startActivity(myIntent);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -76,7 +79,7 @@ public class RecyclerTechniciansAdapter extends FirebaseRecyclerAdapter<Firebase
     public static class Viewholder extends RecyclerView.ViewHolder {
 
         ImageView profile_user;
-        TextView name_user;
+        TextView name_user,textTypeUser;
         LinearLayout card;
 
         public Viewholder(View view) {
@@ -84,6 +87,7 @@ public class RecyclerTechniciansAdapter extends FirebaseRecyclerAdapter<Firebase
             name_user = (TextView) view.findViewById(R.id.txt_name);
             profile_user = (ImageView) view.findViewById(R.id.technician_profile);
             card = (LinearLayout) view.findViewById(R.id.item_click);
+            textTypeUser= (TextView)view.findViewById(R.id.txt_role);
         }
     }
 

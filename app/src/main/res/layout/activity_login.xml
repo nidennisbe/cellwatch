@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_parent_scroll"
+    android:id="@+id/layout_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -36,6 +36,7 @@
             android:textSize="18sp" />
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/email_text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -44,18 +45,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/ic_email"
-                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_email"
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
                 android:padding="20dp"
+                android:drawablePadding="5dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/white"
                 android:textColorLink="@android:color/white" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/password_text_input"
             android:layout_width="match_parent"
+            app:passwordToggleEnabled="true"
+            app:errorEnabled="true"
             android:layout_height="wrap_content">
 
             <EditText
@@ -63,10 +67,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/ic_password"
-                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_password"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
+                android:drawablePadding="5dp"
                 android:padding="20dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/white"
@@ -111,5 +115,5 @@
             android:textSize="18sp" />
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>
 

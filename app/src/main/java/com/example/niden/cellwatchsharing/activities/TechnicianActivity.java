@@ -21,17 +21,17 @@ import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;
+import static com.example.niden.cellwatchsharing.fragments.TaskFragment.recyclerView;
 
 public class TechnicianActivity extends AppCompatActivity {
     TextView textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth;
     Account account = new Account();
     ImageView profileImage;
-    RecyclerView recyclerView;
     Query mRef;
     UserProfile mUserProfile = new UserProfile();
     RelativeLayout cover;
-    String mUserKey;
-
+    public  static String mUserKey;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

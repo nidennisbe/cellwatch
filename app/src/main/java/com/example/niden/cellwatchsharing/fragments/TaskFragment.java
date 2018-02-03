@@ -10,9 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.RecyclerTaskAdapter;
+
+import org.w3c.dom.Text;
 
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
@@ -27,7 +30,8 @@ public class TaskFragment extends Fragment {
     public RecyclerTaskAdapter mAdapter;
     public Activity activity = getActivity();
     View myView;
-    RecyclerView recyclerView;
+    public  static RecyclerView recyclerView;
+    public  static TextView emptyView;
 
     @Nullable
     @Override
@@ -38,6 +42,7 @@ public class TaskFragment extends Fragment {
         this.activity = getActivity();
         getActivity().setTitle(getString(R.string.toobar_tasks));
 
+         emptyView = (TextView) myView.findViewById(R.id.empty_view);
 
         mAdapter = new RecyclerTaskAdapter(QUERY_ALL_TASK_INDIVIDUAL, activity, R.layout.item_task);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);

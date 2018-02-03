@@ -10,9 +10,7 @@
         android:id="@+id/item_click"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="10dp">
+        android:orientation="horizontal">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/technician_profile"
@@ -26,19 +24,33 @@
             app:civ_shadow_color="@color/semiTransparentWhite"
             app:civ_shadow_radius="10" />
 
-        <TextView
-            android:id="@+id/txt_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:padding="15dp"
-            android:text="Name"
-            android:textColor="#898989"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="63dp"
-            tools:layout_editor_absoluteY="39dp" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-light"
+                android:padding="@dimen/standard_padding"
+                android:text="Name"
+                android:textColor="#898989"
+                android:textSize="@dimen/large_font"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/standard_padding"
+                android:text="TextView" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/status"

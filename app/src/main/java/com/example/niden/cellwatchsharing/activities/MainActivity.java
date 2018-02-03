@@ -163,13 +163,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 switch (type) {
                                     case TECHNICIAN:
                                         technicianNavItem();
-                                        Toast.makeText(activity, "TECHNICIAN VIEW", Toast.LENGTH_SHORT).show();
                                         break;
                                     case ADMIN:
                                         adminNavItem();
                                         fragmentManager =getFragmentManager();
                                         fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();
-                                        Toast.makeText(activity, "ADMIN VIEW", Toast.LENGTH_SHORT).show();
                                         break;
                                 }
                             }

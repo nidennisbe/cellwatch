@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.ImageUploadLRecyclerAdapter;
+import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.controllers.Zip;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
@@ -47,14 +48,12 @@ public class TaskDetailActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView imageView, btnCamera;
     EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
-    String strTaskName, strDescription, strAddress, strClass, strSuburb;
-    DatabaseReference mDataReference;
-    TaskEntityDatabase taskEntityDatabase = new TaskEntityDatabase();
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
     private StorageReference mStorage;
     public List<String> fileNameList;
     public List<String> fileDoneList;
     Zip mZip = new Zip();
+    Task mTask = new Task();
     String zipFileName;
 
 
@@ -76,8 +75,8 @@ public class TaskDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(imageUploadLRecyclerAdapter);
-
-        displayTaskDetail(etTaskName, etClass, etDescription, etAddress, etSuburb);
+        String taskKey = getIntent().getStringExtra(ID_KEY);
+        mTask.displayTaskDetail(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb);
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -93,7 +92,6 @@ public class TaskDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GallaryUtils.openGallary(TaskDetailActivity.this, RESULT_LOAD_IMAGE);
-
             }
         });
     }
@@ -109,38 +107,6 @@ public class TaskDetailActivity extends AppCompatActivity {
         etSuburb = (EditText) findViewById(R.id.et_task_suburb);
     }
 
-
-    public void displayTaskDetail(final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb) {
-        String taskKey = getIntent().getStringExtra(ID_KEY);
-        mDataReference = FirebaseDatabase.getInstance().getReference("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("tasks").child(taskKey);
-
-        mDataReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
-                    strTaskName = taskEntityDatabase.getTask_name();
-                    strDescription = taskEntityDatabase.getTask_description();
-                    strAddress = taskEntityDatabase.getTask_address();
-                    strClass = taskEntityDatabase.getTask_class();
-                    strSuburb = taskEntityDatabase.getTask_suburb();
-
-                    etTaskName.setText(strTaskName);
-                    etClass.setText(strClass);
-                    etDescription.setText(strDescription);
-                    etAddress.setText(strAddress);
-                    etSuburb.setText(strSuburb);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-    }
 
     @Override
     public void onBackPressed() {
@@ -169,7 +135,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             try {
-                                mZip.zipper(fileNameList,fileName);
+                                mZip.zipper(fileNameList, fileName);
                             } catch (IOException | ZipException e) {
                                 e.printStackTrace();
                             }

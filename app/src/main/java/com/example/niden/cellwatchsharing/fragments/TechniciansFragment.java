@@ -51,12 +51,10 @@ public class TechniciansFragment extends Fragment {
         activity = getActivity();
         activity.setTitle(getString(R.string.toobar_technicians));
         setHasOptionsMenu(true);
-        technicianList = (RecyclerView) myView.findViewById(R.id.list_technician);
 
+        technicianList = (RecyclerView) myView.findViewById(R.id.list_technician);
         recyclerTechniciansAdapter = new RecyclerTechniciansAdapter(QUERY_TECHNICIAN,activity,R.layout.item_technician);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
         technicianList.setHasFixedSize(true);
         technicianList.setLayoutManager(layoutManager);
         technicianList.setAdapter(recyclerTechniciansAdapter);
