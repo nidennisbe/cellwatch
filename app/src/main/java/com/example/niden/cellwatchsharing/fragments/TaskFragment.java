@@ -42,7 +42,7 @@ public class TaskFragment extends Fragment {
         this.activity = getActivity();
         getActivity().setTitle(getString(R.string.toobar_tasks));
 
-         emptyView = (TextView) myView.findViewById(R.id.empty_view);
+        emptyView = (TextView) myView.findViewById(R.id.empty_view);
 
         mAdapter = new RecyclerTaskAdapter(QUERY_ALL_TASK_INDIVIDUAL, activity, R.layout.item_task);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);

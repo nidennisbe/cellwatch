@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/item_click"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="5dp"
+        android:orientation="horizontal">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/item_s_profile"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:elevation="5dp"
+            android:src="@drawable/ic_user_blue"
+            app:civ_border_width="10dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/semiTransparentWhite"
+            app:civ_shadow_radius="10" />
+
+        <TextView
+            android:id="@+id/item_s_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:padding="@dimen/standard_padding"
+            android:text="Name"
+            android:textAlignment="textStart"
+            android:textColor="#898989"
+            android:textSize="@dimen/medium_font"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

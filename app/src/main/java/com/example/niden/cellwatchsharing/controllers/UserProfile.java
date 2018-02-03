@@ -44,9 +44,18 @@ public class UserProfile {
 
     public void saveUserProfileInfo(String userId, FirebaseUserEntity firebaseUserEntity){
        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Map<String, Object> result = new HashMap<>();
+       /* Map<String, Object> result = new HashMap<>();
         result.put(userId,firebaseUserEntity);
-        databaseReference.child("users").updateChildren(result);
+        databaseReference.child("users").child(userId).updateChildren(result);*/
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("name",firebaseUserEntity.getName());
+        result.put("bio",firebaseUserEntity.getBio());
+        result.put("expiration_date",firebaseUserEntity.getExpiration_date());
+        result.put("hobby",firebaseUserEntity.getHobby());
+        result.put("phone",firebaseUserEntity.getPhone());
+        result.put("user_type",firebaseUserEntity.getUser_type());
+        databaseReference.child("users").child(FirebaseAuth.getInstance().getUid()).updateChildren(result);
     }
 
 

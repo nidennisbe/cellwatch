@@ -94,7 +94,7 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
     public static class Viewholder extends RecyclerView.ViewHolder {
         TextView tvTaskName, tvDate, tvDateAgo,tvTime,emptyView;
         LinearLayout linearLayout;
-        RecyclerView recyclerView;
+
 
         public Viewholder(View itemView) {
             super(itemView);
@@ -103,7 +103,6 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
             linearLayout = (LinearLayout) itemView.findViewById(R.id.card);
             tvDateAgo = (TextView) itemView.findViewById(R.id.txt_date_ago);
             tvTime = (TextView)itemView.findViewById(R.id.txt_time);
-            recyclerView= (RecyclerView)itemView.findViewById(R.id.listTask);
 
 
         }

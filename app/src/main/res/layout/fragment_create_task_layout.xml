@@ -26,54 +26,68 @@
             android:textColor="@color/place_autocomplete_prediction_secondary_text"
             android:textSize="18sp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinnerTechnician"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="5"
+                    android:prompt="@string/prompt_choose_technician"
+                    android:spinnerMode="dialog" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choose_technican"
+                    android:textAlignment="textStart" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinnerType"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="5" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choose_type"
+                    android:textAlignment="textStart" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
         <EditText
             android:id="@+id/editTextTaskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             android:ems="10"
             android:hint="@string/enter_task_name"
-            android:inputType="textPersonName" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/choose_technican" />
-
-            <Spinner
-                android:id="@+id/spinnerTechnician"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="5" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/choose_type"
-                android:textAlignment="textStart" />
-
-            <Spinner
-                android:id="@+id/spinnerType"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="5" />
-        </LinearLayout>
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textSize="@dimen/fab_margin" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,17 +101,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/style_button_border_only"
+                android:drawableStart="@android:drawable/ic_menu_my_calendar"
                 android:text="@string/start_date"
                 android:textColor="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/to"
-                android:textAlignment="center"
-                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnEndDate"
@@ -105,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/style_button_border_only"
+                android:drawableStart="@android:drawable/ic_menu_my_calendar"
                 android:text="@string/end_date"
                 android:textColor="@android:color/darker_gray" />
         </LinearLayout>
@@ -116,7 +123,8 @@
             android:layout_weight="2"
             android:ems="10"
             android:hint="@string/description"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="@dimen/fab_margin" />
 
         <EditText
             android:id="@+id/editTextAddress"
@@ -125,7 +133,8 @@
             android:layout_weight="2"
             android:ems="10"
             android:hint="@string/address"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="@dimen/fab_margin" />
 
         <EditText
             android:id="@+id/editTextSuburb"
@@ -134,16 +143,18 @@
             android:layout_weight="2"
             android:ems="10"
             android:hint="@string/suburb"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="@dimen/fab_margin" />
 
         <EditText
             android:id="@+id/editTextClass"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:ems="10"
             android:hint="@string/hint_class"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="@dimen/fab_margin" />
 
     </LinearLayout>
 

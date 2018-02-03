@@ -75,8 +75,9 @@ public class CreateTaskFragment extends Fragment {
         mSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity, String.class, android.R.layout.simple_list_item_1, QUERY_TASK_TYPE);
         spinner.setAdapter(mSpinnerTaskTypeAdapter);
 
+
         //SETUP SPINNER FOR SELECTING TECHNICIAN
-        mSpinnerTechAdapter = new SpinnerTechnicianAdapter(referenceActivity, FirebaseUserEntity.class, android.R.layout.simple_list_item_1, QUERY_ONLY_TECHNICIAN);
+        mSpinnerTechAdapter = new SpinnerTechnicianAdapter(referenceActivity, FirebaseUserEntity.class, R.layout.item_spinner_technician, QUERY_ONLY_TECHNICIAN);
         spinnerTech.setAdapter(mSpinnerTechAdapter);
 
         mBtnStartDate.setOnClickListener(new View.OnClickListener() {

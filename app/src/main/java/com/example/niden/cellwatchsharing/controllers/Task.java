@@ -34,7 +34,7 @@ public class Task  {
         String strDesc = txAddress.getText().toString();
         String strSuburb=txSuburb.getText().toString();
         String strSpinnerType = spinner.getSelectedItem().toString();
-        String strSpinnerTech = (String) spinnerTech.getSelectedItem();
+        int position = spinnerTech.getSelectedItemPosition();
 
         FirebaseDatabase.getInstance()
                 .getReference()
@@ -43,7 +43,7 @@ public class Task  {
                 .child(DIR_TASK)
                 .push()
                 .setValue(new TaskEntityDatabase(strTaskName,strClass, strAdress, strDesc,strSuburb
-                        ,currentDateTimeString, strSpinnerType, strSpinnerTech));
+                        ,currentDateTimeString, strSpinnerType, ""));
         txTaskName.setText("");
         txAddress.setText("");
         txDescription.setText("");

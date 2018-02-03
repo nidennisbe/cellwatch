@@ -11,7 +11,9 @@ import net.lingala.zip4j.util.Zip4jConstants;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ public class Zip {
             "yourAppFoler");
 
     public String zipper(List<String> allFiles, String zipFileName) throws IOException, ZipException {
-        //String timeStampOfZipFile =new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());mediaStorageDir.mkdirs();
+        String timeStampOfZipFile =new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());mediaStorageDir.mkdirs();
        String zippath = mediaStorageDir.getAbsolutePath() + "/" + zipFileName+ "GG" +  ".zip";
 
             if (new File(zippath).exists())
@@ -49,9 +51,6 @@ public class Zip {
 
                 }
             }
-
-
-
 
         return zippath;
     }
