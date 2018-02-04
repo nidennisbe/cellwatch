@@ -23,6 +23,7 @@ import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;
+import static com.example.niden.cellwatchsharing.utils.FontUtils.setUpFont;
 
 /**
  * Created by niden on 16-Nov-17.
@@ -42,6 +43,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        setUpFont();
         refActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_profile_layout, container, false);
         setHasOptionsMenu(true);
@@ -99,5 +101,6 @@ public class ProfileFragment extends Fragment {
         textViewExpDate = (TextView) parentHolder.findViewById(R.id.prof_tv_exp_date);
 
     }
+
 
 }

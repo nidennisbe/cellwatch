@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -25,30 +26,38 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
+import net.lingala.zip4j.exception.ZipException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
+import static com.example.niden.cellwatchsharing.utils.FontUtils.setUpFont;
 
 public class TaskDetailActivity extends AppCompatActivity {
 
     static final int RESULT_LOAD_IMAGE = 1;
     RecyclerView recyclerImageUpload;
-    ImageView imageView, btnCamera;
-    EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
+    ImageView btnCamera,imageViewZip;
+    Button btnDone;
+    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
     private StorageReference mStorage;
     public ArrayList<String> fileNameList;
     public ArrayList<String> fileDoneList;
     public ArrayList<String> filePathList;
+    //Establish classes
     Zip mZip = new Zip();
     Task mTask = new Task();
-    public String zipFileName;
+    String zipFileName;
     Gallary mGallery = new Gallary();
+    String zipPath;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpFont();
         setContentView(R.layout.activity_task_detail);
         setTitle(getString(R.string.toolbar_task_detail));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
@@ -84,6 +93,13 @@ public class TaskDetailActivity extends AppCompatActivity {
                 GallaryUtils.openGallary(TaskDetailActivity.this, RESULT_LOAD_IMAGE);
             }
         });
+
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -93,44 +109,24 @@ public class TaskDetailActivity extends AppCompatActivity {
         startActivity(technicianActivityIntent);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        btnCamera.setVisibility(View.VISIBLE);
+        imageViewZip.setVisibility(View.INVISIBLE);
+    }
 
     // ACTIVITY RESULT
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
-            if (data.getClipData() != null) {
-                int totalItemsSelected = data.getClipData().getItemCount();
-                for (int i = 0; i < totalItemsSelected; i++) {
-                    final Uri fileUri = data.getClipData().getItemAt(i).getUri();
-                    final String fileName = mGallery.getFileName(this,fileUri);
-                    final String filePath = mGallery.getRealPathFromURIGallery(TaskDetailActivity.this,fileUri);
-                    fileNameList.add(fileName);
-                    filePathList.add(filePath);
-                    fileDoneList.add("uploading");
-                    imageUploadLRecyclerAdapter.notifyDataSetChanged();
-                    mZip.putImagesToZip(filePathList,zipFileName);
-                    final StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
-                    final int j = i;
-
-                    fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            fileDoneList.remove(j);
-                            fileDoneList.add(j, "done");
-                            imageUploadLRecyclerAdapter.notifyDataSetChanged();
-                        }
-                    });
-
-                }
-            } else if (data.getData() != null) {
-                Toast.makeText(TaskDetailActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
-            }
+            setup(data);
         }
     }
 
 
     private void bindingViews() {
-        imageView = (ImageView) findViewById(R.id.gallaryImage);
+        btnDone = (Button) findViewById(R.id.btn_done_task_detail);
         recyclerImageUpload = (RecyclerView) findViewById(R.id.recycler_view);
         btnCamera = (ImageView) findViewById(R.id.button_camera);
         etTaskName = (EditText) findViewById(R.id.et_task_name);
@@ -138,7 +134,45 @@ public class TaskDetailActivity extends AppCompatActivity {
         etDescription = (EditText) findViewById(R.id.et_task_desc);
         etAddress = (EditText) findViewById(R.id.et_task_address);
         etSuburb = (EditText) findViewById(R.id.et_task_suburb);
+        imageViewZip = (ImageView)findViewById(R.id.imgview_zip);
+    }
+
+    private void setup(Intent data) {
+        if (data.getClipData() != null) {
+            int totalItemsSelected = data.getClipData().getItemCount();
+            for (int i = 0; i < totalItemsSelected; i++) {
+                final Uri fileUri = data.getClipData().getItemAt(i).getUri();
+                final String fileName = mGallery.getFileName(this,fileUri);
+                final String filePath = mGallery.getRealPathFromURIGallery(TaskDetailActivity.this,fileUri);
+                fileNameList.add(fileName);
+                filePathList.add(filePath);
+                fileDoneList.add("uploading");
+                imageUploadLRecyclerAdapter.notifyDataSetChanged();
+                try {
+                    mZip.putImagesToZip(zipPath,filePathList,zipFileName);
+                } catch (IOException | ZipException e) {
+                    e.printStackTrace();
+                }
+                final StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
+                final int j = i;
+
+                fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        fileDoneList.remove(j);
+                        fileDoneList.add(j, "done");
+                        imageUploadLRecyclerAdapter.notifyDataSetChanged();
+                        btnCamera.setVisibility(View.INVISIBLE);
+                        imageViewZip.setVisibility(View.VISIBLE);
+                    }
+                });
+
+            }
+        } else if (data.getData() != null) {
+            Toast.makeText(TaskDetailActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
+
 

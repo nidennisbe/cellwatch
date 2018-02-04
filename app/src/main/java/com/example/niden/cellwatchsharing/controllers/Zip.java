@@ -3,6 +3,8 @@ package com.example.niden.cellwatchsharing.controllers;
 
 import android.os.Environment;
 
+import com.example.niden.cellwatchsharing.activities.TaskDetailActivity;
+
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
@@ -21,27 +23,21 @@ import java.util.List;
  */
 
 public class Zip {
-    public static final File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
+    private final File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
             "CellWatchZip");
 
-    public String putImagesToZip(ArrayList<String> allFiles, String zipFileName)  {
+    public String putImagesToZip(String zippath, ArrayList<String> allFiles, String zipFileName) throws IOException, ZipException {
 
         String timeStampOfZipFile = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
         mediaStorageDir.mkdirs();
-        String zippath = mediaStorageDir.getAbsolutePath() + "/" + zipFileName + timeStampOfZipFile + ".rar";
+        zippath = mediaStorageDir.getAbsolutePath() + "/" + zipFileName + timeStampOfZipFile + ".zip";
 
         if (new File(zippath).exists()) {
             new File(zippath).delete();
         }
         // new File(zipFileName).delete(); // Delete if exists
-
         ZipFile zipFile = null;
-        try {
-            zipFile = new ZipFile(zippath);
-        } catch (ZipException e) {
-            e.printStackTrace();
-        }
-
+        zipFile = new ZipFile(zippath);
         ZipParameters zipParameters = new ZipParameters();
         zipParameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
         zipParameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
@@ -51,11 +47,9 @@ public class Zip {
             for (String fileName : allFiles) {
 
                 File file = new File(fileName);
-                try {
-                    zipFile.addFile(file, zipParameters);
-                } catch (ZipException e) {
-                    e.printStackTrace();
-                }
+
+                zipFile.addFile(file, zipParameters);
+
 
             }
         }

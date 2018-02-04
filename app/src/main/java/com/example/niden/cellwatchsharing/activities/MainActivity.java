@@ -3,6 +3,7 @@ package com.example.niden.cellwatchsharing.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,6 +36,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
 
@@ -207,4 +210,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         firebaseAuth.removeAuthStateListener(mAuthListener);
     }
     //End Activity Lifecycles
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 }
