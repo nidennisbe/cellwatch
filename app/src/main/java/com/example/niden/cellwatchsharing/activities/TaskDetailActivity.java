@@ -2,9 +2,7 @@ package com.example.niden.cellwatchsharing.activities;
 
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
-import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.ImageUploadLRecyclerAdapter;
+import com.example.niden.cellwatchsharing.controllers.Gallary;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.controllers.Zip;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
@@ -26,12 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
-import net.lingala.zip4j.exception.ZipException;
-
-import java.io.IOException;
 import java.util.ArrayList;
-
-import java.util.List;
 
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
 
@@ -43,11 +37,13 @@ public class TaskDetailActivity extends AppCompatActivity {
     EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
     private StorageReference mStorage;
-    public List<String> fileNameList;
-    public List<String> fileDoneList;
+    public ArrayList<String> fileNameList;
+    public ArrayList<String> fileDoneList;
+    public ArrayList<String> filePathList;
     Zip mZip = new Zip();
     Task mTask = new Task();
-    String zipFileName;
+    public String zipFileName;
+    Gallary mGallery = new Gallary();
 
 
     @Override
@@ -62,6 +58,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         fileNameList = new ArrayList<>();
         fileDoneList = new ArrayList<>();
+        filePathList = new ArrayList<>();
         imageUploadLRecyclerAdapter = new ImageUploadLRecyclerAdapter(fileNameList, fileDoneList);
 
         //RecyclerView
@@ -104,24 +101,22 @@ public class TaskDetailActivity extends AppCompatActivity {
             if (data.getClipData() != null) {
                 int totalItemsSelected = data.getClipData().getItemCount();
                 for (int i = 0; i < totalItemsSelected; i++) {
-                    Uri fileUri = data.getClipData().getItemAt(i).getUri();
-                    final String fileName = getFileName(fileUri);
+                    final Uri fileUri = data.getClipData().getItemAt(i).getUri();
+                    final String fileName = mGallery.getFileName(this,fileUri);
+                    final String filePath = mGallery.getRealPathFromURIGallery(TaskDetailActivity.this,fileUri);
                     fileNameList.add(fileName);
+                    filePathList.add(filePath);
                     fileDoneList.add("uploading");
                     imageUploadLRecyclerAdapter.notifyDataSetChanged();
-
+                    mZip.putImagesToZip(filePathList,zipFileName);
                     final StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
-                    final int finalI = i;
+                    final int j = i;
+
                     fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            try {
-                                mZip.zipper(fileNameList, fileName);
-                            } catch (IOException | ZipException e) {
-                                e.printStackTrace();
-                            }
-                            fileDoneList.remove(finalI);
-                            fileDoneList.add(finalI, "done");
+                            fileDoneList.remove(j);
+                            fileDoneList.add(j, "done");
                             imageUploadLRecyclerAdapter.notifyDataSetChanged();
                         }
                     });
@@ -133,29 +128,6 @@ public class TaskDetailActivity extends AppCompatActivity {
         }
     }
 
-
-    //GET FILE NAME
-    public String getFileName(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        if (result == null) {
-            result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-            if (cut != -1) {
-                result = result.substring(cut + 1);
-            }
-        }
-        return result;
-    }
 
     private void bindingViews() {
         imageView = (ImageView) findViewById(R.id.gallaryImage);

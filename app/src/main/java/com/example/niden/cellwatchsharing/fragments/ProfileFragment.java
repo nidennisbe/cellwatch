@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,7 +36,7 @@ public class ProfileFragment extends Fragment {
     TextView textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate;
     ImageView profileImage;
     View parentHolder;
-    TextView taskButton;
+    public TextView taskButton,taskUncompleteButton;
 
 
     @Nullable
@@ -54,6 +55,15 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
+            }
+        });
+
+        taskUncompleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
+
             }
         });
         return parentHolder;
@@ -79,6 +89,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void bindingViews() {
+        taskUncompleteButton= (TextView)parentHolder.findViewById(R.id.btn_num_uncomplete_task);
         taskButton = (TextView) parentHolder.findViewById(R.id.btn_num_task);
         profileImage = (ImageView) parentHolder.findViewById(R.id.profile_image);
         textViewName = (TextView) parentHolder.findViewById(R.id.user_profile_name);
@@ -86,6 +97,7 @@ public class ProfileFragment extends Fragment {
         textViewPhone = (TextView) parentHolder.findViewById(R.id.tv_phonenumber);
         textViewHobby = (TextView) parentHolder.findViewById(R.id.prof_tv_hobby);
         textViewExpDate = (TextView) parentHolder.findViewById(R.id.prof_tv_exp_date);
+
     }
 
 }

@@ -22,35 +22,43 @@ import java.util.List;
 
 public class Zip {
     public static final File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
-            "yourAppFoler");
+            "CellWatchZip");
 
-    public String zipper(List<String> allFiles, String zipFileName) throws IOException, ZipException {
-        String timeStampOfZipFile =new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());mediaStorageDir.mkdirs();
-       String zippath = mediaStorageDir.getAbsolutePath() + "/" + zipFileName+ "GG" +  ".zip";
+    public String putImagesToZip(ArrayList<String> allFiles, String zipFileName)  {
 
-            if (new File(zippath).exists())
-            {
-                new File(zippath).delete();
-            }
-           // new File(zipFileName).delete(); // Delete if exists
+        String timeStampOfZipFile = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+        mediaStorageDir.mkdirs();
+        String zippath = mediaStorageDir.getAbsolutePath() + "/" + zipFileName + timeStampOfZipFile + ".rar";
 
-            ZipFile zipFile = new ZipFile(zippath);
+        if (new File(zippath).exists()) {
+            new File(zippath).delete();
+        }
+        // new File(zipFileName).delete(); // Delete if exists
+
+        ZipFile zipFile = null;
+        try {
+            zipFile = new ZipFile(zippath);
+        } catch (ZipException e) {
+            e.printStackTrace();
+        }
 
         ZipParameters zipParameters = new ZipParameters();
-            zipParameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
-            zipParameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
-            zipParameters.setPassword("Reset");
+        zipParameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
+        zipParameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
+        zipParameters.setPassword("Reset");
 
-            if (allFiles.size() > 0)
-            {
-                for (String fileName : allFiles)
-                {
+        if (allFiles.size() > 0) {
+            for (String fileName : allFiles) {
 
-                    File file = new File(fileName);
-                    zipFile.addFile(file,zipParameters);
-
+                File file = new File(fileName);
+                try {
+                    zipFile.addFile(file, zipParameters);
+                } catch (ZipException e) {
+                    e.printStackTrace();
                 }
+
             }
+        }
 
         return zippath;
     }

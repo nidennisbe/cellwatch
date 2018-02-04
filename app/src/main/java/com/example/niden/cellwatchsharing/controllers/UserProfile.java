@@ -55,6 +55,7 @@ public class UserProfile {
         result.put("hobby",firebaseUserEntity.getHobby());
         result.put("phone",firebaseUserEntity.getPhone());
         result.put("user_type",firebaseUserEntity.getUser_type());
+        result.put("id",firebaseUserEntity.getId());
         databaseReference.child("users").child(FirebaseAuth.getInstance().getUid()).updateChildren(result);
     }
 

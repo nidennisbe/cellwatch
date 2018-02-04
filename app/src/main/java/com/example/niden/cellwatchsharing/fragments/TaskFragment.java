@@ -35,9 +35,9 @@ public class TaskFragment extends Fragment {
     public RecyclerTaskAdapter mAdapter;
     public Activity activity = getActivity();
     View myView;
-    public  static RecyclerView recyclerView;
-    public  static TextView emptyView;
-    Query query=QUERY_ALL_TASK_INDIVIDUAL;
+    public static RecyclerView recyclerView;
+    public static TextView emptyView;
+    Query query = QUERY_ALL_TASK_INDIVIDUAL;
 
     @Nullable
     @Override
@@ -56,19 +56,22 @@ public class TaskFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                     query = QUERY_ALL_TASK_INDIVIDUAL;
+                    query = QUERY_ALL_TASK_INDIVIDUAL;
 
                 } else if (tab.getPosition() == 1) {
-                     query=  QUERY_TASK_BY_TYPE;
+                    query = QUERY_TASK_BY_TYPE;
                 }
                 setupRecyclerView();
             }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
-        });
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
         return myView;
     }
 
@@ -78,7 +81,7 @@ public class TaskFragment extends Fragment {
         setupRecyclerView();
     }
 
-    private void setupRecyclerView(){
+    private void setupRecyclerView() {
         mAdapter = new RecyclerTaskAdapter(query, activity, R.layout.item_task);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(true);
