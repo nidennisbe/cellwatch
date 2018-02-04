@@ -21,17 +21,17 @@ import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;
+import static com.example.niden.cellwatchsharing.fragments.TaskFragment.recyclerView;
 
 public class TechnicianActivity extends AppCompatActivity {
     TextView textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth;
     Account account = new Account();
     ImageView profileImage;
-    RecyclerView recyclerView;
     Query mRef;
-    UserProfile mFirebaseRetrive = new UserProfile();
+    UserProfile mUserProfile = new UserProfile();
     RelativeLayout cover;
-    String mUserKey;
-
+    public  static String mUserKey;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,24 +42,12 @@ public class TechnicianActivity extends AppCompatActivity {
         bindingViews();
 
         mUserKey = getIntent().getStringExtra("key");
-        mFirebaseRetrive.displayProfileImage(mUserKey,TechnicianActivity.this,textViewName,textViewBio,profileImage);
+        mUserProfile.displayProfileImage(mUserKey,TechnicianActivity.this,textViewName,textViewBio,profileImage);
         mRef = FirebaseDatabase.getInstance().getReference()
                 .child("users")
                 .child(mUserKey)
                 .child("tasks");
-
-        RecyclerTaskAdapter mAdapter = new RecyclerTaskAdapter(mRef, activity,R.layout.item_task );
-        LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new SlideInDownAnimator(new OvershootInterpolator(1f)));
-        recyclerView.getItemAnimator().setChangeDuration(1000);
-        recyclerView.getItemAnimator().setAddDuration(1000);
-        recyclerView.getItemAnimator().setMoveDuration(1000);
-        recyclerView.setAdapter(mAdapter);
-        OverScrollDecoratorHelper.setUpStaticOverScroll(cover, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
+        setUpRecyclerTechnicianAdapter();
 
     }
 
@@ -82,6 +70,21 @@ public class TechnicianActivity extends AppCompatActivity {
         textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);
         recyclerView = (RecyclerView) findViewById(R.id.listTask);
         cover = (RelativeLayout)findViewById(R.id.background);
+    }
+
+    private void setUpRecyclerTechnicianAdapter(){
+        RecyclerTaskAdapter mAdapter = new RecyclerTaskAdapter(mRef, activity,R.layout.item_task );
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new SlideInDownAnimator(new OvershootInterpolator(1f)));
+        recyclerView.getItemAnimator().setChangeDuration(1000);
+        recyclerView.getItemAnimator().setAddDuration(1000);
+        recyclerView.getItemAnimator().setMoveDuration(1000);
+        recyclerView.setAdapter(mAdapter);
+        OverScrollDecoratorHelper.setUpStaticOverScroll(cover, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
     }
 
 

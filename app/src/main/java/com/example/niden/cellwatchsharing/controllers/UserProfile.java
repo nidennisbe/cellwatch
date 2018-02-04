@@ -42,6 +42,24 @@ public class UserProfile {
     public static final String DIR_STORAGE_PROFILE_PHOTO="user_profile_image/";
 
 
+    public void saveUserProfileInfo(String userId, FirebaseUserEntity firebaseUserEntity){
+       DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+       /* Map<String, Object> result = new HashMap<>();
+        result.put(userId,firebaseUserEntity);
+        databaseReference.child("users").child(userId).updateChildren(result);*/
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("name",firebaseUserEntity.getName());
+        result.put("bio",firebaseUserEntity.getBio());
+        result.put("expiration_date",firebaseUserEntity.getExpiration_date());
+        result.put("hobby",firebaseUserEntity.getHobby());
+        result.put("phone",firebaseUserEntity.getPhone());
+        result.put("user_type",firebaseUserEntity.getUser_type());
+        result.put("id",firebaseUserEntity.getId());
+        databaseReference.child("users").child(FirebaseAuth.getInstance().getUid()).updateChildren(result);
+    }
+
+
 
     //Showing profile information
     public void displayProfileInfo(final Context context, final TextView textViewName, final TextView textViewBio, final TextView textViewPhone, final TextView textViewExpDate, final TextView textViewHobby, final ImageView profilePicture) {
@@ -105,7 +123,6 @@ public class UserProfile {
             }
         });
     }
-
 
     //Showing profile information
     public void displayEditInfo(final Context context, final EditText editProfileName, final EditText editProfileBio, final EditText editProfileContact, final EditText editProfileHobby, final EditText editProfileExpDate, final ImageView profile) {

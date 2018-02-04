@@ -24,7 +24,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -39,7 +39,7 @@
             <TextView
                 android:id="@+id/btn_num_task"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/colorTextLight"
                 android:text="7"
@@ -50,7 +50,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -66,7 +66,7 @@
             <TextView
                 android:id="@+id/btn_num_task1"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/colorTextLight"
                 android:text="5"
@@ -77,7 +77,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -90,9 +90,9 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/btn_num_task2"
+                android:id="@+id/btn_num_uncomplete_task"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/colorTextLight"
                 android:text="12"

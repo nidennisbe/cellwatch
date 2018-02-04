@@ -15,7 +15,16 @@ import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.TSConverterUtils;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.github.marlonlom.utilities.timeago.TimeAgo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import static com.example.niden.cellwatchsharing.fragments.TaskFragment.emptyView;
+import static com.example.niden.cellwatchsharing.fragments.TaskFragment.recyclerView;
 
 /**
  * Created by niden on 21-Nov-17.
@@ -31,12 +40,33 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
 
     @Override
     protected void populateViewHolder(final Viewholder viewholder, final TaskEntityDatabase model, final int position) {
-        long date = Long.parseLong(model.getTask_date());
-        String strTimeStamp = TimeAgo.from(Long.parseLong(model.getTask_date()));
-        viewholder.tvTaskName.setText(model.getTask_name());
-        viewholder.tvDate.setText(TSConverterUtils.getDateFormat(date));
-        viewholder.tvDateAgo.setText(strTimeStamp);
-        viewholder.tvTime.setText(TSConverterUtils.getTimeFormat(date));
+
+
+        DatabaseReference mTaskRef = FirebaseDatabase.getInstance().getReference().child("users");
+        mTaskRef.child(FirebaseAuth.getInstance().getUid()).child("tasks").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    long date = Long.parseLong(model.getTask_date());
+                    String strTimeStamp = TimeAgo.from(Long.parseLong(model.getTask_date()));
+                    viewholder.tvTaskName.setText(model.getTask_name());
+                    viewholder.tvDate.setText(TSConverterUtils.getDateFormat(date));
+                    viewholder.tvDateAgo.setText(strTimeStamp);
+                    viewholder.tvTime.setText(TSConverterUtils.getTimeFormat(date));
+                    /*recyclerView.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);*/
+                }else {
+                 /*   recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+*/
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         viewholder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +75,6 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
                 Intent myIntent = new Intent(activity, TaskDetailActivity.class);
                 myIntent.putExtra("key",getRef(position).getKey());
                 activity.startActivity(myIntent);
-
             }
         });
     }
@@ -63,8 +92,9 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
     }
 
     public static class Viewholder extends RecyclerView.ViewHolder {
-        TextView tvTaskName, tvDate, tvDateAgo,tvTime;
+        TextView tvTaskName, tvDate, tvDateAgo,tvTime,emptyView;
         LinearLayout linearLayout;
+
 
         public Viewholder(View itemView) {
             super(itemView);
@@ -73,6 +103,7 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
             linearLayout = (LinearLayout) itemView.findViewById(R.id.card);
             tvDateAgo = (TextView) itemView.findViewById(R.id.txt_date_ago);
             tvTime = (TextView)itemView.findViewById(R.id.txt_time);
+
 
         }
     }

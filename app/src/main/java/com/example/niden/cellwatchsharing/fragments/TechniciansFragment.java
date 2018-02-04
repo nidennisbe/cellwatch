@@ -2,42 +2,46 @@ package com.example.niden.cellwatchsharing.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
 
-import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
-import com.firebase.ui.database.FirebaseListAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
+import com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter;
+import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.Query;
+
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN_BY_NAME;
 
 /**
  * Created by niden on 16-Nov-17.
  */
 
 public class TechniciansFragment extends Fragment {
-    public DatabaseReference mRef;
     View myView;
-    private Activity activity = getActivity();
-    private FirebaseListAdapter<FirebaseUserEntity> mTechAdapter;
-    private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
-    ListView technicianList;
-
+    Activity activity = getActivity();
+    RecyclerTechniciansAdapter buildRecyclerTechniciansAdapter;
+    RecyclerView technicianList;
+    EditText mSearchField;
+    Query query=QUERY_TECHNICIAN;
 
 
     @Nullable
@@ -48,63 +52,48 @@ public class TechniciansFragment extends Fragment {
         activity = getActivity();
         activity.setTitle(getString(R.string.toobar_technicians));
         setHasOptionsMenu(true);
-        technicianList = (ListView) myView.findViewById(R.id.list_technician);
 
-        mRef = FirebaseDatabase.getInstance().getReference().child("users");
-        mTechAdapter = new FirebaseListAdapter<FirebaseUserEntity>(activity, FirebaseUserEntity.class,
-                R.layout.item_technician, mRef) {
+        mSearchField = (EditText) myView.findViewById(R.id.search_field);
+        technicianList = (RecyclerView) myView.findViewById(R.id.list_technician);
+        initialTechnicianAdapter();
+
+
+        technicianList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtils.hideSoftKeyboard(v, activity);
+            }
+        });
+
+        mSearchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
 
             @Override
-            protected void populateView(View v, FirebaseUserEntity model, final int position) {
-                final TextView name_user = (TextView) v.findViewById(R.id.txt_name);
-                final ImageView profile_user = (ImageView) v.findViewById(R.id.technician_profile);
-
-
-                mRef.child(mTechAdapter.getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                        name_user.setText(firebaseUserEntity.getName());
-                        String url = firebaseUserEntity.getProfile_url();
-                        if (url.isEmpty()) {
-                            profile_user.setImageResource(R.drawable.ic_user_blue);
-                        } else {
-                            Picasso.with(activity).load(url)
-                                    .resize(110, 110).centerCrop()
-                                    .into(profile_user);
-                        }
-                        profile_user.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent myIntent = new Intent(activity, TechnicianActivity.class);
-                                myIntent.putExtra("key", getRef(position).getKey());
-                                activity.startActivity(myIntent);
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String searchText = mSearchField.getText().toString();
+                query = QUERY_TECHNICIAN_BY_NAME.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
+                initialTechnicianAdapter();
             }
-        };
-        technicianList.setAdapter(mTechAdapter);
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         return myView;
-
     }
 
 
-    public void displayFriendsList() {
-
+    private void initialTechnicianAdapter(){
+        buildRecyclerTechniciansAdapter = new RecyclerTechniciansAdapter(query,activity,R.layout.item_technician);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
+        technicianList.setHasFixedSize(true);
+        technicianList.setLayoutManager(layoutManager);
+        technicianList.setAdapter(buildRecyclerTechniciansAdapter);
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 }

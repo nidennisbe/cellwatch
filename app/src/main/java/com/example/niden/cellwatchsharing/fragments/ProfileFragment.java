@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +23,7 @@ import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;
+import static com.example.niden.cellwatchsharing.utils.FontUtils.setUpFont;
 
 /**
  * Created by niden on 16-Nov-17.
@@ -35,13 +37,13 @@ public class ProfileFragment extends Fragment {
     TextView textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate;
     ImageView profileImage;
     View parentHolder;
-    TextView taskButton;
+    public TextView taskButton,taskUncompleteButton;
 
-    FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        setUpFont();
         refActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_profile_layout, container, false);
         setHasOptionsMenu(true);
@@ -57,19 +59,16 @@ public class ProfileFragment extends Fragment {
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
             }
         });
+
+        taskUncompleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
+
+            }
+        });
         return parentHolder;
-    }
-
-
-    private void bindingViews() {
-        taskButton = (TextView) parentHolder.findViewById(R.id.btn_num_task);
-        profileImage = (ImageView) parentHolder.findViewById(R.id.profile_image);
-        textViewName = (TextView) parentHolder.findViewById(R.id.user_profile_name);
-        textViewBio = (TextView) parentHolder.findViewById(R.id.user_profile_short_bio);
-        textViewPhone = (TextView) parentHolder.findViewById(R.id.tv_phonenumber);
-        textViewHobby = (TextView) parentHolder.findViewById(R.id.prof_tv_hobby);
-        textViewExpDate = (TextView) parentHolder.findViewById(R.id.prof_tv_exp_date);
-
     }
 
     @Override
@@ -90,5 +89,18 @@ public class ProfileFragment extends Fragment {
         refActivity.finish();
         return super.onOptionsItemSelected(item);
     }
+
+    private void bindingViews() {
+        taskUncompleteButton= (TextView)parentHolder.findViewById(R.id.btn_num_uncomplete_task);
+        taskButton = (TextView) parentHolder.findViewById(R.id.btn_num_task);
+        profileImage = (ImageView) parentHolder.findViewById(R.id.profile_image);
+        textViewName = (TextView) parentHolder.findViewById(R.id.user_profile_name);
+        textViewBio = (TextView) parentHolder.findViewById(R.id.user_profile_short_bio);
+        textViewPhone = (TextView) parentHolder.findViewById(R.id.tv_phonenumber);
+        textViewHobby = (TextView) parentHolder.findViewById(R.id.prof_tv_hobby);
+        textViewExpDate = (TextView) parentHolder.findViewById(R.id.prof_tv_exp_date);
+
+    }
+
 
 }

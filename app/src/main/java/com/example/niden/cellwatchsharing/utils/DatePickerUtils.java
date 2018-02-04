@@ -17,6 +17,7 @@ import java.util.Calendar;
 public class DatePickerUtils {
     public static void openDatePicker(Context referenceActivity, DatePickerDialog datePickerDialog, final Button mBtnStartDate,final  Button mBtnEndDate){
         // calender class's instance and get current date , month and year from calender
+
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month

@@ -15,13 +15,13 @@ import java.util.List;
  * Created by akshayejh on 19/12/17.
  */
 
-public class ImageUploadLRecyclerAdapter extends RecyclerView.Adapter<ImageUploadLRecyclerAdapter.ViewHolder>{
+public class ImageUploadLRecyclerAdapter extends RecyclerView.Adapter<ImageUploadLRecyclerAdapter.ViewHolder> {
 
 
     private List<String> fileNameList;
     private List<String> fileDoneList;
 
-    public ImageUploadLRecyclerAdapter(List<String> fileNameList, List<String>fileDoneList){
+    public ImageUploadLRecyclerAdapter(List<String> fileNameList, List<String> fileDoneList) {
 
         this.fileDoneList = fileDoneList;
         this.fileNameList = fileNameList;
@@ -44,7 +44,7 @@ public class ImageUploadLRecyclerAdapter extends RecyclerView.Adapter<ImageUploa
 
         String fileDone = fileDoneList.get(position);
 
-        if(fileDone.equals("uploading")){
+        if (fileDone.equals("uploading")) {
 
             holder.fileDoneView.setImageResource(R.mipmap.progress);
         } else {

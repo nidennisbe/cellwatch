@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_parent_scroll"
+    android:id="@+id/layout_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="45dp"
+        android:layout_margin="25dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin"
@@ -18,13 +18,13 @@
 
 
         <ImageView
-            app:srcCompat="@drawable/ic_cellwatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/ic_cellwatch" />
+            android:src="@drawable/ic_cellwatch"
+            app:srcCompat="@drawable/ic_cellwatch" />
 
         <TextView
             android:id="@+id/textView10"
@@ -36,6 +36,7 @@
             android:textSize="18sp" />
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/email_text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -44,8 +45,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/ic_email"
-                android:drawablePadding="10dp"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_email"
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
                 android:padding="20dp"
@@ -55,16 +56,19 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/password_text_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/ic_password"
-                android:drawablePadding="10dp"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_password"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:padding="20dp"
@@ -111,5 +115,5 @@
             android:textSize="18sp" />
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>
 

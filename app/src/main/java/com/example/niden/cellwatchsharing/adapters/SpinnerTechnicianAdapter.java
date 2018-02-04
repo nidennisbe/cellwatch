@@ -2,6 +2,7 @@ package com.example.niden.cellwatchsharing.adapters;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -14,6 +15,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by niden on 03-Feb-18.
@@ -26,18 +31,29 @@ public class SpinnerTechnicianAdapter extends FirebaseListAdapter<FirebaseUserEn
     }
 
     @Override
-    protected void populateView(final View v, final FirebaseUserEntity model, int position) {
+    protected void populateView(final View v, final FirebaseUserEntity model, final int position) {
         DatabaseReference mRefUser = FirebaseDatabase.getInstance().getReference().child("users");
         mRefUser.child(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    FirebaseUserEntity firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                    TextView textView= (TextView) v.findViewById(android.R.id.text1);
-                    Spinner spinner = (Spinner)v.findViewById(R.id.spinnerTechnician);
-                    textView.setText(model.getName());
-                }
 
+                if (dataSnapshot.exists()) {
+                    TextView textView = (TextView) v.findViewById(R.id.item_s_name);
+                    ImageView imageView = (ImageView) v.findViewById(R.id.item_s_profile);
+                    //To String
+                    String resultUid = model.getId();
+                    String resultName = model.getName();
+                    String imageUrl = model.getProfile_url();
+                    //Set Value to Views
+                    textView.setText(resultName);
+                    if (imageUrl.isEmpty()) {
+                        imageView.setImageResource(R.drawable.ic_user_blue);
+                    } else {
+                        Picasso.with(mContext).load(imageUrl)
+                                .resize(110, 110).centerCrop()
+                                .into(imageView);
+                    }
+                }
             }
 
             @Override

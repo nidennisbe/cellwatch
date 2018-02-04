@@ -27,9 +27,9 @@ import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.firebase.database.FirebaseDatabase;
-import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TASK_TYPE;
-import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
 
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ONLY_TECHNICIAN;
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TASK_TYPE;
 
 
 /**
@@ -40,17 +40,17 @@ import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNI
 public class CreateTaskFragment extends Fragment {
 
     private Activity referenceActivity;
-    private EditText txTaskName,txDescription,txAddress,txSuburb,txClass;
+    private EditText txTaskName, txDescription, txAddress, txSuburb, txClass;
     public static FirebaseDatabase database;
     private Task mTask = new Task();
-    private Button mBtnStartDate,mBtnEndDate;
-    private Spinner spinner,dropDownTechnician;
-    private DatePickerDialog datePickerDialog;
+    private Button mBtnStartDate, mBtnEndDate;
+    private Spinner spinner, spinnerTech;
     private View parentHolder;
-    int duration = Snackbar.LENGTH_LONG;
     private LinearLayout parentLayout;
-    SpinnerTaskTypeAdapter mSpinnerTaskTypeAdapter;
-    SpinnerTechnicianAdapter mSpinnerTechAdapter;
+    int duration = Snackbar.LENGTH_LONG;
+    DatePickerDialog datePickerDialog;
+    SpinnerTaskTypeAdapter buildSpinnerTaskTypeAdapter;
+    SpinnerTechnicianAdapter buildSpinnerTechAdapter;
 
     @Nullable
     @Override
@@ -64,46 +64,45 @@ public class CreateTaskFragment extends Fragment {
         parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtils.hideSoftKeyboard(v,referenceActivity);
+                KeyboardUtils.hideSoftKeyboard(v, referenceActivity);
             }
         });
         //SETUP SPINNER FOR SELECTING TYPE OF TASK
-        mSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity,String.class,android.R.layout.simple_list_item_1,QUERY_TASK_TYPE);
-        spinner.setAdapter(mSpinnerTaskTypeAdapter);
+        buildSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity, String.class, android.R.layout.simple_list_item_1, QUERY_TASK_TYPE);
+        spinner.setAdapter(buildSpinnerTaskTypeAdapter);
+
 
         //SETUP SPINNER FOR SELECTING TECHNICIAN
-        mSpinnerTechAdapter = new SpinnerTechnicianAdapter(referenceActivity,FirebaseUserEntity.class,android.R.layout.simple_list_item_1,QUERY_TECHNICIAN);
-        dropDownTechnician.setAdapter(mSpinnerTechAdapter);
+        buildSpinnerTechAdapter = new SpinnerTechnicianAdapter(referenceActivity, FirebaseUserEntity.class, R.layout.item_spinner_technician, QUERY_ONLY_TECHNICIAN);
+        spinnerTech.setAdapter(buildSpinnerTechAdapter);
 
         mBtnStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerUtils.openDatePicker(referenceActivity,datePickerDialog,mBtnStartDate,mBtnEndDate);
-    }
+                DatePickerUtils.openDatePicker(referenceActivity, datePickerDialog, mBtnStartDate, mBtnEndDate);
+            }
         });
-
         mBtnEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerUtils.openEndDatePicker(referenceActivity,datePickerDialog,mBtnStartDate,mBtnEndDate);
+                DatePickerUtils.openEndDatePicker(referenceActivity, datePickerDialog, mBtnStartDate, mBtnEndDate);
             }
         });
         return parentHolder;
     }
 
-    private void bindingViews(){
-        dropDownTechnician = (Spinner)parentHolder.findViewById(R.id.spinnerTechnician);
-        mBtnStartDate= (Button)parentHolder.findViewById(R.id.btnStartDate);
-        mBtnEndDate = (Button)parentHolder.findViewById(R.id.btnEndDate);
+    private void bindingViews() {
+        spinnerTech = (Spinner) parentHolder.findViewById(R.id.spinnerTechnician);
+        mBtnStartDate = (Button) parentHolder.findViewById(R.id.btnStartDate);
+        mBtnEndDate = (Button) parentHolder.findViewById(R.id.btnEndDate);
         txTaskName = (EditText) parentHolder.findViewById(R.id.editTextTaskName);
         txAddress = (EditText) parentHolder.findViewById(R.id.editTextAddress);
         txDescription = (EditText) parentHolder.findViewById(R.id.editTextDescription);
         txSuburb = (EditText) parentHolder.findViewById(R.id.editTextSuburb);
         txClass = (EditText) parentHolder.findViewById(R.id.editTextClass);
-        spinner = (Spinner)parentHolder.findViewById(R.id.spinnerType);
-        parentLayout = (LinearLayout)parentHolder.findViewById(R.id.layout_parent);
+        spinner = (Spinner) parentHolder.findViewById(R.id.spinnerType);
+        parentLayout = (LinearLayout) parentHolder.findViewById(R.id.layout_parent);
     }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.create_task_fragment_menu, menu);
@@ -112,10 +111,10 @@ public class CreateTaskFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mTask.insertTask(txTaskName,txClass,txDescription,txAddress,txSuburb,spinner);
-        ToastUtils.showSnackbar(getView(),getString(R.string.txt_submit_task),duration);
-        FragmentManager fragmentManager =getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
+        mTask.insertTask(txTaskName, txClass, txDescription, txAddress, txSuburb, spinner, spinnerTech);
+        ToastUtils.showSnackbar(getView(), getString(R.string.txt_submit_task), duration);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
         return super.onOptionsItemSelected(item);
     }
 }

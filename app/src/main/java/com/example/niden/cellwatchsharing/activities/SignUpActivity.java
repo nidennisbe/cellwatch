@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.firebase.auth.FirebaseAuth;
+
+import static com.example.niden.cellwatchsharing.utils.ValidationUtils.isEmailValid;
 
 /**
  * Created by niden on 16-Nov-17.
@@ -79,17 +82,22 @@ public class SignUpActivity extends AppCompatActivity{
 
     private void fieldsValidation(String email,String password){
         if (TextUtils.isEmpty(email)) {
-            ToastUtils.displayMessageToast(mActivity,getString(R.string.validation_email));
+            ToastUtils.showSnackbar(parentLayout, getString(R.string.validation_email), Snackbar.LENGTH_LONG);
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            ToastUtils.displayMessageToast(mActivity,getString(R.string.validation_password));
+            ToastUtils.showSnackbar(parentLayout, getString(R.string.validation_password), Snackbar.LENGTH_LONG);
             return;
         }
         if (password.length() < 6) {
-            ToastUtils.displayMessageToast(mActivity,getString(R.string.alert_short_password));
+            ToastUtils.showSnackbar(parentLayout, getString(R.string.alert_short_password), Snackbar.LENGTH_LONG);
             return;
-        }else{
+        }
+        else if (!isEmailValid(email)){
+            ToastUtils.showSnackbar(parentLayout, getString(R.string.txt_invalid_email_format), Snackbar.LENGTH_LONG);
+            return;
+        }
+        else{
             myDialog= DialogsUtils.showProgressDialog(mActivity,getString(R.string.sign_up_process));
         }
         mAccount.createNewUser(mActivity,email,password,myDialog);

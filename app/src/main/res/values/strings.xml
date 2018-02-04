@@ -55,4 +55,6 @@
     <string name="txt_submit_task">Successful Added</string>
     <string name="exit_app_desc">Do you want to exit now?</string>
     <string name="exit_app_dialog_title">Quit app</string>
+    <string name="txt_invalid_email_format">You seem enter the incorrect address format</string>
+    <string name="prompt_choose_technician">Choose technnician below to assign task for them</string>
 </resources>
