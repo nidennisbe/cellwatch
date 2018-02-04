@@ -1,7 +1,10 @@
 package com.example.niden.cellwatchsharing.controllers;
 
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.activities.MainActivity;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
@@ -24,17 +27,17 @@ public class Task  {
     private final String DIR_USER="users";
     private final String DIR_TASK="tasks";
     private String currentDateTimeString = String.valueOf(System.currentTimeMillis());
-
       //Insert new task
 
-    public void insertTask(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner,Spinner spinnerTech) {
+    public void insertTask(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner, Spinner spinnerTech) {
         String strTaskName=txTaskName.getText().toString();
         String strClass =txClass.getText().toString();
         String strAdress = txAddress.getText().toString();
         String strDesc = txAddress.getText().toString();
         String strSuburb=txSuburb.getText().toString();
         String strSpinnerType = spinner.getSelectedItem().toString();
-        int position = spinnerTech.getSelectedItemPosition();
+        String strSpinnerTech = spinnerTech.getSelectedItem().toString();
+
 
         FirebaseDatabase.getInstance()
                 .getReference()
@@ -43,7 +46,7 @@ public class Task  {
                 .child(DIR_TASK)
                 .push()
                 .setValue(new TaskEntityDatabase(strTaskName,strClass, strAdress, strDesc,strSuburb
-                        ,currentDateTimeString, strSpinnerType, ""));
+                        ,currentDateTimeString, strSpinnerType, strSpinnerTech));
         txTaskName.setText("");
         txAddress.setText("");
         txDescription.setText("");

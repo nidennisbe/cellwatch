@@ -38,21 +38,22 @@ public class SpinnerTechnicianAdapter extends FirebaseListAdapter<FirebaseUserEn
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-
                     TextView textView = (TextView) v.findViewById(R.id.item_s_name);
                     ImageView imageView = (ImageView) v.findViewById(R.id.item_s_profile);
-                    String imageUrl= model.getProfile_url();
-                    textView.setText(model.getName());
-                    if (imageUrl.isEmpty()){
+                    //To String
+                    String resultUid = model.getId();
+                    String resultName = model.getName();
+                    String imageUrl = model.getProfile_url();
+                    //Set Value to Views
+                    textView.setText(resultName);
+                    if (imageUrl.isEmpty()) {
                         imageView.setImageResource(R.drawable.ic_user_blue);
-                    }else {
+                    } else {
                         Picasso.with(mContext).load(imageUrl)
                                 .resize(110, 110).centerCrop()
                                 .into(imageView);
                     }
                 }
-
-
             }
 
             @Override

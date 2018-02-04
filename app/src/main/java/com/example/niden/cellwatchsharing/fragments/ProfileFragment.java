@@ -59,16 +59,6 @@ public class ProfileFragment extends Fragment {
         return parentHolder;
     }
 
-    private void bindingViews() {
-        taskButton = (TextView) parentHolder.findViewById(R.id.btn_num_task);
-        profileImage = (ImageView) parentHolder.findViewById(R.id.profile_image);
-        textViewName = (TextView) parentHolder.findViewById(R.id.user_profile_name);
-        textViewBio = (TextView) parentHolder.findViewById(R.id.user_profile_short_bio);
-        textViewPhone = (TextView) parentHolder.findViewById(R.id.tv_phonenumber);
-        textViewHobby = (TextView) parentHolder.findViewById(R.id.prof_tv_hobby);
-        textViewExpDate = (TextView) parentHolder.findViewById(R.id.prof_tv_exp_date);
-    }
-
     @Override
     public void onResume() {
         mAccount.isUserCurrentlyLogin(activity);
@@ -86,6 +76,16 @@ public class ProfileFragment extends Fragment {
         startActivity(new Intent(refActivity, EditProfileActivity.class));
         refActivity.finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void bindingViews() {
+        taskButton = (TextView) parentHolder.findViewById(R.id.btn_num_task);
+        profileImage = (ImageView) parentHolder.findViewById(R.id.profile_image);
+        textViewName = (TextView) parentHolder.findViewById(R.id.user_profile_name);
+        textViewBio = (TextView) parentHolder.findViewById(R.id.user_profile_short_bio);
+        textViewPhone = (TextView) parentHolder.findViewById(R.id.tv_phonenumber);
+        textViewHobby = (TextView) parentHolder.findViewById(R.id.prof_tv_hobby);
+        textViewExpDate = (TextView) parentHolder.findViewById(R.id.prof_tv_exp_date);
     }
 
 }

@@ -26,14 +26,10 @@ import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ONLY_TECHNICIAN;
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TASK_TYPE;
-import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
 
 
 /**
@@ -49,12 +45,12 @@ public class CreateTaskFragment extends Fragment {
     private Task mTask = new Task();
     private Button mBtnStartDate, mBtnEndDate;
     private Spinner spinner, spinnerTech;
-    private DatePickerDialog datePickerDialog;
     private View parentHolder;
-    int duration = Snackbar.LENGTH_LONG;
     private LinearLayout parentLayout;
-    SpinnerTaskTypeAdapter mSpinnerTaskTypeAdapter;
-    SpinnerTechnicianAdapter mSpinnerTechAdapter;
+    int duration = Snackbar.LENGTH_LONG;
+    DatePickerDialog datePickerDialog;
+    SpinnerTaskTypeAdapter buildSpinnerTaskTypeAdapter;
+    SpinnerTechnicianAdapter buildSpinnerTechAdapter;
 
     @Nullable
     @Override
@@ -72,13 +68,13 @@ public class CreateTaskFragment extends Fragment {
             }
         });
         //SETUP SPINNER FOR SELECTING TYPE OF TASK
-        mSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity, String.class, android.R.layout.simple_list_item_1, QUERY_TASK_TYPE);
-        spinner.setAdapter(mSpinnerTaskTypeAdapter);
+        buildSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity, String.class, android.R.layout.simple_list_item_1, QUERY_TASK_TYPE);
+        spinner.setAdapter(buildSpinnerTaskTypeAdapter);
 
 
         //SETUP SPINNER FOR SELECTING TECHNICIAN
-        mSpinnerTechAdapter = new SpinnerTechnicianAdapter(referenceActivity, FirebaseUserEntity.class, R.layout.item_spinner_technician, QUERY_ONLY_TECHNICIAN);
-        spinnerTech.setAdapter(mSpinnerTechAdapter);
+        buildSpinnerTechAdapter = new SpinnerTechnicianAdapter(referenceActivity, FirebaseUserEntity.class, R.layout.item_spinner_technician, QUERY_ONLY_TECHNICIAN);
+        spinnerTech.setAdapter(buildSpinnerTechAdapter);
 
         mBtnStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
