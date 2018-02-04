@@ -5,6 +5,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import static com.example.niden.cellwatchsharing.activities.TechnicianActivity.mUserKey;
+
 /**
  * Created by niden on 03-Feb-18.
  */
@@ -22,4 +24,7 @@ public class DataQuery {
             .child("tasks").orderByChild("task_type").equalTo("Install");
 
     public final static Query QUERY_ONLY_TECHNICIAN = db.child("users").orderByChild("user_type").equalTo("technician");
+
+    public final static Query QUERY_TECHNICIAN_BY_NAME = db.child("users");
+
 }

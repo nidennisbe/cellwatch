@@ -19,15 +19,8 @@ import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.ImageUploadLRecyclerAdapter;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.controllers.Zip;
-import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -45,7 +38,7 @@ import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAda
 public class TaskDetailActivity extends AppCompatActivity {
 
     static final int RESULT_LOAD_IMAGE = 1;
-    RecyclerView recyclerView;
+    RecyclerView recyclerImageUpload;
     ImageView imageView, btnCamera;
     EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
@@ -72,9 +65,9 @@ public class TaskDetailActivity extends AppCompatActivity {
         imageUploadLRecyclerAdapter = new ImageUploadLRecyclerAdapter(fileNameList, fileDoneList);
 
         //RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(imageUploadLRecyclerAdapter);
+        recyclerImageUpload.setLayoutManager(new LinearLayoutManager(this));
+        recyclerImageUpload.setHasFixedSize(true);
+        recyclerImageUpload.setAdapter(imageUploadLRecyclerAdapter);
         String taskKey = getIntent().getStringExtra(ID_KEY);
         mTask.displayTaskDetail(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb);
 
@@ -95,18 +88,6 @@ public class TaskDetailActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void bindingViews() {
-        imageView = (ImageView) findViewById(R.id.gallaryImage);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        btnCamera = (ImageView) findViewById(R.id.button_camera);
-        etTaskName = (EditText) findViewById(R.id.et_task_name);
-        etClass = (EditText) findViewById(R.id.et_task_class);
-        etDescription = (EditText) findViewById(R.id.et_task_desc);
-        etAddress = (EditText) findViewById(R.id.et_task_address);
-        etSuburb = (EditText) findViewById(R.id.et_task_suburb);
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -174,6 +155,17 @@ public class TaskDetailActivity extends AppCompatActivity {
             }
         }
         return result;
+    }
+
+    private void bindingViews() {
+        imageView = (ImageView) findViewById(R.id.gallaryImage);
+        recyclerImageUpload = (RecyclerView) findViewById(R.id.recycler_view);
+        btnCamera = (ImageView) findViewById(R.id.button_camera);
+        etTaskName = (EditText) findViewById(R.id.et_task_name);
+        etClass = (EditText) findViewById(R.id.et_task_class);
+        etDescription = (EditText) findViewById(R.id.et_task_desc);
+        etAddress = (EditText) findViewById(R.id.et_task_address);
+        etSuburb = (EditText) findViewById(R.id.et_task_suburb);
     }
 
 }
