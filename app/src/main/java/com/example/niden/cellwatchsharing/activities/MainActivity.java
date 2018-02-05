@@ -211,8 +211,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     //End Activity Lifecycles
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 }

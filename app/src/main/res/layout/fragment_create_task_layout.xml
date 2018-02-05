@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="50dp"
@@ -11,20 +10,11 @@
     tools:context="com.example.niden.cellwatchsharing.fragments.CreateTaskFragment">
 
     <LinearLayout
+        android:id="@+id/layout_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="15dp"
-        android:layout_weight="2"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/create_a_new_task_for_technicians"
-            android:textColor="@color/place_autocomplete_prediction_secondary_text"
-            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,6 +76,7 @@
             android:ems="10"
             android:hint="@string/enter_task_name"
             android:inputType="textPersonName"
+            android:padding="@dimen/standard_padding"
             android:singleLine="true"
             android:textSize="@dimen/fab_margin" />
 
@@ -124,6 +115,7 @@
             android:ems="10"
             android:hint="@string/description"
             android:inputType="textPersonName"
+            android:padding="@dimen/standard_padding"
             android:textSize="@dimen/fab_margin" />
 
         <EditText
@@ -134,6 +126,7 @@
             android:ems="10"
             android:hint="@string/address"
             android:inputType="textPersonName"
+            android:padding="@dimen/standard_padding"
             android:textSize="@dimen/fab_margin" />
 
         <EditText
@@ -144,6 +137,7 @@
             android:ems="10"
             android:hint="@string/suburb"
             android:inputType="textPersonName"
+            android:padding="@dimen/standard_padding"
             android:textSize="@dimen/fab_margin" />
 
         <EditText
@@ -154,8 +148,9 @@
             android:ems="10"
             android:hint="@string/hint_class"
             android:inputType="textPersonName"
+            android:padding="@dimen/standard_padding"
             android:textSize="@dimen/fab_margin" />
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

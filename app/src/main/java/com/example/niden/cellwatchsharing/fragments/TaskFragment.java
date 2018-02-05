@@ -37,7 +37,7 @@ public class TaskFragment extends Fragment {
     View myView;
     public static RecyclerView recyclerView;
     public static TextView emptyView;
-    Query query = QUERY_ALL_TASK_INDIVIDUAL;
+    public Query query = QUERY_ALL_TASK_INDIVIDUAL;
 
     @Nullable
     @Override

@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.password);
         btnSignup = (Button) findViewById(R.id.btn_signup);
         btnLogin = (Button) findViewById(R.id.btn_login);
-        btnReset = (Button) findViewById(R.id.btn_reset_password);
+       // btnReset = (Button) findViewById(R.id.btn_reset_password);
         linearLayout = (LinearLayout) findViewById(R.id.layout_parent);
     }
 

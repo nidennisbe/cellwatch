@@ -1,7 +1,10 @@
 package com.example.niden.cellwatchsharing.adapters;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -16,6 +19,7 @@ import com.example.niden.cellwatchsharing.utils.TSConverterUtils;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.github.marlonlom.utilities.timeago.TimeAgo;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.example.niden.cellwatchsharing.fragments.TaskFragment.emptyView;
 import static com.example.niden.cellwatchsharing.fragments.TaskFragment.recyclerView;
 
@@ -32,6 +37,7 @@ import static com.example.niden.cellwatchsharing.fragments.TaskFragment.recycler
 
 public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatabase, RecyclerTaskAdapter.Viewholder> {
     public Activity activity;
+    NotificationCompat.Builder builder;
 
     public RecyclerTaskAdapter(Query ref, Activity activity, int layout) {
         super(TaskEntityDatabase.class, layout, Viewholder.class, ref);
@@ -41,11 +47,19 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
     @Override
     protected void populateViewHolder(final Viewholder viewholder, final TaskEntityDatabase model, final int position) {
 
-
+        builder = new NotificationCompat.Builder(activity);
         DatabaseReference mTaskRef = FirebaseDatabase.getInstance().getReference().child("users");
-        mTaskRef.child(FirebaseAuth.getInstance().getUid()).child("tasks").addValueEventListener(new ValueEventListener() {
+
+        mTaskRef.child(FirebaseAuth.getInstance().getUid()).child("tasks").addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                builder.setSmallIcon(R.mipmap.ic_launcher);
+                builder.setContentTitle("NEW TASK ADDED");
+                builder.setContentText("Please check your TASK tab");
+                builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+                builder.setPriority(NotificationManager.IMPORTANCE_HIGH);
+                NotificationManager notificationManager = (NotificationManager) activity.getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.notify(1, builder.build());
                 if (dataSnapshot.exists()){
                     long date = Long.parseLong(model.getTask_date());
                     String strTimeStamp = TimeAgo.from(Long.parseLong(model.getTask_date()));
@@ -53,19 +67,37 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
                     viewholder.tvDate.setText(TSConverterUtils.getDateFormat(date));
                     viewholder.tvDateAgo.setText(strTimeStamp);
                     viewholder.tvTime.setText(TSConverterUtils.getTimeFormat(date));
+
                     /*recyclerView.setVisibility(View.VISIBLE);
                     emptyView.setVisibility(View.GONE);*/
-                }else {
-                 /*   recyclerView.setVisibility(View.GONE);
+                }/*else {
+                 *//*   recyclerView.setVisibility(View.GONE);
                     emptyView.setVisibility(View.VISIBLE);
-*/
-                }
+*//*
+                }*/
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
         viewholder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,7 @@ import java.util.List;
 
 public class SpinnerTechnicianAdapter extends FirebaseListAdapter<FirebaseUserEntity> {
 
+
     public SpinnerTechnicianAdapter(Context context, Class<FirebaseUserEntity> modelClass, int modelLayout, Query query) {
         super(context, modelClass, modelLayout, query);
     }
@@ -36,15 +38,18 @@ public class SpinnerTechnicianAdapter extends FirebaseListAdapter<FirebaseUserEn
         mRefUser.child(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 if (dataSnapshot.exists()) {
                     TextView textView = (TextView) v.findViewById(R.id.item_s_name);
+                    TextView txUid = (TextView) v.findViewById(R.id.item_s_uid);
                     ImageView imageView = (ImageView) v.findViewById(R.id.item_s_profile);
                     //To String
+
+
                     String resultUid = model.getId();
-                    String resultName = model.getName();
+                    String resultName = String.valueOf(model.getName());
                     String imageUrl = model.getProfile_url();
                     //Set Value to Views
+                    txUid.setText(resultUid);
                     textView.setText(resultName);
                     if (imageUrl.isEmpty()) {
                         imageView.setImageResource(R.drawable.ic_user_blue);

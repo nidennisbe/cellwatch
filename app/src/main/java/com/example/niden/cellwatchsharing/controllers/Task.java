@@ -7,6 +7,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.activities.MainActivity;
+import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 
 /**
@@ -27,6 +29,9 @@ public class Task  {
     private final String DIR_USER="users";
     private final String DIR_TASK="tasks";
     private String currentDateTimeString = String.valueOf(System.currentTimeMillis());
+    public String name;
+    public  String id;
+    public String eachUserID;
       //Insert new task
 
     public void insertTask(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner, Spinner spinnerTech) {
@@ -37,12 +42,15 @@ public class Task  {
         String strSuburb=txSuburb.getText().toString();
         String strSpinnerType = spinner.getSelectedItem().toString();
         String strSpinnerTech = spinnerTech.getSelectedItem().toString();
-
-
+        FirebaseUserEntity  data = (FirebaseUserEntity)spinnerTech.getSelectedItem();
+        eachUserID= data.getId();
+        StringTokenizer tokens = new StringTokenizer(strSpinnerTech, ":");
+        name = tokens.nextToken();
+        id = tokens.nextToken();
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child(DIR_USER)
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(eachUserID)
                 .child(DIR_TASK)
                 .push()
                 .setValue(new TaskEntityDatabase(strTaskName,strClass, strAdress, strDesc,strSuburb

@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
-import static com.example.niden.cellwatchsharing.utils.FontUtils.setUpFont;
+
 
 public class TaskDetailActivity extends AppCompatActivity {
 
@@ -57,7 +57,6 @@ public class TaskDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setUpFont();
         setContentView(R.layout.activity_task_detail);
         setTitle(getString(R.string.toolbar_task_detail));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
