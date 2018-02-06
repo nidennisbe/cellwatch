@@ -44,7 +44,6 @@ public class SpinnerTechnicianAdapter extends FirebaseListAdapter<FirebaseUserEn
                     ImageView imageView = (ImageView) v.findViewById(R.id.item_s_profile);
                     //To String
 
-
                     String resultUid = model.getId();
                     String resultName = String.valueOf(model.getName());
                     String imageUrl = model.getProfile_url();

@@ -13,7 +13,9 @@
         android:id="@+id/layout_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
         android:orientation="vertical">
 
         <LinearLayout
@@ -28,13 +30,6 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/spinnerTechnician"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="5"
-                    android:prompt="@string/prompt_choose_technician" />
-
                 <TextView
                     android:id="@+id/textView12"
                     android:layout_width="match_parent"
@@ -42,19 +37,20 @@
                     android:text="@string/choose_technican"
                     android:textAlignment="textStart" />
 
+                <Spinner
+                    android:id="@+id/spinnerTechnician"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:prompt="@string/prompt_choose_technician" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.5"
+                android:layout_weight="1"
                 android:orientation="vertical">
-
-                <Spinner
-                    android:id="@+id/spinnerType"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="5" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -62,25 +58,126 @@
                     android:text="@string/choose_type"
                     android:textAlignment="textStart" />
 
+                <Spinner
+                    android:id="@+id/spinnerType"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="5" />
+
             </LinearLayout>
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/editTextTaskName"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/task_name_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/enter_task_name"
-            android:inputType="textPersonName"
-            android:padding="@dimen/standard_padding"
-            android:singleLine="true"
-            android:textColor="#383838"
-            android:background="@drawable/background_search_layout"
-            android:textSize="@dimen/fab_margin" />
+            app:errorEnabled="true"
+            app:hintEnabled="false">
+
+            <EditText
+                android:id="@+id/editTextTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/background_search_layout"
+                android:ems="10"
+                android:hint="@string/enter_task_name"
+                android:inputType="textPersonName"
+                android:padding="@dimen/standard_padding"
+                android:singleLine="true"
+                android:textColor="#383838"
+                android:textSize="@dimen/fab_margin" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/description_wrapper"
+            android:layout_width="match_parent"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@drawable/background_search_layout"
+                android:ems="10"
+                android:hint="@string/description"
+                android:inputType="textPersonName"
+                android:padding="@dimen/standard_padding"
+                android:singleLine="true"
+                android:textColor="#383838"
+                android:textSize="@dimen/fab_margin" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/address_wrapper"
+            android:layout_width="match_parent"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editTextAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@drawable/background_search_layout"
+                android:ems="10"
+                android:hint="@string/address"
+                android:inputType="textPersonName"
+                android:padding="@dimen/standard_padding"
+                android:singleLine="true"
+                android:textColor="#383838"
+                android:textSize="@dimen/fab_margin" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/suburb_wrapper"
+            android:layout_width="match_parent"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editTextSuburb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@drawable/background_search_layout"
+                android:ems="10"
+                android:hint="@string/suburb"
+                android:inputType="textPersonName"
+                android:padding="@dimen/standard_padding"
+                android:singleLine="true"
+                android:textColor="#383838"
+                android:textSize="@dimen/fab_margin" />
+    </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/class_wrapper"
+            android:layout_width="match_parent"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editTextClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@drawable/background_search_layout"
+                android:ems="10"
+                android:hint="@string/hint_class"
+                android:inputType="textPersonName"
+                android:padding="@dimen/standard_padding"
+                android:singleLine="true"
+                android:textColor="#383838"
+                android:textSize="@dimen/fab_margin" />
+    </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,66 +205,6 @@
                 android:text="@string/end_date"
                 android:textColor="@android:color/darker_gray" />
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/editTextDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:ems="10"
-            android:hint="@string/description"
-            android:inputType="textPersonName"
-            android:padding="@dimen/standard_padding"
-            android:singleLine="true"
-            android:textColor="#383838"
-            android:background="@drawable/background_search_layout"
-            android:layout_marginTop="@dimen/standard_margin"
-            android:layout_marginBottom="@dimen/standard_margin"
-            android:textSize="@dimen/fab_margin" />
-
-        <EditText
-            android:id="@+id/editTextAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:ems="10"
-            android:hint="@string/address"
-            android:inputType="textPersonName"
-            android:singleLine="true"
-            android:textColor="#383838"
-            android:background="@drawable/background_search_layout"
-            android:layout_marginBottom="@dimen/standard_margin"
-            android:padding="@dimen/standard_padding"
-            android:textSize="@dimen/fab_margin" />
-
-        <EditText
-            android:id="@+id/editTextSuburb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:ems="10"
-            android:hint="@string/suburb"
-            android:inputType="textPersonName"
-            android:padding="@dimen/standard_padding"
-            android:singleLine="true"
-            android:textColor="#383838"
-            android:background="@drawable/background_search_layout"
-            android:layout_marginBottom="@dimen/standard_margin"
-            android:textSize="@dimen/fab_margin" />
-
-        <EditText
-            android:id="@+id/editTextClass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:ems="10"
-            android:hint="@string/hint_class"
-            android:inputType="textPersonName"
-            android:padding="@dimen/standard_padding"
-            android:singleLine="true"
-            android:textColor="#383838"
-            android:background="@drawable/background_search_layout"
-            android:textSize="@dimen/fab_margin" />
 
     </LinearLayout>
 

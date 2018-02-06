@@ -19,19 +19,19 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_search_layout"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ic_search"
+            android:ems="10"
+            android:fontFamily="@font/nunito_semibold"
+            android:hint="Search for technician here"
+            android:inputType="textPersonName"
             android:paddingBottom="5dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="5dp"
             android:textColor="#999999"
-            android:background="@drawable/background_search_layout"
-            android:drawablePadding="10dp"
-            android:layout_weight="1"
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:ems="10"
-            android:fontFamily="@font/nunito_semibold"
-            android:hint="Search for technician here"
-            android:inputType="textPersonName"
 
             android:textSize="@dimen/medium_font" />
 
@@ -40,6 +40,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_technician"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/standard_margin" />
 
 </LinearLayout>

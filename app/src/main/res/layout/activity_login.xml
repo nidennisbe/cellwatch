@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawablePadding="1dp"
+                android:drawablePadding="10dp"
                 android:drawableStart="@drawable/ic_email"
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"

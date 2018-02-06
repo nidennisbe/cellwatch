@@ -26,9 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:background="@drawable/toolbar_bg"
-        android:elevation="5dp"
-        app:navigationIcon="?attr/homeAsUpIndicator"
+        android:elevation="10dp"
         android:theme="@style/AppTheme.Toolbar"
+        app:navigationIcon="?attr/homeAsUpIndicator"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 </android.support.design.widget.CoordinatorLayout>
