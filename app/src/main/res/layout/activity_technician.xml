@@ -13,14 +13,14 @@
         android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/listTask"
+        android:id="@+id/recyclerViewTask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:alpha="1"
-        android:elevation="4dp"/>
+        android:elevation="4dp" />
 
 
 

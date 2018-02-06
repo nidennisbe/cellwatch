@@ -47,11 +47,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawablePadding="5dp"
+                android:drawablePadding="1dp"
                 android:drawableStart="@drawable/ic_email"
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
-                android:padding="15dp"
+                android:padding="@dimen/large_font"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/white"
                 android:textColorLink="@android:color/white" />
@@ -61,7 +61,6 @@
             android:id="@+id/password_text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="true"
             app:passwordToggleEnabled="true">
 
             <EditText
@@ -69,11 +68,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawablePadding="5dp"
+                android:drawablePadding="10dp"
                 android:drawableStart="@drawable/ic_password"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
-                android:padding="15dp"
+                android:padding="@dimen/large_font"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/white"
                 android:textColorLink="@android:color/white" />
@@ -86,6 +85,7 @@
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:layout_weight="0.09"
             android:background="@drawable/style_button_sign_in_round"
             android:elevation="3dp"

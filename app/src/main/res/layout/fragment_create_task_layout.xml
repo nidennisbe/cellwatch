@@ -33,8 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="5"
-                    android:prompt="@string/prompt_choose_technician"
-                    android:spinnerMode="dialog" />
+                    android:prompt="@string/prompt_choose_technician" />
 
                 <TextView
                     android:id="@+id/textView12"
@@ -71,13 +70,16 @@
             android:id="@+id/editTextTaskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/enter_task_name"
             android:inputType="textPersonName"
             android:padding="@dimen/standard_padding"
             android:singleLine="true"
+            android:textColor="#383838"
+            android:background="@drawable/background_search_layout"
             android:textSize="@dimen/fab_margin" />
 
         <LinearLayout
@@ -116,6 +118,11 @@
             android:hint="@string/description"
             android:inputType="textPersonName"
             android:padding="@dimen/standard_padding"
+            android:singleLine="true"
+            android:textColor="#383838"
+            android:background="@drawable/background_search_layout"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:layout_marginBottom="@dimen/standard_margin"
             android:textSize="@dimen/fab_margin" />
 
         <EditText
@@ -126,6 +133,10 @@
             android:ems="10"
             android:hint="@string/address"
             android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textColor="#383838"
+            android:background="@drawable/background_search_layout"
+            android:layout_marginBottom="@dimen/standard_margin"
             android:padding="@dimen/standard_padding"
             android:textSize="@dimen/fab_margin" />
 
@@ -138,6 +149,10 @@
             android:hint="@string/suburb"
             android:inputType="textPersonName"
             android:padding="@dimen/standard_padding"
+            android:singleLine="true"
+            android:textColor="#383838"
+            android:background="@drawable/background_search_layout"
+            android:layout_marginBottom="@dimen/standard_margin"
             android:textSize="@dimen/fab_margin" />
 
         <EditText
@@ -149,6 +164,9 @@
             android:hint="@string/hint_class"
             android:inputType="textPersonName"
             android:padding="@dimen/standard_padding"
+            android:singleLine="true"
+            android:textColor="#383838"
+            android:background="@drawable/background_search_layout"
             android:textSize="@dimen/fab_margin" />
 
     </LinearLayout>

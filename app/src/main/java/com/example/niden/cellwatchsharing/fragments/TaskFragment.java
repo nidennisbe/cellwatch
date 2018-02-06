@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.RecyclerTaskAdapter;
+import com.example.niden.cellwatchsharing.adapters.TechnicianRecyclerTaskAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import org.w3c.dom.Text;
@@ -32,12 +35,12 @@ import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TASK_B
  */
 
 public class TaskFragment extends Fragment {
-    public RecyclerTaskAdapter mAdapter;
+    public TechnicianRecyclerTaskAdapter mAdapter;
     public Activity activity = getActivity();
     View myView;
-    public static RecyclerView recyclerView;
+    public RecyclerView recyclerView;
     public static TextView emptyView;
-    public Query query = QUERY_ALL_TASK_INDIVIDUAL;
+    public Query mQuery= FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("tasks");
 
     @Nullable
     @Override
@@ -48,18 +51,20 @@ public class TaskFragment extends Fragment {
         this.activity = getActivity();
         getActivity().setTitle(getString(R.string.toobar_tasks));
 
+
         emptyView = (TextView) myView.findViewById(R.id.empty_view);
         TabLayout tabLayout = (TabLayout) myView.findViewById(R.id.tab);
+        setupRecyclerView();
 
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+       /* tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
                     query = QUERY_ALL_TASK_INDIVIDUAL;
 
                 } else if (tab.getPosition() == 1) {
-                    query = QUERY_TASK_BY_TYPE;
+                    query = QUERY_ALL_TASK_INDIVIDUAL;
                 }
                 setupRecyclerView();
             }
@@ -71,7 +76,7 @@ public class TaskFragment extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
-        });
+        });*/
         return myView;
     }
 
@@ -82,7 +87,7 @@ public class TaskFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        mAdapter = new RecyclerTaskAdapter(query, activity, R.layout.item_task);
+        mAdapter = new TechnicianRecyclerTaskAdapter(mQuery, activity, R.layout.item_task);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);

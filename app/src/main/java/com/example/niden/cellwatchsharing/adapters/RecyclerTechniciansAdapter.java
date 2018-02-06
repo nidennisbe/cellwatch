@@ -97,24 +97,4 @@ public class RecyclerTechniciansAdapter extends FirebaseRecyclerAdapter<Firebase
         return super.getItemViewType(position);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
-    }
-
-
-    @Override
-    public FirebaseUserEntity getItem(int position) {
-        return super.getItem(position);
-    }
-
-    @Override
-    public DatabaseReference getRef(int position) {
-        return super.getRef(position);
-    }
-
-    @Override
-    public int getItemCount() {
-        return super.getItemCount();
-    }
 }

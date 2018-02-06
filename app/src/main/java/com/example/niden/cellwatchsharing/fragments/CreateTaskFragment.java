@@ -103,6 +103,7 @@ public class CreateTaskFragment extends Fragment {
         spinner = (Spinner) parentHolder.findViewById(R.id.spinnerType);
         parentLayout = (LinearLayout) parentHolder.findViewById(R.id.layout_parent);
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.create_task_fragment_menu, menu);
@@ -112,9 +113,11 @@ public class CreateTaskFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         mTask.insertTask(txTaskName, txClass, txDescription, txAddress, txSuburb, spinner, spinnerTech);
-        ToastUtils.showSnackbar(getView(), getString(R.string.txt_submit_task), duration);
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
+        ToastUtils.showSnackbar(parentLayout, getString(R.string.txt_submit_task), duration);
+        txTaskName.setText("");
+        txClass.setText("");
+        txDescription.setText("");
+        txAddress.setText("");
         return super.onOptionsItemSelected(item);
     }
 }
