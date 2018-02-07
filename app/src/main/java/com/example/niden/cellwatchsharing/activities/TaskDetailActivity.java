@@ -29,7 +29,9 @@ import com.google.firebase.storage.UploadTask;
 import net.lingala.zip4j.exception.ZipException;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
 
@@ -51,7 +53,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     Task mTask = new Task();
     String zipFileName;
     Gallary mGallery = new Gallary();
-    String zipPath;
+    String zippath;
 
 
     @Override
@@ -142,19 +144,18 @@ public class TaskDetailActivity extends AppCompatActivity {
             for (int i = 0; i < totalItemsSelected; i++) {
                 final Uri fileUri = data.getClipData().getItemAt(i).getUri();
                 final String fileName = mGallery.getFileName(this,fileUri);
-                final String filePath = mGallery.getRealPathFromURIGallery(TaskDetailActivity.this,fileUri);
+                final String filePath = mGallery.getRealPathFromURIGallery(this,fileUri);
                 fileNameList.add(fileName);
                 filePathList.add(filePath);
                 fileDoneList.add("uploading");
                 imageUploadLRecyclerAdapter.notifyDataSetChanged();
                 try {
-                    mZip.putImagesToZip(zipPath,filePathList,zipFileName);
+                    mZip.putImagesToZip(zippath,filePathList,zipFileName);
                 } catch (IOException | ZipException e) {
                     e.printStackTrace();
                 }
                 final StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
                 final int j = i;
-
                 fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

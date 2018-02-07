@@ -16,9 +16,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_cellwatch"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_cellwatch"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -60,6 +60,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize"
         />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC5rrKjihriFlrwcK8Lf9dgOvZo6wOrGyY"/>
+
+
     </application>
 
 </manifest>

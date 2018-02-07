@@ -103,6 +103,4 @@ public class SignUpActivity extends AppCompatActivity{
         mAccount.createNewUser(mActivity,email,password,myDialog);
     }
 
-
-
 }

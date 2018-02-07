@@ -1,5 +1,6 @@
 package com.example.niden.cellwatchsharing.adapters;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class ImageUploadLRecyclerAdapter extends RecyclerView.Adapter<ImageUploa
 
     private List<String> fileNameList;
     private List<String> fileDoneList;
+    private Activity activity;
 
     public ImageUploadLRecyclerAdapter(List<String> fileNameList, List<String> fileDoneList) {
 
@@ -40,9 +43,9 @@ public class ImageUploadLRecyclerAdapter extends RecyclerView.Adapter<ImageUploa
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         String fileName = fileNameList.get(position);
+        String fileDone = fileDoneList.get(position);
         holder.fileNameView.setText(fileName);
 
-        String fileDone = fileDoneList.get(position);
 
         if (fileDone.equals("uploading")) {
 
@@ -62,13 +65,14 @@ public class ImageUploadLRecyclerAdapter extends RecyclerView.Adapter<ImageUploa
 
         View mView;
         TextView fileNameView;
-        ImageView fileDoneView;
+        ImageView fileDoneView,fileImage;
 
         ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             fileNameView = (TextView) mView.findViewById(R.id.upload_filename);
             fileDoneView = (ImageView) mView.findViewById(R.id.upload_loading);
+            fileImage = (ImageView)mView.findViewById(R.id.upload_icon);
         }
 
     }

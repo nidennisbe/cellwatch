@@ -15,9 +15,8 @@
             android:title="Profile" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_gallary"
-            android:title="Gallery"
-            android:visible="false" />
+            android:icon="@android:drawable/ic_dialog_map"
+            android:title="Map" />
         <item
             android:id="@+id/nav_circles"
             android:icon="@drawable/ic_circles"

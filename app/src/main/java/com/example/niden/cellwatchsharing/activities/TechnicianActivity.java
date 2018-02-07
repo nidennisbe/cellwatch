@@ -64,6 +64,8 @@ public class TechnicianActivity extends AppCompatActivity {
         super.onRestart();
     }
 
+
+
     private void bindingViews(){
         profileImage= findViewById(R.id.profile_image);
         textViewName = (TextView)findViewById(R.id.user_profile_name);

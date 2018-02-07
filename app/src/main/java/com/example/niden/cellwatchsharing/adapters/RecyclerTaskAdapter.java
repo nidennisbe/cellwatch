@@ -36,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import static com.example.niden.cellwatchsharing.activities.TechnicianActivity.mUserKey;
+import static com.example.niden.cellwatchsharing.utils.NotificationUltils.showAlertNotifcation;
 
 
 /**
@@ -60,7 +61,7 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
         mTaskRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("tasks").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //  showAlertNotifcation(activity);
+                   showAlertNotifcation(activity);
                 if (dataSnapshot.exists()){
                     long date = Long.parseLong(model.getTask_date());
                     String strTimeStamp = TimeAgo.from(Long.parseLong(model.getTask_date()));
