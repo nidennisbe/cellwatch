@@ -68,7 +68,7 @@
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/task_name" />
+                        android:text="@string/taskName" />
 
                     <EditText
                         android:id="@+id/et_task_name"

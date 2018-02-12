@@ -46,9 +46,9 @@ public class TechnicianRecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskE
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //  showAlertNotifcation(activity);
                 if (dataSnapshot.exists()){
-                    long date = Long.parseLong(model.getTask_date());
-                    String strTimeStamp = TimeAgo.from(Long.parseLong(model.getTask_date()));
-                    viewholder.tvTaskName.setText(model.getTask_name());
+                    long date = Long.parseLong(model.getTaskDate());
+                    String strTimeStamp = TimeAgo.from(Long.parseLong(model.getTaskDate()));
+                    viewholder.tvTaskName.setText(model.getTaskName());
                     viewholder.tvDate.setText(TSConverterUtils.getDateFormat(date));
                     viewholder.tvDateAgo.setText(strTimeStamp);
                     viewholder.tvTime.setText(TSConverterUtils.getTimeFormat(date));

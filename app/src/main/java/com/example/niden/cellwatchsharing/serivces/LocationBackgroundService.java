@@ -37,7 +37,7 @@ public class LocationBackgroundService extends Service implements android.locati
 
     // The minimum time between updates in milliseconds
     static int time;
-    private static final long MIN_TIME_BW_UPDATES = 1000*time;
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
 
     // Declaring a Location Manager
     protected LocationManager mlocationManager;
@@ -47,9 +47,9 @@ public class LocationBackgroundService extends Service implements android.locati
 
     }
 
-    public LocationBackgroundService(Context mContext,String time) {
+    public LocationBackgroundService(Context mContext) {
         this.mContext=mContext;
-        this.time= Integer.parseInt(time);
+        //this.time= Integer.parseInt(time);
         getLocation();
     }
 

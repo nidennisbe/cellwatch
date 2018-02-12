@@ -3,7 +3,7 @@
     <string name="personal_details">Personal Details</string>
     <string name="email">Email</string>
     <string name="task_detail">TASK DETAIL</string>
-    <string name="task_name">Task Name</string>
+    <string name="taskName">Task Name</string>
     <string name="description">Description</string>
     <string name="address">Address</string>
     <string name="text_class">Class</string>

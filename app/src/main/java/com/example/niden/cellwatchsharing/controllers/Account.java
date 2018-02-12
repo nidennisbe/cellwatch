@@ -122,7 +122,7 @@ public class Account {
                             ((Activity) context).finish();
                             mDatabaseLocationDetails = FirebaseDatabase.getInstance().getReference().child("location").push();
                             time= String.valueOf(time.charAt(0));
-                            gps = new LocationBackgroundService(context,time);
+                            gps = new LocationBackgroundService(context);
                             context.startService(new Intent(context,LocationBackgroundService.class));
                             if(gps.canGetLocation()){
                                 double latitude = gps.getLatitude();

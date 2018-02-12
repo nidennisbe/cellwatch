@@ -68,11 +68,11 @@ public class Task  {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     TaskEntityDatabase taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
-                    String strTaskName = taskEntityDatabase.getTask_name();
-                    String strDescription = taskEntityDatabase.getTask_description();
-                    String strAddress = taskEntityDatabase.getTask_address();
-                    String strClass = taskEntityDatabase.getTask_class();
-                    String strSuburb = taskEntityDatabase.getTask_suburb();
+                    String strTaskName = taskEntityDatabase.getTaskName();
+                    String strDescription = taskEntityDatabase.getTaskDescription();
+                    String strAddress = taskEntityDatabase.getTaskAddress();
+                    String strClass = taskEntityDatabase.getTaskClass();
+                    String strSuburb = taskEntityDatabase.getTaskSuburb();
 
                     etTaskName.setText(strTaskName);
                     etClass.setText(strClass);
