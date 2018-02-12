@@ -17,6 +17,7 @@ import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
 import com.example.niden.cellwatchsharing.activities.LoginActivity;
 import com.example.niden.cellwatchsharing.activities.MainActivity;
+import com.example.niden.cellwatchsharing.serivces.LocationBackgroundService;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +41,10 @@ public class Account {
     public  FirebaseAuth.AuthStateListener mAuthListener;
     private final String DIR_USER="users";
     private final String DIR_CLOCKIN_INFO="clock_in_info";
+    private LocationBackgroundService gps;
+    private String time="5 sec";
+    private DatabaseReference mDatabaseLocationDetails;
+
 
 
     public FirebaseAuth getFirebaseAuth() {
@@ -115,12 +120,30 @@ public class Account {
                             Intent profileIntent = new Intent(context, MainActivity.class);
                             context.startActivity(profileIntent);
                             ((Activity) context).finish();
+                            mDatabaseLocationDetails = FirebaseDatabase.getInstance().getReference().child("location").push();
+                            time= String.valueOf(time.charAt(0));
+                            gps = new LocationBackgroundService(context,time);
+                            context.startService(new Intent(context,LocationBackgroundService.class));
+                            if(gps.canGetLocation()){
+                                double latitude = gps.getLatitude();
+                                double longitude = gps.getLongitude();
+                                storeInDatabase(latitude,longitude);
+                                Toast.makeText(context, latitude+" ::: "+ longitude, Toast.LENGTH_SHORT).show();
+                            }else{
+                                gps.showSettingsAlert();
+                            }
                         }
                     }
 
                     ;
                 });
 
+    }
+    private void storeInDatabase(double latitude, double longitude) {
+
+
+        mDatabaseLocationDetails.child("longitude").setValue(longitude);
+        mDatabaseLocationDetails.child("latitude").setValue(latitude);
     }
 
 

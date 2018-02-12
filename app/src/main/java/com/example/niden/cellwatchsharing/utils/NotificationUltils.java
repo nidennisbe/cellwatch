@@ -17,7 +17,7 @@ public class NotificationUltils {
     public static void showAlertNotifcation(Context context){
         NotificationCompat.Builder builder;
         builder = new NotificationCompat.Builder(context);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.mipmap.ic_cellwatch);
         builder.setContentTitle("NEW TASK ADDED");
         builder.setContentText("Please check your TASK tab");
         builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);

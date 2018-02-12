@@ -23,14 +23,14 @@ public class Zip {
     private final File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
             "CellWatchZip");
 
-    public String putImagesToZip(String zippath,ArrayList<String> allFiles, String zipFileName) throws IOException, ZipException {
+    public String putImagesToZip(String zippath, ArrayList<String> allFiles, String zipFileName) throws IOException, ZipException {
 
         @SuppressLint("SimpleDateFormat") String timeStampOfZipFile = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
         mediaStorageDir.mkdirs();
         zippath = mediaStorageDir.getAbsolutePath() + "/" + timeStampOfZipFile + ".zip";
 
         if (new File(zippath).exists()) {
-           new File(zippath).delete();
+            new File(zippath).delete();
         }
 
         ZipFile zipFile = new ZipFile(zippath);
@@ -44,7 +44,6 @@ public class Zip {
 
                 File file = new File(fileName);
                 zipFile.addFile(file, zipParameters);
-
 
             }
         }

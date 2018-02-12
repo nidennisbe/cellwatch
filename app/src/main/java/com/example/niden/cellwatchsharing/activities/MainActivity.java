@@ -21,6 +21,7 @@ import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
+import com.example.niden.cellwatchsharing.serivces.LocationBackgroundService;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
 import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public  FirebaseAuth firebaseAuth;
     Account mAccount = new Account();
     DatabaseReference scoresRef;
+    LocationBackgroundService locationBackgroundService = new LocationBackgroundService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

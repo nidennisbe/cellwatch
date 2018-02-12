@@ -10,6 +10,7 @@ import com.example.niden.cellwatchsharing.database.LocationDatabase;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -39,15 +40,14 @@ public class GoogleMapAdapter implements OnMapReadyCallback {
                 LocationDatabase locationDatabase = dataSnapshot.getValue(LocationDatabase.class );
                 LatLng targetLocation = new LatLng(locationDatabase.getLatitude(), locationDatabase.getLongitude());
 
-
-
-                mMap.addMarker(new MarkerOptions().position(targetLocation).snippet("Snipple")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.badge_technician);
+                mMap.addMarker(new MarkerOptions().position(targetLocation).snippet("Technician")
+                        .icon(icon)
                         .title(targetLocation+""+dataSnapshot.getKey()));
-               // mMap.moveCamera(CameraUpdateFactory.newLatLng(targetLocation));
+
                 CameraPosition cameraPosition = new CameraPosition.Builder()
                         .target(targetLocation)      // Sets the center of the map to Mountain View
-                        .zoom(8)                   // Sets the zoom
+                        .zoom(6)                   // Sets the zoom
                         .bearing(10)                // Sets the orientation of the camera to east
                         .tilt(30)                   // Sets the tilt of the camera to 30 degrees
                         .build();                   // Creates a CameraPosition from the builder
