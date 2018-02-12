@@ -7,6 +7,8 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ONLY_TECHNICIAN;
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TASK_TYPE;
+import static com.example.niden.cellwatchsharing.utils.ValidationUtils.isEmailValid;
 
 
 /**
@@ -41,6 +44,7 @@ public class CreateTaskFragment extends Fragment {
 
     private Activity referenceActivity;
     private EditText txTaskName, txDescription, txAddress, txSuburb, txClass;
+    private TextInputLayout taskNameWrapper, descriptionWrapper, addressWrapper, suburbWrapper, classWrapper;
     public static FirebaseDatabase database;
     private Task mTask = new Task();
     private Button mBtnStartDate, mBtnEndDate;
@@ -102,7 +106,13 @@ public class CreateTaskFragment extends Fragment {
         txClass = (EditText) parentHolder.findViewById(R.id.editTextClass);
         spinner = (Spinner) parentHolder.findViewById(R.id.spinnerType);
         parentLayout = (LinearLayout) parentHolder.findViewById(R.id.layout_parent);
+        taskNameWrapper = (TextInputLayout) parentLayout.findViewById(R.id.task_name_wrapper);
+        descriptionWrapper = (TextInputLayout) parentLayout.findViewById(R.id.description_wrapper);
+        addressWrapper = (TextInputLayout) parentLayout.findViewById(R.id.address_wrapper);
+        suburbWrapper = (TextInputLayout) parentLayout.findViewById(R.id.suburb_wrapper);
+        classWrapper = (TextInputLayout) parentLayout.findViewById(R.id.class_wrapper);
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.create_task_fragment_menu, menu);
@@ -111,10 +121,59 @@ public class CreateTaskFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mTask.insertTask(txTaskName, txClass, txDescription, txAddress, txSuburb, spinner, spinnerTech);
-        ToastUtils.showSnackbar(getView(), getString(R.string.txt_submit_task), duration);
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
+        fieldsValidation();
+
         return super.onOptionsItemSelected(item);
     }
+
+    private void fieldsValidation() {
+        String strTaskName = txTaskName.getText().toString();
+        String strDescription = txDescription.getText().toString();
+        String strAddress = txAddress.getText().toString();
+        String strSuburb = txSuburb.getText().toString();
+        String strClass = txClass.getText().toString();
+        //Validation
+        if (TextUtils.isEmpty(strTaskName)) {
+            taskNameWrapper.setError("Please field in task name");
+
+        } else {
+            taskNameWrapper.setErrorEnabled(false);
+        }
+
+        if (TextUtils.isEmpty(strDescription)) {
+            descriptionWrapper.setError("Please field in description");
+
+        } else {
+            descriptionWrapper.setErrorEnabled(false);
+        }
+
+        if (TextUtils.isEmpty(strAddress)) {
+            addressWrapper.setError("Please field in address");
+
+        } else {
+            addressWrapper.setErrorEnabled(false);
+        }
+
+        if (TextUtils.isEmpty(strSuburb)) {
+            suburbWrapper.setError("Please field in suburb");
+
+        } else {
+            suburbWrapper.setErrorEnabled(false);
+        }
+        if (TextUtils.isEmpty(strClass)) {
+            classWrapper.setError("Please field in class");
+        } else {
+            classWrapper.setErrorEnabled(false);
+        }
+        if (!TextUtils.isEmpty(strTaskName) && !TextUtils.isEmpty(strDescription) && !TextUtils.isEmpty(strAddress) && !TextUtils.isEmpty(strAddress) &&
+                !TextUtils.isEmpty(strAddress) && !TextUtils.isEmpty(strSuburb) && !TextUtils.isEmpty(strClass)) {
+            mTask.insertTask(txTaskName, txClass, txDescription, txAddress, txSuburb, spinner, spinnerTech);
+            ToastUtils.showSnackbar(parentLayout, getString(R.string.txt_submit_task), duration);
+            txTaskName.setText("");
+            txClass.setText("");
+            txDescription.setText("");
+            txAddress.setText("");
+        }
+    }
+
 }

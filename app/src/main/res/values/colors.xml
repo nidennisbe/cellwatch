@@ -7,7 +7,12 @@
     <color name="colorTextDark">#000000</color>
     <color name="colorDivider">#eae6e6</color>
     <color name="semiTransparentWhite">#92f6f6f6</color>
-    <color name="toolbarColor">#00ffffff</color>
-    <color name="coverBackgroundTint">#1EAFE0</color>
+    <color name="toolbarColor">#ffffff</color>
+    <color name="toolbarShadowColor">#7ce1e1e1</color>
+    <color name="toolbarTextItemColor">#5e5e5e</color>
+    <color name="coverBackgroundTint">#41a5e3</color>
+    <color name="searchBarBackgroundColor">#e9e9e9</color>
+    <color name="mapSearchBarBackgroundColor">#99f0f0f0</color>
+
 
 </resources>

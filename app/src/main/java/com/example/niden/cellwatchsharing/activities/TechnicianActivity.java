@@ -21,7 +21,7 @@ import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;
-import static com.example.niden.cellwatchsharing.fragments.TaskFragment.recyclerView;
+
 
 public class TechnicianActivity extends AppCompatActivity {
     TextView textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth;
@@ -64,11 +64,13 @@ public class TechnicianActivity extends AppCompatActivity {
         super.onRestart();
     }
 
+
+
     private void bindingViews(){
         profileImage= findViewById(R.id.profile_image);
         textViewName = (TextView)findViewById(R.id.user_profile_name);
         textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);
-        recyclerView = (RecyclerView) findViewById(R.id.listTask);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewTask);
         cover = (RelativeLayout)findViewById(R.id.background);
     }
 

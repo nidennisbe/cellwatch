@@ -3,7 +3,6 @@ package com.example.niden.cellwatchsharing.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,17 +15,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
+import com.example.niden.cellwatchsharing.serivces.LocationBackgroundService;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
 import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
-import com.example.niden.cellwatchsharing.fragments.GallaryFragment;
+import com.example.niden.cellwatchsharing.fragments.MapFragment;
 import com.example.niden.cellwatchsharing.fragments.ProfileFragment;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,8 +35,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
 
@@ -53,16 +50,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String TAG ="11";
     private FirebaseAuth.AuthStateListener mAuthListener;
     public  FirebaseAuth firebaseAuth;
+    Account mAccount = new Account();
     DatabaseReference scoresRef;
+    LocationBackgroundService locationBackgroundService = new LocationBackgroundService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        scoresRef =FirebaseDatabase.getInstance().getReference("users");
+        scoresRef.keepSynced(true);
         activity = this;
         firebaseAuth=FirebaseAuth.getInstance();
         checkUserType();
-        QUERY_TECHNICIAN.keepSynced(true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FragmentManager fragmentManager =getFragmentManager();
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_profile) {
             fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
         } else if (id == R.id.nav_gallery) {
-           fragmentManager.beginTransaction().replace(R.id.content_frame,new GallaryFragment()).commit();
+           fragmentManager.beginTransaction().replace(R.id.content_frame,new MapFragment()).commit();
         } else if (id == R.id.nav_circles) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new TechniciansFragment()).commit();
         } else if (id == R.id.nav_task) {
@@ -148,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_circles).setVisible(false);
         nav_Menu.findItem(R.id.nav_anouncement).setVisible(false);
+        nav_Menu.findItem(R.id.nav_gallery).setEnabled(false);
+        nav_Menu.findItem(R.id.nav_gallery).setVisible(false);
     }
 
     private void checkUserType() {
@@ -203,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        mAccount.isUserCurrentlyLogin(activity);
     }
     @Override
     protected void onStop() {
@@ -211,8 +214,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     //End Activity Lifecycles
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 }

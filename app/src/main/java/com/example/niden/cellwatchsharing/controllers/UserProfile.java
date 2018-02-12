@@ -51,11 +51,12 @@ public class UserProfile {
         Map<String, Object> result = new HashMap<>();
         result.put("name",firebaseUserEntity.getName());
         result.put("bio",firebaseUserEntity.getBio());
-        result.put("expiration_date",firebaseUserEntity.getExpiration_date());
+        result.put("expirationDate",firebaseUserEntity.getExpirationDate());
         result.put("hobby",firebaseUserEntity.getHobby());
         result.put("phone",firebaseUserEntity.getPhone());
         result.put("user_type",firebaseUserEntity.getUser_type());
         result.put("id",firebaseUserEntity.getId());
+        result.put("profile_url",firebaseUserEntity.getProfile_url());
         databaseReference.child("users").child(FirebaseAuth.getInstance().getUid()).updateChildren(result);
     }
 
@@ -196,7 +197,7 @@ public class UserProfile {
         strBio = firebaseUserEntity.getBio();
         strPhone = firebaseUserEntity.getPhone();
         strHobby = firebaseUserEntity.getHobby();
-        strExpDate = firebaseUserEntity.getExpiration_date();
+        strExpDate = firebaseUserEntity.getExpirationDate();
         strProfileUrl = firebaseUserEntity.getProfile_url();
     }
 }

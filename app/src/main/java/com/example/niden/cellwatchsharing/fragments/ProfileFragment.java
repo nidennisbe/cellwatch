@@ -23,7 +23,7 @@ import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.activity;
-import static com.example.niden.cellwatchsharing.utils.FontUtils.setUpFont;
+
 
 /**
  * Created by niden on 16-Nov-17.
@@ -43,19 +43,18 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        setUpFont();
         refActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_profile_layout, container, false);
         setHasOptionsMenu(true);
         mAccount.isUserCurrentlyLogin(activity);
         getActivity().setTitle("Profile");
         bindingViews();
+        final FragmentManager fragmentManager = getFragmentManager();
 
         mUserProfile.displayProfileInfo(refActivity, textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate, profileImage);
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
             }
         });
@@ -63,7 +62,6 @@ public class ProfileFragment extends Fragment {
         taskUncompleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
 
             }

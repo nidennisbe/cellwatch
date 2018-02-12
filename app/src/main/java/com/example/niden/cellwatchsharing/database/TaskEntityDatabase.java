@@ -1,94 +1,93 @@
 package com.example.niden.cellwatchsharing.database;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by niden on 16-Nov-17.
  */
 
 public class TaskEntityDatabase implements Serializable{
-    private String task_name;
-    private String task_description;
-    private String task_address;
-    private String task_suburb;
-    private String task_class;
-    private String task_date;
-    private String task_type;
-    private String task_technician_name;
+    private String taskName;
+    private String taskDescription;
+    private String taskAddress;
+    private String taskSuburb;
+    private String taskClass;
+    private String taskDate;
+    private String taskType;
+    private String taskTechnicianName;
 
     public TaskEntityDatabase(){
 
     }
 
 
-    public TaskEntityDatabase(String task_name, String task_class, String task_description, String task_address, String task_suburb, String task_date, String task_type, String task_technician_name) {
-        this.task_name = task_name;
-        this.task_description = task_description;
-        this.task_address = task_address;
-        this.task_suburb = task_suburb;
-        this.task_class = task_class;
-        this.task_date = task_date;
-        this.task_type = task_type;
-        this.task_technician_name = task_technician_name;
+    public TaskEntityDatabase(String taskName, String taskClass, String taskDescription, String taskAddress, String taskSuburb, String taskDate, String taskType, String taskTechnicianName) {
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskAddress = taskAddress;
+        this.taskSuburb = taskSuburb;
+        this.taskClass = taskClass;
+        this.taskDate = taskDate;
+        this.taskType = taskType;
+        this.taskTechnicianName = taskTechnicianName;
     }
 
 
 
 
-    public String getTask_name() {
-        return task_name;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setTask_name(String task_name) {
-        this.task_name = task_name;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
-    public String getTask_description() {
-        return task_description;
+    public String getTaskDescription() {
+        return taskDescription;
     }
 
-    public void setTask_description(String task_description) {
-        this.task_description = task_description;
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
     }
 
-    public String getTask_address() {
-        return task_address;
+    public String getTaskAddress() {
+        return taskAddress;
     }
 
-    public void setTask_address(String task_address) {
-        this.task_address = task_address;
+    public void setTaskAddress(String taskAddress) {
+        this.taskAddress = taskAddress;
     }
 
-    public String getTask_suburb() {
-        return task_suburb;
+    public String getTaskSuburb() {
+        return taskSuburb;
     }
 
-    public void setTask_suburb(String task_suburb) {
-        this.task_suburb = task_suburb;
+    public void setTaskSuburb(String taskSuburb) {
+        this.taskSuburb = taskSuburb;
     }
 
-    public String getTask_class() {
-        return task_class;
+    public String getTaskClass() {
+        return taskClass;
     }
 
-    public void setTask_class(String task_class) {
-        this.task_class = task_class;
+    public void setTaskClass(String taskClass) {
+        this.taskClass = taskClass;
     }
 
-    public String getTask_date() {
-        return task_date;
+    public String getTaskDate() {
+        return taskDate;
     }
 
-    public void setTask_date(String task_date) {
-        this.task_date = task_date;
+    public void setTaskDate(String taskDate) {
+        this.taskDate = taskDate;
     }
 
-    public String getTask_type() {
-        return task_type;
+    public String getTaskType() {
+        return taskType;
     }
 
-    public String getTask_technician_name() {
-        return task_technician_name;
+    public String getTaskTechnicianName() {
+        return taskTechnicianName;
     }
 }

@@ -61,9 +61,7 @@ public class Gallary {
         return result;
     }
 
-    private void uploadGallery () {
 
-    }
 
 
 
