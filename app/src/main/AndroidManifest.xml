@@ -65,7 +65,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC5rrKjihriFlrwcK8Lf9dgOvZo6wOrGyY" />
 
-        <service android:name=".serivces.LocationBackgroundService" />
+        <service android:name=".serivces.LocationBackgroundService"
+            android:enabled="true">
+           </service>
     </application>
 
 </manifest>

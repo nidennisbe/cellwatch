@@ -1,12 +1,16 @@
 package com.example.niden.cellwatchsharing.controllers;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,6 +22,7 @@ import com.example.niden.cellwatchsharing.activities.EditProfileActivity;
 import com.example.niden.cellwatchsharing.activities.LoginActivity;
 import com.example.niden.cellwatchsharing.activities.MainActivity;
 import com.example.niden.cellwatchsharing.serivces.LocationBackgroundService;
+import com.example.niden.cellwatchsharing.serivces.LocationService;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,7 +49,7 @@ public class Account {
     private LocationBackgroundService gps;
     private String time="5 sec";
     private DatabaseReference mDatabaseLocationDetails;
-
+    LocationService locationService = new LocationService();
 
 
     public FirebaseAuth getFirebaseAuth() {
@@ -121,10 +126,10 @@ public class Account {
                             context.startActivity(profileIntent);
                             ((Activity) context).finish();
                             mDatabaseLocationDetails = FirebaseDatabase.getInstance().getReference().child("location").push();
-                            time= String.valueOf(time.charAt(0));
                             gps = new LocationBackgroundService(context);
                             context.startService(new Intent(context,LocationBackgroundService.class));
                             if(gps.canGetLocation()){
+                                //gps.getLocation().get
                                 double latitude = gps.getLatitude();
                                 double longitude = gps.getLongitude();
                                 storeInDatabase(latitude,longitude);
@@ -140,11 +145,11 @@ public class Account {
 
     }
     private void storeInDatabase(double latitude, double longitude) {
-
-
         mDatabaseLocationDetails.child("longitude").setValue(longitude);
         mDatabaseLocationDetails.child("latitude").setValue(latitude);
     }
+
+
 
 
 
