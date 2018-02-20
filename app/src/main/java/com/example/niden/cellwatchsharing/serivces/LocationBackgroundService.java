@@ -29,7 +29,6 @@ public class LocationBackgroundService extends Service implements LocationListen
     public Context mContext;
     // flag for GPS status
     boolean isGPSEnabled = false;
-
     // flag for network status
     boolean isNetworkEnabled = false;
     boolean canGetLocation = false;
@@ -37,11 +36,9 @@ public class LocationBackgroundService extends Service implements LocationListen
     Location location;//Location
     double latitude;//Latitude
     double longitude;//Longitude
-
     // The minimum time between updates in milliseconds
     static int time;
     private static final long MIN_TIME_BW_UPDATES = 3000;
-
     // Declaring a Location Manager
     protected LocationManager mlocationManager;
     private Handler mHandler = new Handler();

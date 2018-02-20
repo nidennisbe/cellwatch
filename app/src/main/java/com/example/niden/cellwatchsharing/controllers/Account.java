@@ -7,6 +7,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -32,9 +34,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
 /**
  * Created by niden on 20-Nov-17.
@@ -47,7 +53,6 @@ public class Account {
     private final String DIR_USER="users";
     private final String DIR_CLOCKIN_INFO="clock_in_info";
     private LocationBackgroundService gps;
-    private String time="5 sec";
     private DatabaseReference mDatabaseLocationDetails;
     LocationService locationService = new LocationService();
 
@@ -109,7 +114,7 @@ public class Account {
 
 
     //Login USER method
-    public void loginAUser(final LinearLayout v, final Context context, String email, String password, final ProgressDialog myDialog) {
+    public void loginAUser(final LinearLayout v, final Context context, final String email, String password, final ProgressDialog myDialog) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -132,7 +137,11 @@ public class Account {
                                 //gps.getLocation().get
                                 double latitude = gps.getLatitude();
                                 double longitude = gps.getLongitude();
-                                storeInDatabase(latitude,longitude);
+                                try {
+                                    storeInDatabase(latitude,longitude,email,context);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 Toast.makeText(context, latitude+" ::: "+ longitude, Toast.LENGTH_SHORT).show();
                             }else{
                                 gps.showSettingsAlert();
@@ -144,9 +153,22 @@ public class Account {
                 });
 
     }
-    private void storeInDatabase(double latitude, double longitude) {
+    private void storeInDatabase(double latitude, double longitude, String email,Context context) throws IOException {
+        StringTokenizer tokens = new StringTokenizer(email,"@");
+        String technicianName = tokens.nextToken();
+
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(context, Locale.getDefault());
+
+        addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+        String address = addresses.get(0).getAddressLine(0);
         mDatabaseLocationDetails.child("longitude").setValue(longitude);
         mDatabaseLocationDetails.child("latitude").setValue(latitude);
+        mDatabaseLocationDetails.child("eachUserID").setValue(firebaseAuth.getCurrentUser().getUid());
+        mDatabaseLocationDetails.child("technicianName").setValue(technicianName);
+        mDatabaseLocationDetails.child("address").setValue(address);
     }
 
 

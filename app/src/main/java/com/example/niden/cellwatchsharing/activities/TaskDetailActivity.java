@@ -29,9 +29,7 @@ import com.google.firebase.storage.UploadTask;
 import net.lingala.zip4j.exception.ZipException;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
 
@@ -53,7 +51,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     Task mTask = new Task();
     String zipFileName;
     Gallary mGallery = new Gallary();
-    String zippath;
+    public String zippath;
 
 
     @Override
@@ -156,6 +154,8 @@ public class TaskDetailActivity extends AppCompatActivity {
                 }
                 final StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
                 final int j = i;
+              //  Uri myUri = Uri.parse(zippath);
+                Toast.makeText(this, zippath, Toast.LENGTH_SHORT).show();
                 fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
