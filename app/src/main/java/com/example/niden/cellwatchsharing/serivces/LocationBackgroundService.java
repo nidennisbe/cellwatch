@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
 
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -16,39 +18,38 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.location.LocationListener;
+import java.util.TimerTask;
+
 
 /**
  * Created by niden on 09-Feb-18.
  */
 
-public class LocationBackgroundService extends Service implements android.location.LocationListener {
-    private Context mContext;
+public class LocationBackgroundService extends Service implements LocationListener {
+    public Context mContext;
     // flag for GPS status
     boolean isGPSEnabled = false;
-
     // flag for network status
-    boolean isNetworkEnabled=false;
-    boolean canGetLocation=false;
+    boolean isNetworkEnabled = false;
+    boolean canGetLocation = false;
 
     Location location;//Location
     double latitude;//Latitude
     double longitude;//Longitude
-
     // The minimum time between updates in milliseconds
     static int time;
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
-
+    private static final long MIN_TIME_BW_UPDATES = 3000;
     // Declaring a Location Manager
     protected LocationManager mlocationManager;
+    private Handler mHandler = new Handler();
 
 
-    public LocationBackgroundService(){
+    public LocationBackgroundService() {
 
     }
 
     public LocationBackgroundService(Context mContext) {
-        this.mContext=mContext;
+        this.mContext = mContext;
         //this.time= Integer.parseInt(time);
         getLocation();
     }
@@ -62,7 +63,10 @@ public class LocationBackgroundService extends Service implements android.locati
 
     @Override
     public void onLocationChanged(Location location) {
-
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
     }
 
     @Override
@@ -84,7 +88,7 @@ public class LocationBackgroundService extends Service implements android.locati
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
         getLocation();
-        Log.d("Working","Service Started");
+        Log.d("Working", "***Service Started****");
     }
 
     @Override
@@ -94,10 +98,9 @@ public class LocationBackgroundService extends Service implements android.locati
     }
 
 
-
     @SuppressLint("MissingPermission")
-    public Location getLocation(){
-        try{
+    public Location getLocation() {
+        try {
             mlocationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
             isGPSEnabled = mlocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             isNetworkEnabled = mlocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -117,6 +120,7 @@ public class LocationBackgroundService extends Service implements android.locati
                         if (location != null) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
+                            Log.d("****latLong", latitude+":"+longitude);
                         }
                     }
                 }
@@ -132,40 +136,43 @@ public class LocationBackgroundService extends Service implements android.locati
                             if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
+                                Log.d("****latLong", latitude+":"+longitude);
                             }
                         }
                     }
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return location;
     }
 
-    public void stopUsingGPS(){
-        if(mlocationManager != null){
+    public void stopUsingGPS() {
+        if (mlocationManager != null) {
             mlocationManager.removeUpdates(LocationBackgroundService.this);
         }
     }
-    public double getLatitude(){
-        if(location != null){
+
+    public double getLatitude() {
+        if (location != null) {
             latitude = location.getLatitude();
         }
-
-
         return latitude;
     }
-    public double getLongitude(){
-        if(location != null){
+
+    public double getLongitude() {
+        if (location != null) {
             longitude = location.getLongitude();
         }
         return longitude;
     }
+
     public boolean canGetLocation() {
         return this.canGetLocation;
     }
-    public void showSettingsAlert(){
+
+    public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
         alertDialog.setTitle("GPS is settings");
@@ -173,7 +180,7 @@ public class LocationBackgroundService extends Service implements android.locati
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
 
         alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which) {
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 mContext.startActivity(intent);
             }
@@ -187,4 +194,19 @@ public class LocationBackgroundService extends Service implements android.locati
 
         alertDialog.show();
     }
+    private  class TimeTaskToGetLocation extends TimerTask{
+
+        @Override
+        public void run() {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    getLocation();
+                }
+            });
+        }
+    }
+
+
+
 }

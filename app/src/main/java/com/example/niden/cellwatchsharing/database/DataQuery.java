@@ -13,7 +13,7 @@ import static com.example.niden.cellwatchsharing.activities.TechnicianActivity.m
 
 public class DataQuery {
     public static DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-    public final static Query QUERY_TASK_TYPE = db.child("task_type");
+    public final static Query QUERY_TASK_TYPE = db.child("taskType");
 
     public final static Query QUERY_TECHNICIAN = db.child("users");
 
