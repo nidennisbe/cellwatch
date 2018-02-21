@@ -66,30 +66,13 @@ public class MapFragment extends Fragment {
 
                     return;
                 }
-                mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-                    @Override
-                    public void onMapLongClick(LatLng point) {
-                        // added marker saved as marker and coordinates passed to latlng
-                        Marker marker = mMap.addMarker(new MarkerOptions().position(point));
-                        final LatLng latlng = marker.getPosition();
-                        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("location");
-                        db.push().setValue(latlng);
-
-
-                    }
-                });
-
                 googleMap.setMyLocationEnabled(true);
 
             }
         });
-
-
-
         return myView;
 
     }
-
     @Override
     public void onResume() {
         super.onResume();

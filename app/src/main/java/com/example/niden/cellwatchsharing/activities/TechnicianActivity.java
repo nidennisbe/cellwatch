@@ -48,7 +48,6 @@ public class TechnicianActivity extends AppCompatActivity {
                 .child(mUserKey)
                 .child("tasks");
         setUpRecyclerTechnicianAdapter();
-
     }
 
 
@@ -63,8 +62,6 @@ public class TechnicianActivity extends AppCompatActivity {
         account.checkUserLogin(activity);
         super.onRestart();
     }
-
-
 
     private void bindingViews(){
         profileImage= findViewById(R.id.profile_image);

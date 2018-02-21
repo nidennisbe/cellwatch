@@ -154,7 +154,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                 }
                 final StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
                 final int j = i;
-              //  Uri myUri = Uri.parse(zippath);
+//                Uri myUri = Uri.parse(zippath);
                 Toast.makeText(this, zippath, Toast.LENGTH_SHORT).show();
                 fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
