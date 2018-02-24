@@ -3,6 +3,7 @@ package com.example.niden.cellwatchsharing.activities;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,16 +21,16 @@ import com.example.niden.cellwatchsharing.controllers.Gallary;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.controllers.Zip;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 
 import net.lingala.zip4j.exception.ZipException;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
 
@@ -49,9 +50,13 @@ public class TaskDetailActivity extends AppCompatActivity {
     //Establish classes
     Zip mZip = new Zip();
     Task mTask = new Task();
-    String zipFileName;
     Gallary mGallery = new Gallary();
-    public String zippath;
+    public Uri zipUri;
+    public  File file;
+    File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
+            "CellWatchZip");
+    String timeStampOfZipFile = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+    String zippath = mediaStorageDir.getAbsolutePath() + "/" + timeStampOfZipFile + ".zip";
 
 
     @Override
@@ -61,7 +66,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         setTitle(getString(R.string.toolbar_task_detail));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
         setSupportActionBar(toolbar);
-        mStorage = FirebaseStorage.getInstance().getReference();
+
         bindingViews();
 
         fileNameList = new ArrayList<>();
@@ -119,7 +124,11 @@ public class TaskDetailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
-            setup(data);
+            try {
+                setup(data);
+            } catch (IOException | ZipException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -136,7 +145,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         imageViewZip = (ImageView)findViewById(R.id.imgview_zip);
     }
 
-    private void setup(Intent data) {
+    private void setup(Intent data) throws IOException, ZipException {
         if (data.getClipData() != null) {
             int totalItemsSelected = data.getClipData().getItemCount();
             for (int i = 0; i < totalItemsSelected; i++) {
@@ -147,25 +156,10 @@ public class TaskDetailActivity extends AppCompatActivity {
                 filePathList.add(filePath);
                 fileDoneList.add("uploading");
                 imageUploadLRecyclerAdapter.notifyDataSetChanged();
-                try {
-                    mZip.putImagesToZip(zippath,filePathList,zipFileName);
-                } catch (IOException | ZipException e) {
-                    e.printStackTrace();
-                }
-                final StorageReference fileToUpload = mStorage.child("Gallery").child(fileName);
-                final int j = i;
-//                Uri myUri = Uri.parse(zippath);
-                Toast.makeText(this, zippath, Toast.LENGTH_SHORT).show();
-                fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        fileDoneList.remove(j);
-                        fileDoneList.add(j, "done");
-                        imageUploadLRecyclerAdapter.notifyDataSetChanged();
-                        btnCamera.setVisibility(View.INVISIBLE);
-                        imageViewZip.setVisibility(View.VISIBLE);
-                    }
-                });
+                mZip.putImagesToZip(zippath,filePathList);
+                mZip.uploadZipFile(this,i,zippath,zipUri,fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip);
+
+
 
             }
         } else if (data.getData() != null) {
@@ -174,5 +168,6 @@ public class TaskDetailActivity extends AppCompatActivity {
     }
 
 }
+
 
 
