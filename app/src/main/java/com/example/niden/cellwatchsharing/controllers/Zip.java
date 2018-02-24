@@ -1,8 +1,21 @@
 package com.example.niden.cellwatchsharing.controllers;
 
 
-import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.example.niden.cellwatchsharing.adapters.ImageUploadLRecyclerAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -20,15 +33,9 @@ import java.util.Calendar;
  */
 
 public class Zip {
-    private final File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
-            "CellWatchZip");
 
-    public void putImagesToZip( String zippath, ArrayList<String> allFiles, String zipFileName) throws IOException, ZipException {
 
-        @SuppressLint("SimpleDateFormat") String timeStampOfZipFile = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-        mediaStorageDir.mkdirs();
-        zippath = mediaStorageDir.getAbsolutePath() + "/" + timeStampOfZipFile + ".zip";
-
+    public void putImagesToZip(String zippath, ArrayList<String> allFiles) throws IOException, ZipException {
         if (new File(zippath).exists()) {
             new File(zippath).delete();
         }
@@ -46,8 +53,37 @@ public class Zip {
                 zipFile.addFile(file, zipParameters);
 
             }
-        }
 
+        }
+    }
+
+    public void uploadZipFile(Context context, int i, String zippath, Uri zipUri, final ArrayList<String> fileDoneList,
+                              final ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter, final ImageView btnCamera,
+                              final ImageView imageViewZip) {
+        StorageReference mStorage = FirebaseStorage.getInstance().getReference();
+        final StorageReference storageRef = mStorage.child("Gallery");
+        final int j = i;
+        Toast.makeText(context, zippath, Toast.LENGTH_SHORT).show();
+        zipUri = Uri.fromFile(new File(zippath));
+        Log.d("file", zipUri.getPath());
+        StorageReference readyToUpload = storageRef.child(zipUri.getLastPathSegment());
+        UploadTask uploadTask = readyToUpload.putFile(zipUri);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("myStorage", "failure :(");
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                fileDoneList.remove(j);
+                fileDoneList.add(j, "done");
+                imageUploadLRecyclerAdapter.notifyDataSetChanged();
+                btnCamera.setVisibility(View.INVISIBLE);
+                imageViewZip.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
 
