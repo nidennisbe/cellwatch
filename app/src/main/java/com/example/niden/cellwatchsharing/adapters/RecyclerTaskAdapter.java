@@ -95,7 +95,7 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(activity, "successfully deleted task from technician: "+model.getTaskTechnicianName(), Toast.LENGTH_LONG).show();
-                        mTaskRef.child(mUserKey).child("tasks").child(getRef(position).getKey()).removeValue();
+                        mTaskRef.child(getRef(position).getKey()).removeValue();
                     }
                 });
                 mAlertDialog.setNegativeButton("Cancel",null);

@@ -75,6 +75,9 @@ public class Account {
             Intent profileIntent = new Intent(context, MainActivity.class);
             context.startActivity(profileIntent);
         }
+        else {
+            Toast.makeText(context, "Error connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Check who is currently login

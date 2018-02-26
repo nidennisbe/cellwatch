@@ -48,7 +48,6 @@ public class Task  {
         name = tokens.nextToken();
         uid = tokens.nextToken();
 
-
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child(DIR_TASK)
