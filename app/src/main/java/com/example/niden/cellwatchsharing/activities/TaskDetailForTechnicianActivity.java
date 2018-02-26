@@ -35,7 +35,7 @@ import java.util.Calendar;
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
 
 
-public class TaskDetailActivity extends AppCompatActivity {
+public class TaskDetailForTechnicianActivity extends AppCompatActivity {
 
     static final int RESULT_LOAD_IMAGE = 1;
     RecyclerView recyclerImageUpload;
@@ -62,7 +62,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail);
+        setContentView(R.layout.activity_task_detail_for_technician);
         setTitle(getString(R.string.toolbar_task_detail));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
         setSupportActionBar(toolbar);
@@ -79,7 +79,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         recyclerImageUpload.setHasFixedSize(true);
         recyclerImageUpload.setAdapter(imageUploadLRecyclerAdapter);
         String taskKey = getIntent().getStringExtra(ID_KEY);
-        mTask.displayTaskDetail(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb);
+        mTask.displayTaskDetailForTechnician(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb);
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -87,14 +87,14 @@ public class TaskDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(actMain);
-                TaskDetailActivity.this.finish();
+                TaskDetailForTechnicianActivity.this.finish();
             }
         });
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GallaryUtils.openGallary(TaskDetailActivity.this, RESULT_LOAD_IMAGE);
+                GallaryUtils.openGallary(TaskDetailForTechnicianActivity.this, RESULT_LOAD_IMAGE);
             }
         });
 
@@ -163,7 +163,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
             }
         } else if (data.getData() != null) {
-            Toast.makeText(TaskDetailActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TaskDetailForTechnicianActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -14,8 +14,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import java.util.StringTokenizer;
+
+import static com.example.niden.cellwatchsharing.activities.TechnicianActivity.mUserKey;
 
 
 /**
@@ -49,8 +52,6 @@ public class Task  {
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child(DIR_TASK)
-                /*.child(eachUserID)
-                .child(DIR_TASK)*/
                 .push()
                 .setValue(new TaskEntityDatabase(eachUserID,strTaskName,strClass, strAdress, strDesc,strSuburb
                         ,currentDateTimeString, strSpinnerType, name));
@@ -62,12 +63,37 @@ public class Task  {
     }
 
 //SHOW CONTENTS ON TASK DETAIL ACTIVITY
-    public void displayTaskDetail(String taskKey, final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb ){
-       DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("tasks").child(taskKey);
+    public void displayTaskDetailForTechnician(String taskKey, final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb ){
+       DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference().child("tasks");
+        mDataReference.child(taskKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    TaskEntityDatabase taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
+                    String strTaskName = taskEntityDatabase.getTaskName();
+                    String strDescription = taskEntityDatabase.getTaskDescription();
+                    String strAddress = taskEntityDatabase.getTaskAddress();
+                    String strClass = taskEntityDatabase.getTaskClass();
+                    String strSuburb = taskEntityDatabase.getTaskSuburb();
 
-        mDataReference.addValueEventListener(new ValueEventListener() {
+                    etTaskName.setText(strTaskName);
+                    etClass.setText(strClass);
+                    etDescription.setText(strDescription);
+                    etAddress.setText(strAddress);
+                    etSuburb.setText(strSuburb);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+    //SHOW CONTENTS ON TASK DETAIL ACTIVITY
+    public void displayTaskDetailForAdmin(String taskKey, final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb ){
+        DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference("tasks");
+        mDataReference.child(taskKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

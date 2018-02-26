@@ -12,7 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.activities.TaskDetailActivity;
+import com.example.niden.cellwatchsharing.activities.TaskDetailForAdminActivity;
+import com.example.niden.cellwatchsharing.activities.TaskDetailForTechnicianActivity;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.TSConverterUtils;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -48,8 +49,8 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
     protected void populateViewHolder(final Viewholder viewholder, final TaskEntityDatabase model, final int position) {
 
 
-        final DatabaseReference mTaskRef = FirebaseDatabase.getInstance().getReference().child("users");
-        mTaskRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("tasks").addChildEventListener(new ChildEventListener() {
+        final DatabaseReference mTaskRef = FirebaseDatabase.getInstance().getReference().child("tasks");
+        mTaskRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                    showAlertNotifcation(activity);
@@ -107,7 +108,7 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.zoom_in));
-                Intent myIntent = new Intent(activity, TaskDetailActivity.class);
+                Intent myIntent = new Intent(activity, TaskDetailForAdminActivity.class);
                 myIntent.putExtra("key",getRef(position).getKey());
                 activity.startActivity(myIntent);
             }

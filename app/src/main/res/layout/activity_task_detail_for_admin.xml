@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.niden.cellwatchsharing.activities.TaskDetailActivity">
+    tools:context="com.example.niden.cellwatchsharing.activities.TaskDetailForAdminActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_second"
@@ -42,14 +42,6 @@
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_zip" />
 
-                <ImageView
-                    android:id="@+id/button_camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="right"
-                    android:paddingTop="15dp"
-                    android:src="@drawable/ic_circle_camera" />
             </RelativeLayout>
 
             <LinearLayout

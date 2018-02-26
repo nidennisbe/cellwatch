@@ -40,7 +40,7 @@ public class TaskFragment extends Fragment {
     View myView;
     public RecyclerView recyclerView;
     public static TextView emptyView;
-    public Query mQuery= FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("tasks");
+    public Query mQuery= FirebaseDatabase.getInstance().getReference().child("tasks").orderByChild("eachUserID").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
     @Nullable
     @Override

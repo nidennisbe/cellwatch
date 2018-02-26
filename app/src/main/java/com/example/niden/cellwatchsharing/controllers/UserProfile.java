@@ -51,6 +51,7 @@ public class UserProfile {
         Map<String, Object> result = new HashMap<>();
         result.put("name",firebaseUserEntity.getName());
         result.put("bio",firebaseUserEntity.getBio());
+        result.put("email",firebaseUserEntity.getEmail());
         result.put("expirationDate",firebaseUserEntity.getExpirationDate());
         result.put("hobby",firebaseUserEntity.getHobby());
         result.put("phone",firebaseUserEntity.getPhone());
