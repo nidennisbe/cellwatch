@@ -48,6 +48,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
     public ArrayList<String> fileDoneList;
     public ArrayList<String> filePathList;
     //Establish classes
+    String taskKey;
     Zip mZip = new Zip();
     Task mTask = new Task();
     Gallary mGallery = new Gallary();
@@ -56,7 +57,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
     File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
             "CellWatchZip");
     String timeStampOfZipFile = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-    String zippath = mediaStorageDir.getAbsolutePath() + "/" + timeStampOfZipFile + ".zip";
+    String zippath = mediaStorageDir.getAbsolutePath() + "/" + etTaskName+timeStampOfZipFile + ".zip";
 
 
     @Override
@@ -78,7 +79,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         recyclerImageUpload.setLayoutManager(new LinearLayoutManager(this));
         recyclerImageUpload.setHasFixedSize(true);
         recyclerImageUpload.setAdapter(imageUploadLRecyclerAdapter);
-        String taskKey = getIntent().getStringExtra(ID_KEY);
+        taskKey = getIntent().getStringExtra(ID_KEY);
         mTask.displayTaskDetailForTechnician(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb);
 
 
@@ -157,7 +158,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
                 fileDoneList.add("uploading");
                 imageUploadLRecyclerAdapter.notifyDataSetChanged();
                 mZip.putImagesToZip(zippath,filePathList);
-                mZip.uploadZipFile(this,i,zippath,zipUri,fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip);
+                mZip.uploadZipFile(this,i,zippath,zipUri,fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip,taskKey);
 
 
 

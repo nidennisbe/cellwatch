@@ -72,6 +72,9 @@
         <service android:name=".serivces.LocationBackgroundService"
             android:enabled="true">
            </service>
+        <service android:name=".serivces.LocationService"
+            android:enabled="true">
+        </service>
     </application>
 
 </manifest>

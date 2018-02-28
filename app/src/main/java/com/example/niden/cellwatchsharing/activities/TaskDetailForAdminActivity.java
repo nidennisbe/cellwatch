@@ -47,6 +47,7 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
     public ArrayList<String> fileDoneList;
     public ArrayList<String> filePathList;
     //Establish classes
+    String taskKey;
     Zip mZip = new Zip();
     Task mTask = new Task();
     Gallary mGallery = new Gallary();
@@ -77,7 +78,7 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
         recyclerImageUpload.setLayoutManager(new LinearLayoutManager(this));
         recyclerImageUpload.setHasFixedSize(true);
         recyclerImageUpload.setAdapter(imageUploadLRecyclerAdapter);
-        String taskKey = getIntent().getStringExtra(ID_KEY);
+        taskKey = getIntent().getStringExtra(ID_KEY);
         mTask.displayTaskDetailForAdmin(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb);
 
 
@@ -136,7 +137,7 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
                 fileDoneList.add("uploading");
                 imageUploadLRecyclerAdapter.notifyDataSetChanged();
                 mZip.putImagesToZip(zippath,filePathList);
-                mZip.uploadZipFile(this,i,zippath,zipUri,fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip);
+                mZip.uploadZipFile(this,i,zippath,zipUri,fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip,taskKey);
             }
         } else if (data.getData() != null) {
             Toast.makeText(TaskDetailForAdminActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();

@@ -22,6 +22,7 @@ import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
 import com.example.niden.cellwatchsharing.serivces.LocationBackgroundService;
+import com.example.niden.cellwatchsharing.serivces.LocationService;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
 import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
@@ -35,6 +36,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
 
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public  FirebaseAuth firebaseAuth;
     Account mAccount = new Account();
     DatabaseReference scoresRef;
-    LocationBackgroundService locationBackgroundService = new LocationBackgroundService();
+    LocationService locationBackgroundService = new LocationService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,13 +111,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
+
+
                 }
             };
+//            mAccount.userOnlineisFalse(firebaseAuth.getUid());
             ToastUtils.displayMessageToast(activity,"Logout Successfully");
-            // account auth state is changed - account is null
-            // launch login activity
+            activity.stopService(new Intent(activity,LocationService.class));
             startActivity(new Intent(activity, LoginActivity.class));
             this.finish();
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

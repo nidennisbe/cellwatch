@@ -63,7 +63,7 @@ public class Zip {
 
     public void uploadZipFile(Context context, int i, String zippath, Uri zipUri, final ArrayList<String> fileDoneList,
                               final ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter, final ImageView btnCamera,
-                              final ImageView imageViewZip) {
+                              final ImageView imageViewZip, final String taskKey) {
         StorageReference mStorage = FirebaseStorage.getInstance().getReference();
         final StorageReference storageRef = mStorage.child("Gallery");
         final int j = i;
@@ -84,7 +84,7 @@ public class Zip {
                 String readyToAddDownloadUrl= String.valueOf(downloadUrl);
                 Map<String, Object> result = new HashMap<>();
                 result.put("zipFileUrl",readyToAddDownloadUrl);
-                DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference().child("tasks");
+                DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference().child("tasks").child(taskKey);
                 mDataReference.updateChildren(result);
                 fileDoneList.remove(j);
                 fileDoneList.add(j, "done");
