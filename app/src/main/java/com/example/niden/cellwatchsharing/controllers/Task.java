@@ -63,7 +63,7 @@ public class Task  {
 
 //SHOW CONTENTS ON TASK DETAIL ACTIVITY
     public void displayTaskDetailForTechnician(String taskKey, final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb ){
-       DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference().child("tasks");
+       DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference().child(DIR_TASK);
         mDataReference.child(taskKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -91,7 +91,7 @@ public class Task  {
 
     //SHOW CONTENTS ON TASK DETAIL ACTIVITY
     public void displayTaskDetailForAdmin(String taskKey, final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb ){
-        DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference("tasks");
+        DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference(DIR_TASK);
         mDataReference.child(taskKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

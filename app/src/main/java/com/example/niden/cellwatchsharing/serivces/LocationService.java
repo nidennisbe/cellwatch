@@ -68,18 +68,12 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         Log.i(LOGSERVICE, "onConnected" + bundle);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         Location l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (l != null) {
-            longitude = l.getLongitude();
+         /*   longitude = l.getLongitude();
             latitude = l.getLatitude();
             Log.i(LOGSERVICE, "lat " + latitude);
             Log.i(LOGSERVICE, "lng " + longitude);
@@ -87,7 +81,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
                 storeInDatabase(latitude, longitude);
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
 
         startLocationUpdate();
@@ -118,7 +112,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(LOGSERVICE, "onDestroy - Estou sendo destruido ");
+        Log.i(LOGSERVICE, "onDestroy");
 
     }
 
@@ -141,13 +135,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         initLocationRequest();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
@@ -178,8 +166,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         String technicianName = tokens.nextToken();
         String currentDateTimeString = String.valueOf(System.currentTimeMillis());
         Uri photoUrl = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
-
-
+        
         Geocoder geocoder;
         List<Address> addresses;
         geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());

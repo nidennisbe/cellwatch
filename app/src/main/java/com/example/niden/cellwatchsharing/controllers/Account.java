@@ -87,7 +87,7 @@ public class Account {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+                DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(user.getUid());
                 Map<String, Object> result = new HashMap<>();
                 if (null != user) {
                     Intent profileIntent = new Intent(context, MainActivity.class);
@@ -167,14 +167,14 @@ public class Account {
 
     }
     private void userOnlineisTrue()  {
-        DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference("users").child(getFirebaseUserAuthenticateId());
+        DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(getFirebaseUserAuthenticateId());
         Map<String, Object> result = new HashMap<>();
         result.put("online",true);
         onlineUser.updateChildren(result);
     }
 
     public void userOnlineisFalse(String uId)  {
-        DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference("users").child(uId);
+        DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(uId);
         Map<String, Object> result = new HashMap<>();
         result.put("online",false);
         onlineUser.updateChildren(result);
