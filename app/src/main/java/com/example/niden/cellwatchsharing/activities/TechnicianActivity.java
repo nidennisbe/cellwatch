@@ -28,6 +28,7 @@ public class TechnicianActivity extends AppCompatActivity {
     Account account = new Account();
     ImageView profileImage;
     Query mRef;
+    Query query;
     UserProfile mUserProfile = new UserProfile();
     RelativeLayout cover;
     public  static String mUserKey;
@@ -43,10 +44,9 @@ public class TechnicianActivity extends AppCompatActivity {
 
         mUserKey = getIntent().getStringExtra("key");
         mUserProfile.displayProfileImage(mUserKey,TechnicianActivity.this,textViewName,textViewBio,profileImage);
-        mRef = FirebaseDatabase.getInstance().getReference()
-                .child("users")
-                .child(mUserKey)
-                .child("tasks");
+        mRef = FirebaseDatabase.getInstance().getReference().child("tasks");
+        query = mRef.orderByChild("eachUserID").equalTo(mUserKey);
+
         setUpRecyclerTechnicianAdapter();
     }
 
@@ -72,7 +72,7 @@ public class TechnicianActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerTechnicianAdapter(){
-        RecyclerTaskAdapter mAdapter = new RecyclerTaskAdapter(mRef, activity,R.layout.item_task );
+        RecyclerTaskAdapter mAdapter = new RecyclerTaskAdapter(query, activity,R.layout.item_task );
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);

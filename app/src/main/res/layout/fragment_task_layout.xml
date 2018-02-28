@@ -42,4 +42,5 @@
         android:gravity="center"
         android:visibility="gone"
         android:text="NO TASK AVAILABLE" />
+
 </LinearLayout>

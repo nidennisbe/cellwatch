@@ -38,6 +38,7 @@ public class GoogleMapAdapter implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     Activity activity;
+    public Bitmap bmp;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -47,11 +48,22 @@ public class GoogleMapAdapter implements OnMapReadyCallback {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 LocationDatabase locationDatabase = dataSnapshot.getValue(LocationDatabase.class );
+                FirebaseUserEntity firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
+                URL url;
+
+                try {
+                    url = new URL(firebaseUserEntity.getProfile_url());
+                    bmp= BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
                 LatLng targetLocation = new LatLng(locationDatabase.getLatitude(), locationDatabase.getLongitude());
                 BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.badge_technician);
                 mMap.addMarker(new MarkerOptions().position(targetLocation).snippet("Technician: "+locationDatabase.getTechnicianName())
                         .icon(icon)
-                        .title(locationDatabase.getAddress()));
+                        .title(locationDatabase.getAddress())).showInfoWindow();
                 CameraPosition cameraPosition = new CameraPosition.Builder()
                         .target(targetLocation)
                         .zoom(6)

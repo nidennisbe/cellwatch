@@ -40,6 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
@@ -54,7 +55,7 @@ public class Account {
     private final String DIR_CLOCKIN_INFO="clock_in_info";
     private LocationBackgroundService gps;
     private DatabaseReference mDatabaseLocationDetails;
-    LocationService locationService = new LocationService();
+    public LocationService locationService = new LocationService();
 
 
     public FirebaseAuth getFirebaseAuth() {
@@ -75,6 +76,9 @@ public class Account {
             Intent profileIntent = new Intent(context, MainActivity.class);
             context.startActivity(profileIntent);
         }
+        else {
+            Toast.makeText(context, "Error connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Check who is currently login
@@ -83,12 +87,19 @@ public class Account {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+                DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(user.getUid());
+                Map<String, Object> result = new HashMap<>();
                 if (null != user) {
                     Intent profileIntent = new Intent(context, MainActivity.class);
                     context.startActivity(profileIntent);
+                    result.put("online",true);
+                    onlineUser.updateChildren(result);
+
                 } else {
                     Intent loginIntent = new Intent(context, LoginActivity.class);
                     context.startActivity(loginIntent);
+                    result.put("online",false);
+                    onlineUser.updateChildren(result);
                 }
             }
         };
@@ -131,9 +142,11 @@ public class Account {
                             context.startActivity(profileIntent);
                             ((Activity) context).finish();
                             mDatabaseLocationDetails = FirebaseDatabase.getInstance().getReference().child("location").push();
-                            gps = new LocationBackgroundService(context);
-                            context.startService(new Intent(context,LocationBackgroundService.class));
-                            if(gps.canGetLocation()){
+                            userOnlineisTrue();
+                           /* gps = new LocationBackgroundService(context);
+                            context.startService(new Intent(context,LocationBackgroundService.class));*/
+                           context.startService(new Intent(context,LocationService.class));
+                         /*   if(gps.canGetLocation()){
                                 //gps.getLocation().get
                                 double latitude = gps.getLatitude();
                                 double longitude = gps.getLongitude();
@@ -145,7 +158,7 @@ public class Account {
                                 Toast.makeText(context, latitude+" ::: "+ longitude, Toast.LENGTH_SHORT).show();
                             }else{
                                 gps.showSettingsAlert();
-                            }
+                            }*/
                         }
                     }
 
@@ -153,23 +166,21 @@ public class Account {
                 });
 
     }
-    private void storeInDatabase(double latitude, double longitude, String email,Context context) throws IOException {
-        StringTokenizer tokens = new StringTokenizer(email,"@");
-        String technicianName = tokens.nextToken();
-
-        Geocoder geocoder;
-        List<Address> addresses;
-        geocoder = new Geocoder(context, Locale.getDefault());
-
-        addresses = geocoder.getFromLocation(latitude, longitude, 1);
-
-        String address = addresses.get(0).getAddressLine(0);
-        mDatabaseLocationDetails.child("longitude").setValue(longitude);
-        mDatabaseLocationDetails.child("latitude").setValue(latitude);
-        mDatabaseLocationDetails.child("eachUserID").setValue(firebaseAuth.getCurrentUser().getUid());
-        mDatabaseLocationDetails.child("technicianName").setValue(technicianName);
-        mDatabaseLocationDetails.child("address").setValue(address);
+    private void userOnlineisTrue()  {
+        DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(getFirebaseUserAuthenticateId());
+        Map<String, Object> result = new HashMap<>();
+        result.put("online",true);
+        onlineUser.updateChildren(result);
     }
+
+    public void userOnlineisFalse(String uId)  {
+        DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(uId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("online",false);
+        onlineUser.updateChildren(result);
+    }
+
+
 
 
 

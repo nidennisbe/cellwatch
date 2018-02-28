@@ -3,9 +3,9 @@ package com.example.niden.cellwatchsharing.activities;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +23,6 @@ import com.example.niden.cellwatchsharing.controllers.Zip;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.google.firebase.storage.StorageReference;
 
-
 import net.lingala.zip4j.exception.ZipException;
 
 import java.io.File;
@@ -35,7 +34,7 @@ import java.util.Calendar;
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
 
 
-public class TaskDetailActivity extends AppCompatActivity {
+public class TaskDetailForAdminActivity extends AppCompatActivity {
 
     static final int RESULT_LOAD_IMAGE = 1;
     RecyclerView recyclerImageUpload;
@@ -48,6 +47,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     public ArrayList<String> fileDoneList;
     public ArrayList<String> filePathList;
     //Establish classes
+    String taskKey;
     Zip mZip = new Zip();
     Task mTask = new Task();
     Gallary mGallery = new Gallary();
@@ -62,7 +62,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail);
+        setContentView(R.layout.activity_task_detail_for_admin);
         setTitle(getString(R.string.toolbar_task_detail));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_second);
         setSupportActionBar(toolbar);
@@ -78,8 +78,8 @@ public class TaskDetailActivity extends AppCompatActivity {
         recyclerImageUpload.setLayoutManager(new LinearLayoutManager(this));
         recyclerImageUpload.setHasFixedSize(true);
         recyclerImageUpload.setAdapter(imageUploadLRecyclerAdapter);
-        String taskKey = getIntent().getStringExtra(ID_KEY);
-        mTask.displayTaskDetail(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb);
+        taskKey = getIntent().getStringExtra(ID_KEY);
+        mTask.displayTaskDetailForAdmin(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb);
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -87,14 +87,14 @@ public class TaskDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(actMain);
-                TaskDetailActivity.this.finish();
+                TaskDetailForAdminActivity.this.finish();
             }
         });
 
-        btnCamera.setOnClickListener(new View.OnClickListener() {
+        imageViewZip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GallaryUtils.openGallary(TaskDetailActivity.this, RESULT_LOAD_IMAGE);
+
             }
         });
 
@@ -113,13 +113,6 @@ public class TaskDetailActivity extends AppCompatActivity {
         startActivity(technicianActivityIntent);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        btnCamera.setVisibility(View.VISIBLE);
-        imageViewZip.setVisibility(View.INVISIBLE);
-    }
-
     // ACTIVITY RESULT
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -130,19 +123,6 @@ public class TaskDetailActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-
-    private void bindingViews() {
-        btnDone = (Button) findViewById(R.id.btn_done_task_detail);
-        recyclerImageUpload = (RecyclerView) findViewById(R.id.recycler_view);
-        btnCamera = (ImageView) findViewById(R.id.button_camera);
-        etTaskName = (EditText) findViewById(R.id.et_task_name);
-        etClass = (EditText) findViewById(R.id.et_task_class);
-        etDescription = (EditText) findViewById(R.id.et_task_desc);
-        etAddress = (EditText) findViewById(R.id.et_task_address);
-        etSuburb = (EditText) findViewById(R.id.et_task_suburb);
-        imageViewZip = (ImageView)findViewById(R.id.imgview_zip);
     }
 
     private void setup(Intent data) throws IOException, ZipException {
@@ -157,14 +137,23 @@ public class TaskDetailActivity extends AppCompatActivity {
                 fileDoneList.add("uploading");
                 imageUploadLRecyclerAdapter.notifyDataSetChanged();
                 mZip.putImagesToZip(zippath,filePathList);
-                mZip.uploadZipFile(this,i,zippath,zipUri,fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip);
-
-
-
+                mZip.uploadZipFile(this,i,zippath,zipUri,fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip,taskKey);
             }
         } else if (data.getData() != null) {
-            Toast.makeText(TaskDetailActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TaskDetailForAdminActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void bindingViews() {
+        btnDone = (Button) findViewById(R.id.btn_done_task_detail);
+        recyclerImageUpload = (RecyclerView) findViewById(R.id.recycler_view);
+        btnCamera = (ImageView) findViewById(R.id.button_camera);
+        etTaskName = (EditText) findViewById(R.id.et_task_name);
+        etClass = (EditText) findViewById(R.id.et_task_class);
+        etDescription = (EditText) findViewById(R.id.et_task_desc);
+        etAddress = (EditText) findViewById(R.id.et_task_address);
+        etSuburb = (EditText) findViewById(R.id.et_task_suburb);
+        imageViewZip = (ImageView)findViewById(R.id.imgview_zip);
     }
 
 }
