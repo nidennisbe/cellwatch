@@ -49,10 +49,10 @@ import java.util.StringTokenizer;
 
 public class Account {
     private static final String TAG = Account.class.getSimpleName();
-    private  FirebaseAuth firebaseAuth;
-    public  FirebaseAuth.AuthStateListener mAuthListener;
-    private final String DIR_USER="users";
-    private final String DIR_CLOCKIN_INFO="clock_in_info";
+    private FirebaseAuth firebaseAuth;
+    public FirebaseAuth.AuthStateListener mAuthListener;
+    private final String DIR_USER = "users";
+    private final String DIR_CLOCKIN_INFO = "clock_in_info";
     private LocationBackgroundService gps;
     private DatabaseReference mDatabaseLocationDetails;
     public LocationService locationService = new LocationService();
@@ -66,6 +66,7 @@ public class Account {
         String userId = null;
         if (firebaseAuth.getCurrentUser() != null) {
             userId = firebaseAuth.getCurrentUser().getUid();
+
         }
         return userId;
     }
@@ -75,8 +76,7 @@ public class Account {
         if (firebaseAuth.getCurrentUser() != null) {
             Intent profileIntent = new Intent(context, MainActivity.class);
             context.startActivity(profileIntent);
-        }
-        else {
+        } else {
             Toast.makeText(context, "Error connection", Toast.LENGTH_SHORT).show();
         }
     }
@@ -92,13 +92,13 @@ public class Account {
                 if (null != user) {
                     Intent profileIntent = new Intent(context, MainActivity.class);
                     context.startActivity(profileIntent);
-                    result.put("online",true);
+                    result.put("online", true);
                     onlineUser.updateChildren(result);
 
                 } else {
                     Intent loginIntent = new Intent(context, LoginActivity.class);
                     context.startActivity(loginIntent);
-                    result.put("online",false);
+                    result.put("online", false);
                     onlineUser.updateChildren(result);
                 }
             }
@@ -112,7 +112,7 @@ public class Account {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(context, ""+ task.getException(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "" + task.getException(), Toast.LENGTH_SHORT).show();
                             myDialog.dismiss();
                         } else {
                             Intent myIntent = new Intent(context, EditProfileActivity.class);
@@ -131,7 +131,7 @@ public class Account {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            ToastUtils.showSnackbar(v,context.getString(R.string.alert_check_emailpassword), Snackbar.LENGTH_LONG);
+                            ToastUtils.showSnackbar(v, context.getString(R.string.alert_check_emailpassword), Snackbar.LENGTH_LONG);
                             myDialog.dismiss();
                         } else {
                             myDialog.dismiss();
@@ -145,7 +145,7 @@ public class Account {
                             userOnlineisTrue();
                            /* gps = new LocationBackgroundService(context);
                             context.startService(new Intent(context,LocationBackgroundService.class));*/
-                           context.startService(new Intent(context,LocationService.class));
+                            context.startService(new Intent(context, LocationService.class));
                          /*   if(gps.canGetLocation()){
                                 //gps.getLocation().get
                                 double latitude = gps.getLatitude();
@@ -166,25 +166,23 @@ public class Account {
                 });
 
     }
-    private void userOnlineisTrue()  {
+    public void logoutUser(){
+
+    }
+
+    private void userOnlineisTrue() {
         DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(getFirebaseUserAuthenticateId());
         Map<String, Object> result = new HashMap<>();
-        result.put("online",true);
+        result.put("online", true);
         onlineUser.updateChildren(result);
     }
 
-    public void userOnlineisFalse(String uId)  {
+    public void userOnlineisFalse(String uId) {
         DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(uId);
         Map<String, Object> result = new HashMap<>();
-        result.put("online",false);
+        result.put("online", false);
         onlineUser.updateChildren(result);
     }
-
-
-
-
-
-
 
 
 }
