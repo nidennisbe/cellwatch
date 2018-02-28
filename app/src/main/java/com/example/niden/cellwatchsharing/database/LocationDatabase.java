@@ -10,6 +10,7 @@ public class LocationDatabase {
     public String technicianName;
     public String address;
 
+
 public  LocationDatabase(){
 
 }

@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
             };
-//            mAccount.userOnlineisFalse(firebaseAuth.getUid());
+            mAccount.userOnlineisFalse(firebaseAuth.getCurrentUser().getUid());
             ToastUtils.displayMessageToast(activity,"Logout Successfully");
             activity.stopService(new Intent(activity,LocationService.class));
             startActivity(new Intent(activity, LoginActivity.class));

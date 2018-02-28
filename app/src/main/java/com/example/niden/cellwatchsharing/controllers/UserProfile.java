@@ -44,9 +44,7 @@ public class UserProfile {
 
     public void saveUserProfileInfo(String userId, FirebaseUserEntity firebaseUserEntity){
        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-       /* Map<String, Object> result = new HashMap<>();
-        result.put(userId,firebaseUserEntity);
-        databaseReference.child("users").child(userId).updateChildren(result);*/
+
 
         Map<String, Object> result = new HashMap<>();
         result.put("name",firebaseUserEntity.getName());
@@ -174,6 +172,7 @@ public class UserProfile {
                             user.put("profile_url", url);
                             databaseReference.child(DIR_USER)
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(user);
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
