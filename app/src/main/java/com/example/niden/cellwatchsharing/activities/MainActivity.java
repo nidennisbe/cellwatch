@@ -111,8 +111,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
-
-
                 }
             };
             mAccount.userOnlineisFalse(firebaseAuth.getCurrentUser().getUid());
