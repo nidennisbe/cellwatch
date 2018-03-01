@@ -111,9 +111,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
+                    assert user != null;
+                    mAccount.userOnlineisFalse(user.getUid());
                 }
             };
-            mAccount.userOnlineisFalse(firebaseAuth.getCurrentUser().getUid());
+
             ToastUtils.displayMessageToast(activity,"Logout Successfully");
             activity.stopService(new Intent(activity,LocationService.class));
             startActivity(new Intent(activity, LoginActivity.class));
