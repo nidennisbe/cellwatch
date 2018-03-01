@@ -179,9 +179,9 @@ public class Account {
 
     public void userOnlineisFalse(String uId) {
         DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(uId);
-        Map<String, Object> result = new HashMap<>();
-        result.put("online", false);
-        onlineUser.updateChildren(result);
+        Map<String, Object> resultUser = new HashMap<>();
+        resultUser.put("online", false);
+        onlineUser.onDisconnect().updateChildren(resultUser);
     }
 
 
