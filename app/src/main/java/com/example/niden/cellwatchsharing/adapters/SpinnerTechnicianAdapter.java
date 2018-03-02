@@ -3,13 +3,11 @@ package com.example.niden.cellwatchsharing.adapters;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.firebase.ui.database.FirebaseListAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,9 +15,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by niden on 03-Feb-18.
@@ -46,7 +41,7 @@ public class SpinnerTechnicianAdapter extends FirebaseListAdapter<FirebaseUserEn
 
                     String resultUid = model.getId();
                     String resultName = String.valueOf(model.getName());
-                    String imageUrl = model.getProfile_url();
+                    String imageUrl = model.getProfileUrl();
                     //Set Value to Views
                     txUid.setText(resultUid);
                     textView.setText(resultName);

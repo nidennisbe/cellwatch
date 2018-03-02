@@ -49,7 +49,7 @@ import java.util.StringTokenizer;
 
 public class Account {
     private static final String TAG = Account.class.getSimpleName();
-    private FirebaseAuth firebaseAuth;
+    public FirebaseAuth firebaseAuth;
     public FirebaseAuth.AuthStateListener mAuthListener;
     private final String DIR_USER = "users";
     private final String DIR_CLOCKIN_INFO = "clock_in_info";
@@ -76,8 +76,6 @@ public class Account {
         if (firebaseAuth.getCurrentUser() != null) {
             Intent profileIntent = new Intent(context, MainActivity.class);
             context.startActivity(profileIntent);
-        } else {
-            Toast.makeText(context, "Error connection", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -166,22 +164,20 @@ public class Account {
                 });
 
     }
-    public void logoutUser(){
 
-    }
 
     private void userOnlineisTrue() {
-        DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(getFirebaseUserAuthenticateId());
+        DatabaseReference onlineUserRef = FirebaseDatabase.getInstance().getReference(DIR_USER).child(getFirebaseUserAuthenticateId());
         Map<String, Object> result = new HashMap<>();
         result.put("online", true);
-        onlineUser.updateChildren(result);
+        onlineUserRef.updateChildren(result);
     }
 
-    public void userOnlineisFalse(String uId) {
-        DatabaseReference onlineUser = FirebaseDatabase.getInstance().getReference(DIR_USER).child(uId);
+    public void userOnlineisFalse(DatabaseReference onlineUserRef) {
+
         Map<String, Object> resultUser = new HashMap<>();
         resultUser.put("online", false);
-        onlineUser.onDisconnect().updateChildren(resultUser);
+        onlineUserRef.updateChildren(resultUser);
     }
 
 

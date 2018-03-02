@@ -10,8 +10,9 @@ public class FirebaseUserEntity {
     private String phone;
     private String hobby;
     private String expirationDate;
-    private String profile_url;
+    private String profileUrl;
     private String user_type;
+    private Boolean online;
 
 
 
@@ -35,7 +36,7 @@ public class FirebaseUserEntity {
     }
 
 
-    public FirebaseUserEntity(String id, String email, String name, String bio, String phone, String hobby, String expirationDate, String profile_url, String user_type) {
+    public FirebaseUserEntity(String id, String email, String name, String bio, String phone, String hobby, String expirationDate, String profileUrl, String user_type,Boolean online) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -43,8 +44,9 @@ public class FirebaseUserEntity {
         this.phone = phone;
         this.hobby = hobby;
         this.expirationDate = expirationDate;
-        this.profile_url = profile_url;
+        this.profileUrl = profileUrl;
         this.user_type = user_type;
+        this.online = online;
     }
 
 
@@ -105,15 +107,19 @@ public class FirebaseUserEntity {
         this.name = name;
     }
 
-    public String getProfile_url() {
-        return profile_url;
+    public String getProfileUrl() {
+        return profileUrl;
     }
 
-    public void setProfile_url(String profile_url) {
-        this.profile_url = profile_url;
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 
     public String getUser_type() {
         return user_type;
+    }
+
+    public Boolean getOnline() {
+        return online;
     }
 }

@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
@@ -158,7 +159,7 @@ public class EditProfileActivity extends AppCompatActivity {
             String id = user.getUid();
             String profileEmail = user.getEmail();
 
-            firebaseUserEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby,  profileExpDate,"" , "technician");
+            firebaseUserEntity = new FirebaseUserEntity(id, profileEmail, profileName, profileBio, profileContact, profileHobby,  profileExpDate,"" , "technician",true);
             mUserProfile.saveUserProfileInfo(id, firebaseUserEntity);
             Intent intent = new Intent(mActivity, MainActivity.class);
             startActivity(intent);

@@ -10,9 +10,12 @@ import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.GoogleMapAdapter;
+import com.example.niden.cellwatchsharing.adapters.SpinnerTechnicianAdapter;
+import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -28,6 +31,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ONLY_TECHNICIAN;
+
 /**
  * Created by niden on 16-Nov-17.
  */
@@ -36,8 +41,10 @@ public class MapFragment extends Fragment {
     MapView mMapView;
     private GoogleMap googleMap;
     View myView;
-    Activity mapFrag;
+    public  static Activity mapFrag;
     GoogleMapAdapter showMapAdapter = new GoogleMapAdapter();
+    SpinnerTechnicianAdapter buildSpinnerTechAdapter;
+    private Spinner spinnerTech;
 
     @Nullable
     @Override
@@ -47,7 +54,11 @@ public class MapFragment extends Fragment {
         getActivity().setTitle("Map");
         mMapView = (MapView) myView.findViewById(R.id.google_map_view);
         mMapView.onCreate(savedInstanceState);
+        spinnerTech = (Spinner) myView.findViewById(R.id.spinnerTechnician2);
 
+//SETUP SPINNER FOR SELECTING TECHNICIAN
+        buildSpinnerTechAdapter = new SpinnerTechnicianAdapter(mapFrag, FirebaseUserEntity.class, R.layout.item_spinner_technician, QUERY_ONLY_TECHNICIAN);
+        spinnerTech.setAdapter(buildSpinnerTechAdapter);
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {

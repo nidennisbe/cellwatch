@@ -1,76 +1,114 @@
 package com.example.niden.cellwatchsharing.adapters;
 
 import android.app.Activity;
+import android.app.Application;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.database.LocationDatabase;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.StringTokenizer;
+import java.util.concurrent.ExecutionException;
+
+import static com.example.niden.cellwatchsharing.activities.TechnicianActivity.mUserKey;
+import static com.example.niden.cellwatchsharing.fragments.MapFragment.mapFrag;
 
 /**
  * Created by niden on 07-Feb-18.
  */
 
-public class GoogleMapAdapter implements OnMapReadyCallback {
+public class GoogleMapAdapter extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    Activity activity;
-    public Bitmap bmp;
-
+    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+    private Bitmap bmImg;
+    Context mContext;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap= googleMap;
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        db.child("location").addChildEventListener(new ChildEventListener() {
+
+
+        final DatabaseReference locationRef= rootRef.child("location");
+        locationRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                LocationDatabase locationDatabase = dataSnapshot.getValue(LocationDatabase.class );
-                FirebaseUserEntity firebaseUserEntity = dataSnapshot.getValue(FirebaseUserEntity.class);
-                URL url;
+                final LocationDatabase locationDatabase = dataSnapshot.getValue(LocationDatabase.class );
+                DatabaseReference usersRef = rootRef.child("users");
+                usersRef.orderByChild("id").equalTo(locationDatabase.getEachUserID()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        FirebaseUserEntity userDatabase = dataSnapshot.getValue(FirebaseUserEntity.class );
+                        String imageUrl = userDatabase.getProfileUrl();
+                        final String nameOfTechnician = userDatabase.getName();
+                        Glide.with(mapFrag).asBitmap().load(imageUrl).into(new SimpleTarget<Bitmap>(55,55) {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                LatLng targetLocation = new LatLng(locationDatabase.getLatitude(), locationDatabase.getLongitude());
+                                mMap.addMarker(new MarkerOptions().position(targetLocation).snippet("Technician: "+nameOfTechnician)
+                                        .icon(BitmapDescriptorFactory.fromBitmap(resource))
+                                        .title(locationDatabase.getAddress()));
+                                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .target(targetLocation)
+                                        .zoom(16)
+                                        .bearing(10)
+                                        .tilt(80)
+                                        .build();
+                                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                            }
+                        });
+                    }
 
-                try {
-                    url = new URL(firebaseUserEntity.getProfile_url());
-                    bmp= BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
+                    }
 
-                LatLng targetLocation = new LatLng(locationDatabase.getLatitude(), locationDatabase.getLongitude());
-                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.badge_technician);
-                mMap.addMarker(new MarkerOptions().position(targetLocation).snippet("Technician: "+locationDatabase.getTechnicianName())
-                        .icon(icon)
-                        .title(locationDatabase.getAddress())).showInfoWindow();
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(targetLocation)
-                        .zoom(6)
-                        .bearing(10)
-                        .tilt(30)
-                        .build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
             @Override

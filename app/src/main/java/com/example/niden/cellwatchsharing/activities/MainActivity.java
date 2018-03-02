@@ -106,13 +106,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
         }
         else if (id == R.id.nav_logout) {
+            mAccount.userOnlineisFalse(scoresRef.child(firebaseAuth.getCurrentUser().getUid()));
             firebaseAuth.signOut();
             FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     assert user != null;
-                    mAccount.userOnlineisFalse(user.getUid());
+
                 }
             };
 
