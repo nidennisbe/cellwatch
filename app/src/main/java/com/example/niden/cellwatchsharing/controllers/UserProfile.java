@@ -35,6 +35,7 @@ import java.util.UUID;
 public class UserProfile {
 
     private String strName, strBio, strPhone, strHobby, strExpDate, strProfileUrl;
+    Boolean userOnlineState;
     private DatabaseReference mRefUserInfo;
     private FirebaseUserEntity firebaseUserEntity = new FirebaseUserEntity();
     private Account mAccount = new Account();
@@ -95,7 +96,7 @@ public class UserProfile {
 
     //Show profile Picture
 
-    public void displayProfileImage(final String mUserKey,final Context context, final TextView textViewName, final TextView textViewBio, final ImageView profilePicture) {
+    public void displayProfileImage(final String mUserKey, final Context context, final TextView textViewName, final TextView textViewBio, final ImageView profilePicture, final ImageView onlineIcon) {
         mRefUserInfo = FirebaseDatabase.getInstance().getReference(DIR_USER)
                 .child(mUserKey);
         mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -106,8 +107,16 @@ public class UserProfile {
                     strName = firebaseUserEntity.getName();
                     strBio = firebaseUserEntity.getBio();
                     strProfileUrl = firebaseUserEntity.getProfileUrl();
+                    String strOnline = String.valueOf(userOnlineState);
                     textViewBio.setText(strBio);
                     textViewName.setText(strName);
+
+                    if (strOnline.equals("true")){
+                        onlineIcon.setImageResource(R.drawable.ic_online);
+                    }else{
+                        onlineIcon.setImageResource(R.drawable.ic_offline);
+                    }
+
                     if (strProfileUrl.isEmpty()) {
                         profilePicture.setImageResource(R.drawable.ic_user_blue);
                     }else {
@@ -115,6 +124,7 @@ public class UserProfile {
                                 .resize(110, 110).centerCrop()
                                 .into(profilePicture);
                     }
+
                 }
             }
             @Override
@@ -199,5 +209,6 @@ public class UserProfile {
         strHobby = firebaseUserEntity.getHobby();
         strExpDate = firebaseUserEntity.getExpirationDate();
         strProfileUrl = firebaseUserEntity.getProfileUrl();
+        userOnlineState = firebaseUserEntity.getOnline();
     }
 }

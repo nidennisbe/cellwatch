@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Spinner;
 
 import com.example.niden.cellwatchsharing.R;
@@ -34,6 +35,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ONLY_TECHNICIAN;
@@ -117,6 +121,10 @@ public class MapFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(mapFrag, LinearLayoutManager.HORIZONTAL, false);
         technicianList.setHasFixedSize(true);
         technicianList.setLayoutManager(layoutManager);
+        technicianList.setItemAnimator(new SlideInRightAnimator(new OvershootInterpolator(1f)));
+        technicianList.getItemAnimator().setChangeDuration(1000);
+        technicianList.getItemAnimator().setAddDuration(1000);
+        technicianList.getItemAnimator().setMoveDuration(1000);
         technicianList.setAdapter(buildRecyclerTechniciansAdapter);
         OverScrollDecoratorHelper.setUpOverScroll(technicianList, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
     }

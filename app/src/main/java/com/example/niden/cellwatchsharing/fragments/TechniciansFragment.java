@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,6 +28,8 @@ import com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
+
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN_BY_NAME;
@@ -92,6 +95,10 @@ public class TechniciansFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         technicianList.setHasFixedSize(true);
         technicianList.setLayoutManager(layoutManager);
+        technicianList.setItemAnimator(new SlideInDownAnimator(new OvershootInterpolator(1f)));
+        technicianList.getItemAnimator().setChangeDuration(1000);
+        technicianList.getItemAnimator().setAddDuration(1000);
+        technicianList.getItemAnimator().setMoveDuration(1000);
         technicianList.setAdapter(buildRecyclerTechniciansAdapter);
     }
 

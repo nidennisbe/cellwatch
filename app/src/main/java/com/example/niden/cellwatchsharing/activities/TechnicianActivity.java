@@ -26,7 +26,7 @@ import static com.example.niden.cellwatchsharing.activities.MainActivity.activit
 public class TechnicianActivity extends AppCompatActivity {
     TextView textViewName,textViewBio,textViewPhone,textViewHobby,textViewDateBirth;
     Account account = new Account();
-    ImageView profileImage;
+    ImageView profileImage,userOnlineIcon;
     Query mRef;
     Query query;
     UserProfile mUserProfile = new UserProfile();
@@ -43,7 +43,7 @@ public class TechnicianActivity extends AppCompatActivity {
         bindingViews();
 
         mUserKey = getIntent().getStringExtra("key");
-        mUserProfile.displayProfileImage(mUserKey,TechnicianActivity.this,textViewName,textViewBio,profileImage);
+        mUserProfile.displayProfileImage(mUserKey,TechnicianActivity.this,textViewName,textViewBio,profileImage,userOnlineIcon);
         mRef = FirebaseDatabase.getInstance().getReference().child("tasks");
         query = mRef.orderByChild("eachUserID").equalTo(mUserKey);
 
@@ -69,6 +69,7 @@ public class TechnicianActivity extends AppCompatActivity {
         textViewBio = (TextView)findViewById(R.id.user_profile_short_bio);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewTask);
         cover = (RelativeLayout)findViewById(R.id.background);
+        userOnlineIcon = (ImageView)findViewById(R.id.activity_technician_online_status_icon);
     }
 
     private void setUpRecyclerTechnicianAdapter(){

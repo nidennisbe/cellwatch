@@ -20,6 +20,14 @@
         android:layout_marginTop="-70dp">
 
 
+        <ImageView
+            android:id="@+id/activity_technician_online_status_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/presence_online" />
+
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_image"
             android:layout_width="110dp"
