@@ -46,13 +46,21 @@ public class RecyclerTechniciansAdapter extends FirebaseRecyclerAdapter<Firebase
                 if (dataSnapshot.exists()) {
                     viewHolder.name_user.setText(model.getName());
                     viewHolder.textTypeUser.setText(model.getUser_type());
-                    String url = model.getProfile_url();
+                    String url = model.getProfileUrl();
                     if (url.isEmpty()) {
                         viewHolder.profile_user.setImageResource(R.drawable.ic_user_blue);
                     } else {
                         Picasso.with(activity).load(url)
                                 .resize(110, 110).centerCrop()
                                 .into(viewHolder.profile_user);
+                    }
+                    Boolean userOnline= model.getOnline();
+                    String strOnline = String.valueOf(userOnline);
+                  //Check online users
+                    if (strOnline.equals("true")){
+                        viewHolder.onlineIcon.setImageResource(R.drawable.ic_online);
+                    }else{
+                        viewHolder.onlineIcon.setImageResource(R.drawable.ic_offline);
                     }
                     viewHolder.card.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -76,7 +84,7 @@ public class RecyclerTechniciansAdapter extends FirebaseRecyclerAdapter<Firebase
 
     public static class Viewholder extends RecyclerView.ViewHolder {
 
-        ImageView profile_user;
+        ImageView profile_user, onlineIcon;
         TextView name_user,textTypeUser;
         LinearLayout card;
 
@@ -86,6 +94,7 @@ public class RecyclerTechniciansAdapter extends FirebaseRecyclerAdapter<Firebase
             profile_user = (ImageView) view.findViewById(R.id.technician_profile);
             card = (LinearLayout) view.findViewById(R.id.item_click);
             textTypeUser= (TextView)view.findViewById(R.id.txt_role);
+            onlineIcon = (ImageView) view.findViewById(R.id.online_status_icon);
         }
     }
 

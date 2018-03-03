@@ -61,12 +61,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkUserType();
         setContentView(R.layout.activity_main);
         scoresRef =FirebaseDatabase.getInstance().getReference("users");
         scoresRef.keepSynced(true);
         activity = this;
         firebaseAuth=FirebaseAuth.getInstance();
-        checkUserType();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FragmentManager fragmentManager =getFragmentManager();
@@ -106,13 +106,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
         }
         else if (id == R.id.nav_logout) {
+            mAccount.userOnlineisFalse(scoresRef.child(firebaseAuth.getCurrentUser().getUid()));
             firebaseAuth.signOut();
             FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     assert user != null;
-                    mAccount.userOnlineisFalse(user.getUid());
+
                 }
             };
 

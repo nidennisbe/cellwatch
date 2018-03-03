@@ -5,17 +5,17 @@ package com.example.niden.cellwatchsharing.database;
  */
 
 public class ProfilePhotoEntityDatabase {
-    private String profile_url;
+    private String profileUrl;
 
-    public ProfilePhotoEntityDatabase(String profile_url) {
-        this.profile_url = profile_url;
+    public ProfilePhotoEntityDatabase(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 
-    public String getProfile_url() {
-        return profile_url;
+    public String getProfileUrl() {
+        return profileUrl;
     }
 
-    public void setProfile_url(String profile_url) {
-        this.profile_url = profile_url;
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 }

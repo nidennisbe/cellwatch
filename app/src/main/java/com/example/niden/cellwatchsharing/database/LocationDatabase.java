@@ -9,17 +9,19 @@ public class LocationDatabase {
     public double latitude;
     public String technicianName;
     public String address;
+    public String eachUserID;
+
+    public LocationDatabase() {
+
+    }
 
 
-public  LocationDatabase(){
-
-}
-
-    public LocationDatabase(double latitude, double longitude,String technicianName,String address) {
+    public LocationDatabase(double latitude, double longitude,String technicianName,String address,String eachUserID) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.technicianName = technicianName;
         this.address = address;
+        this.eachUserID = eachUserID;
     }
 
 
@@ -38,5 +40,9 @@ public  LocationDatabase(){
 
     public String getAddress() {
         return address;
+    }
+
+    public String getEachUserID() {
+        return eachUserID;
     }
 }

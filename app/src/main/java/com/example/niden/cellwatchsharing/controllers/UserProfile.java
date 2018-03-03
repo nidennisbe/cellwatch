@@ -55,7 +55,7 @@ public class UserProfile {
         result.put("phone",firebaseUserEntity.getPhone());
         result.put("user_type",firebaseUserEntity.getUser_type());
         result.put("id",firebaseUserEntity.getId());
-        result.put("profile_url",firebaseUserEntity.getProfile_url());
+        result.put("profileUrl",firebaseUserEntity.getProfileUrl());
         databaseReference.child("users").child(FirebaseAuth.getInstance().getUid()).updateChildren(result);
     }
 
@@ -105,7 +105,7 @@ public class UserProfile {
                     getUserInfo(dataSnapshot);
                     strName = firebaseUserEntity.getName();
                     strBio = firebaseUserEntity.getBio();
-                    strProfileUrl = firebaseUserEntity.getProfile_url();
+                    strProfileUrl = firebaseUserEntity.getProfileUrl();
                     textViewBio.setText(strBio);
                     textViewName.setText(strName);
                     if (strProfileUrl.isEmpty()) {
@@ -169,7 +169,7 @@ public class UserProfile {
                             Uri downloadUrl = taskSnapshot.getDownloadUrl();
                             String url = downloadUrl.toString();
                             Map<String, Object> user = new HashMap<>();
-                            user.put("profile_url", url);
+                            user.put("profileUrl", url);
                             databaseReference.child(DIR_USER)
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(user);
 
@@ -198,6 +198,6 @@ public class UserProfile {
         strPhone = firebaseUserEntity.getPhone();
         strHobby = firebaseUserEntity.getHobby();
         strExpDate = firebaseUserEntity.getExpirationDate();
-        strProfileUrl = firebaseUserEntity.getProfile_url();
+        strProfileUrl = firebaseUserEntity.getProfileUrl();
     }
 }
