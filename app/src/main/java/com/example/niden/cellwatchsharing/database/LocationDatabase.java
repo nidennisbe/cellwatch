@@ -5,23 +5,23 @@ package com.example.niden.cellwatchsharing.database;
  */
 
 public class LocationDatabase {
-    public double longitude;
-    public double latitude;
-    public String technicianName;
-    public String address;
-    public String eachUserID;
+    private double longitude;
+    private double latitude;
+    private String address;
+    private String eachUserID;
+    private String timeStamp;
 
     public LocationDatabase() {
 
     }
 
 
-    public LocationDatabase(double latitude, double longitude,String technicianName,String address,String eachUserID) {
+    public LocationDatabase(double latitude, double longitude,String address,String eachUserID,String timeStamp) {
         this.longitude = longitude;
         this.latitude = latitude;
-        this.technicianName = technicianName;
         this.address = address;
         this.eachUserID = eachUserID;
+        this.timeStamp = timeStamp;
     }
 
 
@@ -34,15 +34,15 @@ public class LocationDatabase {
         return latitude;
     }
 
-    public String getTechnicianName() {
-        return technicianName;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public String getEachUserID() {
         return eachUserID;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
     }
 }

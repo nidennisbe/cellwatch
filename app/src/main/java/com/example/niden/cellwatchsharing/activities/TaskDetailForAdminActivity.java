@@ -42,7 +42,6 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
     Button btnDone;
     private EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
-    private StorageReference mStorage;
     public ArrayList<String> fileNameList;
     public ArrayList<String> fileDoneList;
     public ArrayList<String> filePathList;

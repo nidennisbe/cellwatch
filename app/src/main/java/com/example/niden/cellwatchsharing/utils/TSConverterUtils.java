@@ -27,7 +27,7 @@ import java.util.TimeZone;
     public static String getTimeFormat(long timestamp) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(timestamp);
-        String time = DateFormat.format("hh:mm",cal).toString();
+        String time = DateFormat.format("hh:mm:AA",cal).toString();
         return time;
 
     }
