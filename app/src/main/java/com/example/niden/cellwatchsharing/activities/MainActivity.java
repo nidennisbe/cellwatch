@@ -61,12 +61,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkUserType();
         setContentView(R.layout.activity_main);
         scoresRef =FirebaseDatabase.getInstance().getReference("users");
         scoresRef.keepSynced(true);
         activity = this;
         firebaseAuth=FirebaseAuth.getInstance();
-        checkUserType();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FragmentManager fragmentManager =getFragmentManager();

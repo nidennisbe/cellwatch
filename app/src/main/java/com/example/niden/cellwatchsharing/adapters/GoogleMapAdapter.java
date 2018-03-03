@@ -51,8 +51,8 @@ public class GoogleMapAdapter extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-    private Bitmap bmImg;
-    Context mContext;
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap= googleMap;
@@ -72,10 +72,11 @@ public class GoogleMapAdapter extends Fragment implements OnMapReadyCallback {
                         final String nameOfTechnician = userDatabase.getName();
                         Glide.with(mapFrag).asBitmap().load(imageUrl).into(new SimpleTarget<Bitmap>(55,55) {
                             @Override
-                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            public void onResourceReady(@NonNull Bitmap bmpProfileImage, @Nullable Transition<? super Bitmap> transition) {
                                 LatLng targetLocation = new LatLng(locationDatabase.getLatitude(), locationDatabase.getLongitude());
-                                mMap.addMarker(new MarkerOptions().position(targetLocation).snippet("Technician: "+nameOfTechnician)
-                                        .icon(BitmapDescriptorFactory.fromBitmap(resource))
+                                mMap.addMarker(new MarkerOptions().position(targetLocation)
+                                        .snippet("Technician: "+nameOfTechnician)
+                                        .icon(BitmapDescriptorFactory.fromBitmap(bmpProfileImage))
                                         .title(locationDatabase.getAddress()));
                                 CameraPosition cameraPosition = new CameraPosition.Builder()
                                         .target(targetLocation)
