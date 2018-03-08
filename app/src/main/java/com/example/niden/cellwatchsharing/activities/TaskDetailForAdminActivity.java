@@ -40,7 +40,7 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
     RecyclerView recyclerImageUpload;
     ImageView btnCamera,imageViewZip;
     Button btnDone;
-    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
+    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb, etComment;
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
     public ArrayList<String> fileNameList;
     public ArrayList<String> fileDoneList;
@@ -78,7 +78,7 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
         recyclerImageUpload.setHasFixedSize(true);
         recyclerImageUpload.setAdapter(imageUploadLRecyclerAdapter);
         taskKey = getIntent().getStringExtra(ID_KEY);
-        mTask.displayTaskDetailForAdmin(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb);
+        mTask.displayTaskDetailForAdmin(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb,etComment);
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -153,6 +153,7 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
         etAddress = (EditText) findViewById(R.id.et_task_address);
         etSuburb = (EditText) findViewById(R.id.et_task_suburb);
         imageViewZip = (ImageView)findViewById(R.id.imgview_zip);
+        etComment = (EditText)findViewById(R.id.task_detail_admin_et_comment);
     }
 
 }

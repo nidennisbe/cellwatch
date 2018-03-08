@@ -41,7 +41,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
     RecyclerView recyclerImageUpload;
     ImageView btnCamera,imageViewZip;
     Button btnDone;
-    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb;
+    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb,etComment;
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
     public ArrayList<String> fileNameList;
     public ArrayList<String> fileDoneList;
@@ -101,7 +101,10 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mTask.updateTask(taskKey,etComment);
+                Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(actMain);
+                TaskDetailForTechnicianActivity.this.finish();
             }
         });
     }
@@ -143,6 +146,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         etAddress = (EditText) findViewById(R.id.et_task_address);
         etSuburb = (EditText) findViewById(R.id.et_task_suburb);
         imageViewZip = (ImageView)findViewById(R.id.imgview_zip);
+        etComment = (EditText)findViewById(R.id.task_detail_technician_et_comment);
     }
 
     private void setup(Intent data) throws IOException, ZipException {

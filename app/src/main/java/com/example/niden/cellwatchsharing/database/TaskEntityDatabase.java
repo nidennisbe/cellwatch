@@ -9,12 +9,15 @@ import java.io.Serializable;
 public class TaskEntityDatabase implements Serializable{
     private String taskName;
     private String taskDescription;
+    private String taskComment;
     private String taskAddress;
     private String taskSuburb;
     private String taskClass;
     private String taskDate;
     private String taskType;
     private String taskTechnicianName;
+    private String taskStartDate;
+    private String taskEndDate;
 
     public String getEachUserID() {
         return eachUserID;
@@ -27,7 +30,8 @@ public class TaskEntityDatabase implements Serializable{
     }
 
 
-    public TaskEntityDatabase(String eachUserID, String taskName, String taskClass, String taskDescription, String taskAddress, String taskSuburb, String taskDate, String taskType, String taskTechnicianName) {
+    public TaskEntityDatabase(String eachUserID, String taskName, String taskClass, String taskDescription, String taskAddress, String taskSuburb, String taskDate, String taskType, String taskTechnicianName,String taskComment,
+                              String taskStartDate,String taskEndDate) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskAddress = taskAddress;
@@ -37,6 +41,9 @@ public class TaskEntityDatabase implements Serializable{
         this.taskType = taskType;
         this.taskTechnicianName = taskTechnicianName;
         this.eachUserID = eachUserID;
+        this.taskComment = taskComment;
+        this.taskStartDate = taskStartDate;
+        this.taskEndDate = taskEndDate;
     }
 
 
@@ -96,5 +103,17 @@ public class TaskEntityDatabase implements Serializable{
 
     public String getTaskTechnicianName() {
         return taskTechnicianName;
+    }
+
+    public String getTaskComment() {
+        return taskComment;
+    }
+
+    public String getTaskStartDate() {
+        return taskStartDate;
+    }
+
+    public String getTaskEndDate() {
+        return taskEndDate;
     }
 }

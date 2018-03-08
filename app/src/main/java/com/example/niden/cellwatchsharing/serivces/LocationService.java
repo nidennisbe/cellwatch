@@ -181,6 +181,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         mDatabaseLocationDetails.child("technicianName").setValue(technicianName);
         mDatabaseLocationDetails.child("address").setValue(address);
         mDatabaseLocationDetails.child("timeStamp").setValue(currentDateTimeString);
+        mDatabaseLocationDetails.child("currentLocation").setValue(true);
 
     }
 }

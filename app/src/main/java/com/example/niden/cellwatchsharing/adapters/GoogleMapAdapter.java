@@ -99,7 +99,7 @@ public class GoogleMapAdapter extends Fragment implements OnMapReadyCallback {
                                         .tilt(80)
                                         .build();
                                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                                drawPolyLineOnMap(latLngs);
+                               // drawPolyLineOnMap(latLngs);
                             }
                         });
                     }
