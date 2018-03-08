@@ -142,7 +142,6 @@ public class EditProfileActivity extends AppCompatActivity {
         String profileExpDate = editProfileExp.getText().toString();
 
 
-
         // update the account profile information in Firebase database.\
         if (TextUtils.isEmpty(profileName) && TextUtils.isEmpty(profileBio) && TextUtils.isEmpty(profileContact)
                 && TextUtils.isEmpty(profileHobby) && TextUtils.isEmpty(profileExpDate)) {

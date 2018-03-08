@@ -7,13 +7,17 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Spinner;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.GoogleMapAdapter;
+import com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter;
 import com.example.niden.cellwatchsharing.adapters.SpinnerTechnicianAdapter;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,6 +35,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ONLY_TECHNICIAN;
 
 /**
@@ -43,8 +52,9 @@ public class MapFragment extends Fragment {
     View myView;
     public  static Activity mapFrag;
     GoogleMapAdapter showMapAdapter = new GoogleMapAdapter();
-    SpinnerTechnicianAdapter buildSpinnerTechAdapter;
-    private Spinner spinnerTech;
+    RecyclerTechniciansAdapter buildRecyclerTechniciansAdapter;
+    RecyclerView technicianList;
+
 
     @Nullable
     @Override
@@ -54,11 +64,9 @@ public class MapFragment extends Fragment {
         getActivity().setTitle("Map");
         mMapView = (MapView) myView.findViewById(R.id.google_map_view);
         mMapView.onCreate(savedInstanceState);
-        spinnerTech = (Spinner) myView.findViewById(R.id.spinnerTechnician2);
+        technicianList = (RecyclerView)myView.findViewById(R.id.map_frag_recyclerview_technician);
+        initialTechnicianAdapter();
 
-//SETUP SPINNER FOR SELECTING TECHNICIAN
-        buildSpinnerTechAdapter = new SpinnerTechnicianAdapter(mapFrag, FirebaseUserEntity.class, R.layout.item_spinner_technician, QUERY_ONLY_TECHNICIAN);
-        spinnerTech.setAdapter(buildSpinnerTechAdapter);
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
@@ -106,6 +114,19 @@ public class MapFragment extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    private void initialTechnicianAdapter(){
+        buildRecyclerTechniciansAdapter = new RecyclerTechniciansAdapter(QUERY_ONLY_TECHNICIAN,mapFrag,R.layout.item_technician_map_frag);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mapFrag, LinearLayoutManager.HORIZONTAL, false);
+        technicianList.setHasFixedSize(true);
+        technicianList.setLayoutManager(layoutManager);
+        technicianList.setItemAnimator(new SlideInRightAnimator(new OvershootInterpolator(1f)));
+        technicianList.getItemAnimator().setChangeDuration(1000);
+        technicianList.getItemAnimator().setAddDuration(1000);
+        technicianList.getItemAnimator().setMoveDuration(1000);
+        technicianList.setAdapter(buildRecyclerTechniciansAdapter);
+        OverScrollDecoratorHelper.setUpOverScroll(technicianList, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
     }
 
 

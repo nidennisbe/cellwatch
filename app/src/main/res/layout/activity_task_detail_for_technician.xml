@@ -176,12 +176,12 @@
                         android:text="@string/comment" />
 
                     <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/task_detail_technician_et_comment"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
-                        android:hint="leave a comment here"
                         android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
                         android:ems="10"
+                        android:hint="leave a comment here"
                         android:inputType="textMultiLine" />
 
                 </LinearLayout>

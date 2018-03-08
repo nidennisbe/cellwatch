@@ -3,7 +3,6 @@ package com.example.niden.cellwatchsharing.fragments;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -32,7 +31,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ONLY_TECHNICIAN;
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TASK_TYPE;
-import static com.example.niden.cellwatchsharing.utils.ValidationUtils.isEmailValid;
 
 
 /**
@@ -83,13 +81,14 @@ public class CreateTaskFragment extends Fragment {
         mBtnStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerUtils.openDatePicker(referenceActivity, datePickerDialog, mBtnStartDate, mBtnEndDate);
+                DatePickerUtils.openDatePicker(referenceActivity, mBtnStartDate);
             }
         });
         mBtnEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerUtils.openEndDatePicker(referenceActivity, datePickerDialog, mBtnStartDate, mBtnEndDate);
+                DatePickerUtils.openEndDatePicker(referenceActivity,mBtnEndDate);
+
             }
         });
         return parentHolder;
@@ -132,6 +131,8 @@ public class CreateTaskFragment extends Fragment {
         String strAddress = txAddress.getText().toString();
         String strSuburb = txSuburb.getText().toString();
         String strClass = txClass.getText().toString();
+        String strStartDate = mBtnStartDate.getText().toString();
+        String strStartEnd = mBtnEndDate.getText().toString();
         //Validation
         if (TextUtils.isEmpty(strTaskName)) {
             taskNameWrapper.setError("Please field in task name");
@@ -167,7 +168,7 @@ public class CreateTaskFragment extends Fragment {
         }
         if (!TextUtils.isEmpty(strTaskName) && !TextUtils.isEmpty(strDescription) && !TextUtils.isEmpty(strAddress) && !TextUtils.isEmpty(strAddress) &&
                 !TextUtils.isEmpty(strAddress) && !TextUtils.isEmpty(strSuburb) && !TextUtils.isEmpty(strClass)) {
-            mTask.insertTask(txTaskName, txClass, txDescription, txAddress, txSuburb, spinner, spinnerTech);
+            mTask.insertTask(txTaskName, txClass, txDescription, txAddress, txSuburb, spinner, spinnerTech,mBtnStartDate,mBtnEndDate);
             ToastUtils.showSnackbar(parentLayout, getString(R.string.txt_submit_task), duration);
             txTaskName.setText("");
             txClass.setText("");

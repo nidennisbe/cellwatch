@@ -11,38 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Spinner
-        android:id="@+id/spinnerTechnician2"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/map_frag_recyclerview_technician"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_weight="1"
         android:prompt="@string/prompt_choose_technician" />
-
-    <EditText
-        android:id="@+id/search_map"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_weight="1"
-        android:background="@drawable/background_map_search_layout"
-        android:drawablePadding="10dp"
-        android:drawableStart="@drawable/ic_search"
-        android:ems="10"
-        android:fontFamily="@font/nunito_semibold"
-        android:hint="Search here"
-        android:inputType="textPersonName"
-        android:paddingBottom="5dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="5dp"
-        android:textColor="#424242"
-
-        android:textSize="@dimen/medium_font" />
 
 
 </RelativeLayout>
