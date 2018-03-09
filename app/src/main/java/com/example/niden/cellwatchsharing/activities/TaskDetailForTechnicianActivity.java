@@ -10,9 +10,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
@@ -31,6 +33,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
 
@@ -42,10 +45,12 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
     ImageView btnCamera,imageViewZip;
     Button btnDone;
     private EditText etTaskName, etClass, etDescription, etAddress, etSuburb,etComment;
+    private Spinner spinnerTaskStatus;
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
     public ArrayList<String> fileNameList;
     public ArrayList<String> fileDoneList;
     public ArrayList<String> filePathList;
+    List<String> spinnerArrayStatus = new ArrayList<>();
     //Establish classes
     String taskKey;
     Zip mZip = new Zip();
@@ -68,6 +73,10 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         bindingViews();
+        spinnerArrayStatus.add("Choose status of the task");
+        spinnerArrayStatus.add("Completed");
+        spinnerArrayStatus.add("Pending");
+        spinnerArrayStatus.add("Uncomplete");
 
         fileNameList = new ArrayList<>();
         fileDoneList = new ArrayList<>();
@@ -79,8 +88,14 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         recyclerImageUpload.setHasFixedSize(true);
         recyclerImageUpload.setAdapter(imageUploadLRecyclerAdapter);
         taskKey = getIntent().getStringExtra(ID_KEY);
-        mTask.displayTaskDetailForTechnician(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb);
+        mTask.displayTaskDetailForTechnician(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb,etComment);
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getApplicationContext(),
+                android.R.layout.simple_spinner_item,
+                spinnerArrayStatus
+        );
+        spinnerTaskStatus.setAdapter(adapter);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +105,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
                 TaskDetailForTechnicianActivity.this.finish();
             }
         });
+
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +117,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTask.updateTask(taskKey,etComment);
+                mTask.updateTask(taskKey,etComment,spinnerTaskStatus);
                 Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(actMain);
                 TaskDetailForTechnicianActivity.this.finish();
@@ -147,6 +163,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         etSuburb = (EditText) findViewById(R.id.et_task_suburb);
         imageViewZip = (ImageView)findViewById(R.id.imgview_zip);
         etComment = (EditText)findViewById(R.id.task_detail_technician_et_comment);
+        spinnerTaskStatus = (Spinner)findViewById(R.id.spinner_task_status);
     }
 
     private void setup(Intent data) throws IOException, ZipException {
@@ -162,9 +179,6 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
                 imageUploadLRecyclerAdapter.notifyDataSetChanged();
                 mZip.putImagesToZip(zippath,filePathList);
                 mZip.uploadZipFile(this,i,zippath,zipUri,fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip,taskKey);
-
-
-
             }
         } else if (data.getData() != null) {
             Toast.makeText(TaskDetailForTechnicianActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
