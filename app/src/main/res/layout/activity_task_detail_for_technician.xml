@@ -184,6 +184,12 @@
                         android:hint="leave a comment here"
                         android:inputType="textMultiLine" />
 
+                    <Spinner
+                        android:id="@+id/spinner_task_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView

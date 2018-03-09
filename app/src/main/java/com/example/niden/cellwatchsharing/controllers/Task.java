@@ -67,10 +67,12 @@ public class Task  {
         txClass.setText("");
     }
 
-    public void updateTask(String taskKey,EditText txComment) {
+    public void updateTask(String taskKey,EditText txComment,Spinner spinnerTaskStatus) {
         String strComment = txComment.getText().toString();
+        String strTaskStatus = spinnerTaskStatus.getSelectedItem().toString();
         Map<String, Object> result = new HashMap<>();
         result.put("taskComment",strComment);
+        result.put("taskStatus",strTaskStatus);
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child(DIR_TASK)
@@ -79,20 +81,23 @@ public class Task  {
     }
 
 //SHOW CONTENTS ON TASK DETAIL ACTIVITY
-    public void displayTaskDetailForTechnician(String taskKey, final EditText etTaskName, final EditText etClass, final EditText etDescription, final EditText etAddress, final EditText etSuburb ){
+    public void displayTaskDetailForTechnician(final String taskKey, final EditText etTaskName, final EditText etClass, final EditText etDescription,
+                                               final EditText etAddress, final EditText etSuburb, final EditText etComment ){
        DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference().child(DIR_TASK);
         mDataReference.child(taskKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    //getting from firebase
                     TaskEntityDatabase taskEntityDatabase = dataSnapshot.getValue(TaskEntityDatabase.class);
                     String strTaskName = taskEntityDatabase.getTaskName();
                     String strDescription = taskEntityDatabase.getTaskDescription();
                     String strAddress = taskEntityDatabase.getTaskAddress();
                     String strClass = taskEntityDatabase.getTaskClass();
                     String strSuburb = taskEntityDatabase.getTaskSuburb();
-
-
+                    String strComment = taskEntityDatabase.getTaskComment();
+                    //set into edit text
+                    etComment.setText(strComment);
                     etTaskName.setText(strTaskName);
                     etClass.setText(strClass);
                     etDescription.setText(strDescription);

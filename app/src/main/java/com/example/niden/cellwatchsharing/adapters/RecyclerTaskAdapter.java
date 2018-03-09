@@ -139,8 +139,6 @@ public class RecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskEntityDatab
             linearLayout = (LinearLayout) itemView.findViewById(R.id.card);
             tvDateAgo = (TextView) itemView.findViewById(R.id.txt_date_ago);
             tvTime = (TextView)itemView.findViewById(R.id.txt_time);
-
-
         }
     }
 }
