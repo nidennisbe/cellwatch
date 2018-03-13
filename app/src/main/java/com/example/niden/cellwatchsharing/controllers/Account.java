@@ -2,14 +2,18 @@ package com.example.niden.cellwatchsharing.controllers;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -56,6 +60,8 @@ public class Account {
     private LocationBackgroundService gps;
     private DatabaseReference mDatabaseLocationDetails;
     public LocationService locationService = new LocationService();
+
+
 
 
     public FirebaseAuth getFirebaseAuth() {
@@ -132,37 +138,62 @@ public class Account {
                             ToastUtils.showSnackbar(v, context.getString(R.string.alert_check_emailpassword), Snackbar.LENGTH_LONG);
                             myDialog.dismiss();
                         } else {
-                            myDialog.dismiss();
-                            String currentDateTimeString = String.valueOf(System.currentTimeMillis());
-                            final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child(DIR_USER).child(firebaseAuth.getCurrentUser().getUid())
-                                    .child(DIR_CLOCKIN_INFO).push().setValue(currentDateTimeString);
-                            Intent profileIntent = new Intent(context, MainActivity.class);
-                            context.startActivity(profileIntent);
-                            ((Activity) context).finish();
-                            mDatabaseLocationDetails = FirebaseDatabase.getInstance().getReference().child("location").push();
-                            userOnlineisTrue();
-                           /* gps = new LocationBackgroundService(context);
-                            context.startService(new Intent(context,LocationBackgroundService.class));*/
-                            context.startService(new Intent(context, LocationService.class));
-                         /*   if(gps.canGetLocation()){
-                                //gps.getLocation().get
-                                double latitude = gps.getLatitude();
-                                double longitude = gps.getLongitude();
-                                try {
-                                    storeInDatabase(latitude,longitude,email,context);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                Toast.makeText(context, latitude+" ::: "+ longitude, Toast.LENGTH_SHORT).show();
-                            }else{
-                                gps.showSettingsAlert();
-                            }*/
+                         checkGPS(context);myDialog.dismiss();
                         }
                     }
 
                     ;
                 });
 
+    }
+
+    private  void checkGPS(final Context context) {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception ex) {
+        }
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception ex) {
+        }
+        //No GPS run below code
+        if (!gps_enabled && !network_enabled) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+            dialog.setMessage(context.getResources().getString(R.string.gps_network_not_enabled));
+            dialog.setPositiveButton(context.getResources().getString(R.string.open_location_settings), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    // TODO Auto-generated method stub
+                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    context.startActivity(myIntent);
+                }
+            });
+            dialog.setNegativeButton(context.getString(R.string.Cancel), new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    // TODO Auto-generated method stub
+
+                }
+            });
+            dialog.show();
+
+            //if GPS location enabled run below code
+        }else {
+            String currentDateTimeString = String.valueOf(System.currentTimeMillis());
+            final Task<Void> mRef = FirebaseDatabase.getInstance().getReference().child(DIR_USER).child(firebaseAuth.getCurrentUser().getUid())
+                    .child(DIR_CLOCKIN_INFO).push().setValue(currentDateTimeString);
+            Intent profileIntent = new Intent(context, MainActivity.class);
+            context.startActivity(profileIntent);
+            ((Activity) context).finish();
+            mDatabaseLocationDetails = FirebaseDatabase.getInstance().getReference().child("location").push();
+            userOnlineisTrue();
+            context.startService(new Intent(context, LocationService.class));
+        }
     }
 
 
@@ -174,7 +205,6 @@ public class Account {
     }
 
     public void userOnlineisFalse(DatabaseReference onlineUserRef) {
-
         Map<String, Object> resultUser = new HashMap<>();
         resultUser.put("online", false);
         onlineUserRef.updateChildren(resultUser);

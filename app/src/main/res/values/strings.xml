@@ -57,4 +57,7 @@
     <string name="exit_app_dialog_title">Quit app</string>
     <string name="txt_invalid_email_format">You seem enter the incorrect address format</string>
     <string name="prompt_choose_technician">Choose technnician below to assign task for them</string>
+    <string name="gps_network_not_enabled">GPS NOT ENABLE</string>
+    <string name="open_location_settings">LOCATION SETTING</string>
+    <string name="Cancel">Cancel</string>
 </resources>

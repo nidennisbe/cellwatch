@@ -18,6 +18,7 @@ public class TaskEntityDatabase implements Serializable{
     private String taskTechnicianName;
     private String taskStartDate;
     private String taskEndDate;
+    private String taskStatus;
 
     public String getEachUserID() {
         return eachUserID;
@@ -31,7 +32,7 @@ public class TaskEntityDatabase implements Serializable{
 
 
     public TaskEntityDatabase(String eachUserID, String taskName, String taskClass, String taskDescription, String taskAddress, String taskSuburb, String taskDate, String taskType, String taskTechnicianName,String taskComment,
-                              String taskStartDate,String taskEndDate) {
+                              String taskStartDate,String taskEndDate,String taskStatus) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskAddress = taskAddress;
@@ -44,6 +45,7 @@ public class TaskEntityDatabase implements Serializable{
         this.taskComment = taskComment;
         this.taskStartDate = taskStartDate;
         this.taskEndDate = taskEndDate;
+        this.taskStatus= taskStatus;
     }
 
 
@@ -115,5 +117,9 @@ public class TaskEntityDatabase implements Serializable{
 
     public String getTaskEndDate() {
         return taskEndDate;
+    }
+
+    public String getTaskStatus() {
+        return taskStatus;
     }
 }
