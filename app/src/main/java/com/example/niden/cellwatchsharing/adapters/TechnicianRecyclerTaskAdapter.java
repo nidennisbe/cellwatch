@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,12 +49,20 @@ public class TechnicianRecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskE
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //  showAlertNotifcation(activity);
                 if (dataSnapshot.exists()){
+                    String strTaskStatus = model.getTaskStatus();
                     long date = Long.parseLong(model.getTaskDate());
                     String strTimeStamp = TimeAgo.from(Long.parseLong(model.getTaskDate()));
                     viewholder.tvTaskName.setText(model.getTaskName());
                     viewholder.tvDate.setText(TSConverterUtils.getDateFormat(date));
                     viewholder.tvDateAgo.setText(strTimeStamp);
                     viewholder.tvTime.setText(TSConverterUtils.getTimeFormat(date));
+                    if (strTaskStatus.equals("Completed")){
+                        viewholder.taskIconStatus.setImageResource(R.drawable.icon_complete);
+                    }else if (strTaskStatus.equals("Pending")){
+                        viewholder.taskIconStatus.setImageResource(R.drawable.icon_pending);
+                    }else if (strTaskStatus.equals("Uncomplete")){
+                        viewholder.taskIconStatus.setImageResource(R.drawable.icon_uncomplete);
+                    }
                 }
             }
 
@@ -88,6 +97,7 @@ public class TechnicianRecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskE
     public static class Viewholder extends RecyclerView.ViewHolder {
         TextView tvTaskName, tvDate, tvDateAgo,tvTime,emptyView;
         LinearLayout linearLayout;
+        ImageView taskIconStatus;
 
 
         public Viewholder(View itemView) {
@@ -97,6 +107,7 @@ public class TechnicianRecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskE
             linearLayout = (LinearLayout) itemView.findViewById(R.id.card);
             tvDateAgo = (TextView) itemView.findViewById(R.id.txt_date_ago);
             tvTime = (TextView)itemView.findViewById(R.id.txt_time);
+            taskIconStatus = (ImageView)itemView.findViewById(R.id.task_icon_status);
         }
     }
 }

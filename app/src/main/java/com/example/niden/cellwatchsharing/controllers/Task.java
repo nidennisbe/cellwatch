@@ -34,7 +34,7 @@ public class Task  {
     private final String DIR_TASK="tasks";
     private String currentDateTimeString = String.valueOf(System.currentTimeMillis());
     public static String eachUserID;
-    String name,uid;
+
 
     //Insert new task
 
@@ -51,15 +51,40 @@ public class Task  {
         FirebaseUserEntity  data = (FirebaseUserEntity)spinnerTech.getSelectedItem();
         eachUserID= data.getId();
         StringTokenizer tokens = new StringTokenizer(strSpinnerTech,"|");
-        name = tokens.nextToken();
-        uid = tokens.nextToken();
+        String name = tokens.nextToken();
+        String uid = tokens.nextToken();
 
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child(DIR_TASK)
                 .push()
                 .setValue(new TaskEntityDatabase(eachUserID,strTaskName,strClass, strAdress, strDesc,strSuburb
-                        ,currentDateTimeString, strSpinnerType, name,"",strStartDate,strEndDate));
+                        ,currentDateTimeString, strSpinnerType, name,"",strStartDate,strEndDate,"Pending"));
+        txTaskName.setText("");
+        txAddress.setText("");
+        txDescription.setText("");
+        txSuburb.setText("");
+        txClass.setText("");
+    }
+
+    public void insertTaskForTheirOwn(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner, Spinner spinnerTech,Button btnStartDate,Button btnEndDate) {
+        String strTaskName=txTaskName.getText().toString();
+        String strClass =txClass.getText().toString();
+        String strAdress = txAddress.getText().toString();
+        String strDesc = txAddress.getText().toString();
+        String strSuburb=txSuburb.getText().toString();
+        String strStartDate = btnStartDate.getText().toString();
+        String strEndDate = btnEndDate.getText().toString();
+        String strSpinnerType = spinner.getSelectedItem().toString();
+        String strEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        StringTokenizer tokens = new StringTokenizer(strEmail,"@");
+        String name = tokens.nextToken();
+        FirebaseDatabase.getInstance()
+                .getReference()
+                .child(DIR_TASK)
+                .push()
+                .setValue(new TaskEntityDatabase(FirebaseAuth.getInstance().getCurrentUser().getUid(),strTaskName,strClass, strAdress, strDesc,strSuburb
+                        ,currentDateTimeString, strSpinnerType, name,"",strStartDate,strEndDate,"Pending"));
         txTaskName.setText("");
         txAddress.setText("");
         txDescription.setText("");

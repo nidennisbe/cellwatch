@@ -41,7 +41,7 @@ public class LocationBackgroundService extends Service implements LocationListen
     private static final long MIN_TIME_BW_UPDATES = 3000;
     // Declaring a Location Manager
     protected LocationManager mlocationManager;
-    private Handler mHandler = new Handler();
+
 
 
     public LocationBackgroundService() {
@@ -194,18 +194,7 @@ public class LocationBackgroundService extends Service implements LocationListen
 
         alertDialog.show();
     }
-    private  class TimeTaskToGetLocation extends TimerTask{
 
-        @Override
-        public void run() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    getLocation();
-                }
-            });
-        }
-    }
 
 
 

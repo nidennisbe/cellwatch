@@ -92,7 +92,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getApplicationContext(),
-                android.R.layout.simple_spinner_item,
+                android.R.layout.simple_list_item_1,
                 spinnerArrayStatus
         );
         spinnerTaskStatus.setAdapter(adapter);
@@ -163,7 +163,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         etSuburb = (EditText) findViewById(R.id.et_task_suburb);
         imageViewZip = (ImageView)findViewById(R.id.imgview_zip);
         etComment = (EditText)findViewById(R.id.task_detail_technician_et_comment);
-        spinnerTaskStatus = (Spinner)findViewById(R.id.spinner_task_status);
+        spinnerTaskStatus = (Spinner)findViewById(R.id.spinner_task_status4);
     }
 
     private void setup(Intent data) throws IOException, ZipException {

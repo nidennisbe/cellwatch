@@ -17,6 +17,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.example.niden.cellwatchsharing.controllers.Account;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -40,10 +41,11 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
     private static final String LOGSERVICE = "#######";
-    private static final long MIN_TIME_BW_UPDATES = 60000;
+    private static final long MIN_TIME_BW_UPDATES = 900000; //900000milisecond = 15minute
     public DatabaseReference mDatabaseLocationDetails;
-    Context context;
     double longitude, latitude;
+
+
 
     @Override
     public void onCreate() {
@@ -67,23 +69,23 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     public void onConnected(Bundle bundle) {
         Log.i(LOGSERVICE, "onConnected" + bundle);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+       /* if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
-        Location l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (l != null) {
-         /*   longitude = l.getLongitude();
-            latitude = l.getLatitude();
+        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (location != null) {
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
             Log.i(LOGSERVICE, "lat " + latitude);
             Log.i(LOGSERVICE, "lng " + longitude);
             try {
                 storeInDatabase(latitude, longitude);
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
-
+*/
         startLocationUpdate();
     }
 
@@ -112,8 +114,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(LOGSERVICE, "onDestroy");
-
+        Log.i(LOGSERVICE, "########***ONDESTROY*******");
     }
 
     @Nullable
@@ -134,7 +135,8 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     private void startLocationUpdate() {
         initLocationRequest();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
@@ -159,13 +161,14 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         Log.i(LOGSERVICE, "onConnectionFailed ");
     }
 
+
     private void storeInDatabase(double latitude, double longitude) throws IOException {
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         StringTokenizer tokens = new StringTokenizer(email, "@");
         String technicianName = tokens.nextToken();
         String currentDateTimeString = String.valueOf(System.currentTimeMillis());
-        Uri photoUrl = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+
         
         Geocoder geocoder;
         List<Address> addresses;
@@ -181,7 +184,6 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         mDatabaseLocationDetails.child("technicianName").setValue(technicianName);
         mDatabaseLocationDetails.child("address").setValue(address);
         mDatabaseLocationDetails.child("timeStamp").setValue(currentDateTimeString);
-        mDatabaseLocationDetails.child("currentLocation").setValue(true);
 
     }
 }

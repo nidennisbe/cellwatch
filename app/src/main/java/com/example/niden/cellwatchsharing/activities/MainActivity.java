@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
+import com.example.niden.cellwatchsharing.fragments.CreateTaskForTechnicianFragment;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
 import com.example.niden.cellwatchsharing.serivces.LocationBackgroundService;
 import com.example.niden.cellwatchsharing.serivces.LocationService;
@@ -105,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id ==R.id.content_frame){
             fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
         }
+        else if (id ==R.id.nav_create_new_task){
+            fragmentManager.beginTransaction().replace(R.id.content_frame,new CreateTaskForTechnicianFragment()).commit();
+        }
         else if (id == R.id.nav_logout) {
             mAccount.userOnlineisFalse(scoresRef.child(firebaseAuth.getCurrentUser().getUid()));
             firebaseAuth.signOut();
@@ -116,8 +120,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
             };
-
-            ToastUtils.displayMessageToast(activity,"Logout Successfully");
             activity.stopService(new Intent(activity,LocationService.class));
             startActivity(new Intent(activity, LoginActivity.class));
             this.finish();
@@ -149,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_task).setVisible(false);
         nav_Menu.findItem(R.id.nav_profile).setVisible(false);
+        nav_Menu.findItem(R.id.nav_create_new_task).setVisible(false);
     }
 
     public void technicianNavItem()
@@ -180,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     case ADMIN:
                                         adminNavItem();
                                         fragmentManager =getFragmentManager();
-                                        fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();
+                                        fragmentManager.beginTransaction().replace(R.id.nav_circles,new TechniciansFragment()).commit();
                                         break;
                                 }
                             }

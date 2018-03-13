@@ -50,33 +50,8 @@ public class TaskFragment extends Fragment {
         recyclerView = (RecyclerView) myView.findViewById(R.id.listTask);
         this.activity = getActivity();
         getActivity().setTitle(getString(R.string.toobar_tasks));
-
-
-        emptyView = (TextView) myView.findViewById(R.id.empty_view);
-        TabLayout tabLayout = (TabLayout) myView.findViewById(R.id.tab);
         setupRecyclerView();
 
-
-       /* tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 0) {
-                    query = QUERY_ALL_TASK_INDIVIDUAL;
-
-                } else if (tab.getPosition() == 1) {
-                    query = QUERY_ALL_TASK_INDIVIDUAL;
-                }
-                setupRecyclerView();
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });*/
         return myView;
     }
 

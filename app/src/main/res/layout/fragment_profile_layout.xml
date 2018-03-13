@@ -23,6 +23,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/btn_complete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -36,16 +37,13 @@
                 android:text="Completed"
                 android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/btn_num_task"
+            <ImageView
+                android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/colorTextLight"
-                android:text="7"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp" />
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/icon_complete" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -63,16 +61,14 @@
                 android:text="Pending"
                 android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/btn_num_task1"
+            <ImageView
+                android:id="@+id/imageView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/colorTextLight"
-                android:text="5"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp" />
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/icon_pending" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -89,16 +85,13 @@
                 android:text="Uncomplete"
                 android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/btn_num_uncomplete_task"
+            <ImageView
+                android:id="@+id/imageView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/colorTextLight"
-                android:text="12"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp" />
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/icon_uncomplete" />
+
         </LinearLayout>
 
     </LinearLayout>

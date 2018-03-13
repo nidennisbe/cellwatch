@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
@@ -37,6 +38,7 @@ public class ProfileFragment extends Fragment {
     TextView textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate;
     ImageView profileImage;
     View parentHolder;
+    LinearLayout btnComplete;
     public TextView taskButton,taskUncompleteButton;
 
 
@@ -52,20 +54,13 @@ public class ProfileFragment extends Fragment {
         final FragmentManager fragmentManager = getFragmentManager();
 
         mUserProfile.displayProfileInfo(refActivity, textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate, profileImage);
-        taskButton.setOnClickListener(new View.OnClickListener() {
+        btnComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
             }
         });
 
-        taskUncompleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
-
-            }
-        });
         return parentHolder;
     }
 
@@ -89,8 +84,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void bindingViews() {
-        taskUncompleteButton= (TextView)parentHolder.findViewById(R.id.btn_num_uncomplete_task);
-        taskButton = (TextView) parentHolder.findViewById(R.id.btn_num_task);
+        btnComplete = (LinearLayout)parentHolder.findViewById(R.id.btn_complete);
         profileImage = (ImageView) parentHolder.findViewById(R.id.profile_image);
         textViewName = (TextView) parentHolder.findViewById(R.id.user_profile_name);
         textViewBio = (TextView) parentHolder.findViewById(R.id.user_profile_short_bio);

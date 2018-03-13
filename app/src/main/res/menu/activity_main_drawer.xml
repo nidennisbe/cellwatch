@@ -10,6 +10,10 @@
         app:itemBackground="@color/colorTextDark">
 
         <item
+            android:id="@+id/nav_anouncement"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="Create new task" />
+        <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
             android:title="Profile" />
@@ -26,7 +30,7 @@
             android:icon="@drawable/ic_news"
             android:title="Tasks" />
         <item
-            android:id="@+id/nav_anouncement"
+            android:id="@+id/nav_create_new_task"
             android:icon="@android:drawable/ic_menu_add"
             android:title="Create new task" />
     </group>
