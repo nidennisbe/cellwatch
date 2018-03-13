@@ -92,7 +92,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getApplicationContext(),
-                android.R.layout.simple_list_item_1,
+                R.layout.item_spinner_status,
                 spinnerArrayStatus
         );
         spinnerTaskStatus.setAdapter(adapter);
