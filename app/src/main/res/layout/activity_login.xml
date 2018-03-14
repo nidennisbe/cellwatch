@@ -95,16 +95,6 @@
             android:textStyle="normal|bold" />
 
 
-        <Button
-            android:id="@+id/btn_signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:text="@string/don_t_have_account_sign_up"
-            android:textAllCaps="false"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="18sp" />
-
     </LinearLayout>
 </LinearLayout>
 

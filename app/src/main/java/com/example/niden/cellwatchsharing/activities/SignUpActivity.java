@@ -42,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity{
         setContentView(R.layout.activity_signup);
         mActivity=this;
         mAccount.getFirebaseAuth();
-        mAccount.checkUserLogin(mActivity);
+        //mAccount.checkUserLogin(mActivity);
         bindingViews();
 
 
@@ -70,6 +70,14 @@ public class SignUpActivity extends AppCompatActivity{
                 fieldsValidation(email,password);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        startActivity(new Intent(mActivity, LoginActivity.class));
+
     }
 
     private void bindingViews(){

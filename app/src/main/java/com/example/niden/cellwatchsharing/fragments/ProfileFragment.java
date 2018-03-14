@@ -36,7 +36,7 @@ public class ProfileFragment extends Fragment {
     private UserProfile mUserProfile = new UserProfile();
     private Account mAccount = new Account();
     TextView textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate;
-    ImageView profileImage;
+    ImageView profileImage, addTaskFragment;
     View parentHolder;
     LinearLayout btnComplete;
     public TextView taskButton,taskUncompleteButton;
@@ -58,6 +58,12 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
+            }
+        });
+        addTaskFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new CreateTaskForTechnicianFragment()).commit();
             }
         });
 
@@ -91,7 +97,7 @@ public class ProfileFragment extends Fragment {
         textViewPhone = (TextView) parentHolder.findViewById(R.id.tv_phonenumber);
         textViewHobby = (TextView) parentHolder.findViewById(R.id.prof_tv_hobby);
         textViewExpDate = (TextView) parentHolder.findViewById(R.id.prof_tv_exp_date);
-
+        addTaskFragment = (ImageView)parentHolder.findViewById(R.id.btn_add_task);
     }
 
 

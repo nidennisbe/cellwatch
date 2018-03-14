@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 
+import com.example.niden.cellwatchsharing.activities.SignUpActivity;
 import com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -45,6 +48,7 @@ public class TechniciansFragment extends Fragment {
     RecyclerView technicianList;
     EditText mSearchField;
     Query query=QUERY_TECHNICIAN;
+    Button btnAddTech;
 
 
     @Nullable
@@ -58,6 +62,7 @@ public class TechniciansFragment extends Fragment {
 
         mSearchField = (EditText) myView.findViewById(R.id.search_field);
         technicianList = (RecyclerView) myView.findViewById(R.id.list_technician);
+        btnAddTech = (Button)myView.findViewById(R.id.btn_add_new_tech);
         initialTechnicianAdapter();
 
 
@@ -84,6 +89,14 @@ public class TechniciansFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        btnAddTech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SignUpActivity.class));
+                getActivity().finish();
             }
         });
         return myView;

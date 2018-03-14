@@ -108,11 +108,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawablePadding="5dp"
             android:drawableLeft="@drawable/icon_calender"
+            android:drawablePadding="5dp"
             android:fontFamily="sans-serif-light"
             android:padding="20dp"
-            android:text="Expiration Date"
+            android:text="Contract Date"
             android:textAlignment="textStart"
             android:textSize="14sp" />
 

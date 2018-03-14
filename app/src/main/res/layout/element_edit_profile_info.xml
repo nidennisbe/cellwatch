@@ -140,24 +140,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Expiration Date"
+                        android:text="Contract Date"
                         android:textSize="@dimen/medium_font" />
 
-
-                    <EditText
-                        android:id="@+id/ed_profile_exp_date"
+                    <Button
+                        android:id="@+id/btnExpirationDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="5"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="Expiration"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:padding="12dp"
-                        android:singleLine="true"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="@dimen/medium_font" />
+                        android:layout_weight="1"
+                        android:background="@drawable/style_button_border_only"
+                        android:drawableStart="@android:drawable/ic_menu_my_calendar"
+                        android:text="Select contract date"
+                        android:textColor="@android:color/darker_gray" />
+
 
                 </TableRow>
             </TableLayout>

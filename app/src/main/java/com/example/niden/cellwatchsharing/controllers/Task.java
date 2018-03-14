@@ -84,7 +84,7 @@ public class Task  {
                 .child(DIR_TASK)
                 .push()
                 .setValue(new TaskEntityDatabase(FirebaseAuth.getInstance().getCurrentUser().getUid(),strTaskName,strClass, strAdress, strDesc,strSuburb
-                        ,currentDateTimeString, strSpinnerType, name,"",strStartDate,strEndDate,"Pending"));
+                        ,currentDateTimeString, strSpinnerType, name,"",strStartDate,strEndDate,"Uncomplete"));
         txTaskName.setText("");
         txAddress.setText("");
         txDescription.setText("");

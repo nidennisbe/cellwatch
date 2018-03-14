@@ -24,6 +24,8 @@ import com.example.niden.cellwatchsharing.adapters.SpinnerTaskTypeAdapter;
 import com.example.niden.cellwatchsharing.adapters.SpinnerTechnicianAdapter;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.controllers.Task;
+import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
+import com.example.niden.cellwatchsharing.database.TaskTypeEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
@@ -70,7 +72,7 @@ public class CreateTaskFragment extends Fragment {
             }
         });
         //SETUP SPINNER FOR SELECTING TYPE OF TASK
-        buildSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity, String.class, android.R.layout.simple_list_item_1, QUERY_TASK_TYPE);
+        buildSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity, TaskTypeEntityDatabase.class, android.R.layout.simple_list_item_1, QUERY_TASK_TYPE);
         spinner.setAdapter(buildSpinnerTaskTypeAdapter);
 
 
