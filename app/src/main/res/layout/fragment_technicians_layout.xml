@@ -8,6 +8,17 @@
     android:orientation="vertical">
 
 
+    <Button
+        android:id="@+id/btn_add_new_tech"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/background_gradient"
+        android:text="ADD NEW TECHNICIAN"
+        android:textColor="@color/cardview_light_background"
+        app:srcCompat="@drawable/ic_user_blue" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,6 +53,9 @@
         android:id="@+id/list_technician"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/standard_margin" />
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_weight="3">
+
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

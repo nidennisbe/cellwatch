@@ -5,7 +5,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import static com.example.niden.cellwatchsharing.activities.TechnicianActivity.mUserKey;
+
 
 /**
  * Created by niden on 03-Feb-18.

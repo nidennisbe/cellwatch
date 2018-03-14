@@ -1,7 +1,10 @@
 package com.example.niden.cellwatchsharing.serivces;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,6 +20,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.example.niden.cellwatchsharing.adapters.AlarmReceiver;
 import com.example.niden.cellwatchsharing.controllers.Account;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
@@ -44,6 +49,8 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     private static final long MIN_TIME_BW_UPDATES = 900000; //900000milisecond = 15minute
     public DatabaseReference mDatabaseLocationDetails;
     double longitude, latitude;
+    public static final int DAILY_REMINDER_REQUEST_CODE=100;
+    public static final String TAG="NotificationScheduler";
 
 
 
@@ -52,7 +59,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         super.onCreate();
         buildGoogleApiClient();
         Log.i(LOGSERVICE, "onCreate");
-
+        setReminder(AlarmReceiver.class);
     }
 
     @Override
@@ -186,5 +193,35 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         mDatabaseLocationDetails.child("timeStamp").setValue(currentDateTimeString);
 
     }
+
+    private void setReminder(Class<?> cls)
+    {
+        Calendar calendar = Calendar.getInstance();
+
+        Calendar setcalendar = Calendar.getInstance();
+        setcalendar.set(Calendar.HOUR_OF_DAY, 22);
+        setcalendar.set(Calendar.MINUTE, 24);
+
+
+        if(setcalendar.before(calendar))
+            setcalendar.add(Calendar.DATE,1);
+
+
+        ComponentName receiver = new ComponentName(getApplicationContext(), cls);
+        PackageManager pm = getApplicationContext().getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+
+
+        Intent intent1 = new Intent(getApplicationContext(), cls);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+    }
+
+
 }
 

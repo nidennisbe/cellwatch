@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
+import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 import com.example.niden.cellwatchsharing.utils.ToastUtils;
@@ -52,6 +54,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editProfileHobby;
     private EditText editProfileExp;
     private ImageView profile;
+    private Button datePicker;
     UserProfile mUserProfile = new UserProfile();
     public CoordinatorLayout coordinatorLayout;
     LinearLayout parentLayout;
@@ -79,7 +82,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 KeyboardUtils.hideSoftKeyboard(v, mActivity);
             }
         });
-        mUserProfile.displayEditInfo(mActivity, editProfileName, editProfileBio, editProfileContact, editProfileHobby, editProfileExp, profile);
+        mUserProfile.displayEditInfo(mActivity, editProfileName, editProfileBio, editProfileContact, editProfileHobby, datePicker, profile);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +101,13 @@ public class EditProfileActivity extends AppCompatActivity {
                 Intent actMain = new Intent(mActivity, MainActivity.class);
                 startActivity(actMain);
                 mActivity.finish();
+            }
+        });
+
+        datePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerUtils.openDatePicker(mActivity, datePicker);
             }
         });
 
@@ -139,7 +149,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String profileBio = editProfileBio.getText().toString();
         String profileContact = editProfileContact.getText().toString();
         String profileHobby = editProfileHobby.getText().toString();
-        String profileExpDate = editProfileExp.getText().toString();
+        String profileExpDate = datePicker.getText().toString();
 
 
         // update the account profile information in Firebase database.\
@@ -173,7 +183,8 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfileBio = (EditText) findViewById(R.id.profile_bio);
         editProfileContact = (EditText) findViewById(R.id.profile_phone);
         editProfileHobby = (EditText) findViewById(R.id.ed_profile_hobby);
-        editProfileExp = (EditText) findViewById(R.id.ed_profile_exp_date);
+       //editProfileExp = (EditText) findViewById(R.id.ed_profile_exp_date);
         parentLayout = (LinearLayout) findViewById(R.id.layout_parent);
+        datePicker = (Button)findViewById(R.id.btnExpirationDate);
     }
 }

@@ -3,7 +3,6 @@ package com.example.niden.cellwatchsharing.controllers;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -26,9 +25,7 @@ import net.lingala.zip4j.util.Zip4jConstants;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,14 +58,14 @@ public class Zip {
         }
     }
 
-    public void uploadZipFile(Context context, int i, String zippath, Uri zipUri, final ArrayList<String> fileDoneList,
+    public void uploadZipFile(Context context, int i, String zippath, final ArrayList<String> fileDoneList,
                               final ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter, final ImageView btnCamera,
                               final ImageView imageViewZip, final String taskKey) {
         StorageReference mStorage = FirebaseStorage.getInstance().getReference();
         final StorageReference storageRef = mStorage.child("Gallery");
         final int j = i;
         Toast.makeText(context, zippath, Toast.LENGTH_SHORT).show();
-        zipUri = Uri.fromFile(new File(zippath));
+        Uri zipUri = Uri.fromFile(new File(zippath));
         Log.d("file", zipUri.getPath());
         StorageReference readyToUpload = storageRef.child(zipUri.getLastPathSegment());
         UploadTask uploadTask = readyToUpload.putFile(zipUri);

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -135,7 +136,7 @@ public class UserProfile {
     }
 
     //Showing profile information
-    public void displayEditInfo(final Context context, final EditText editProfileName, final EditText editProfileBio, final EditText editProfileContact, final EditText editProfileHobby, final EditText editProfileExpDate, final ImageView profile) {
+    public void displayEditInfo(final Context context, final EditText editProfileName, final EditText editProfileBio, final EditText editProfileContact, final EditText editProfileHobby, final Button btnProfileExpDate, final ImageView profile) {
         mRefUserInfo = FirebaseDatabase.getInstance().getReference(DIR_USER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         mRefUserInfo.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -147,7 +148,7 @@ public class UserProfile {
                     editProfileBio.setText(strBio);
                     editProfileName.setText(strName);
                     editProfileHobby.setText(strHobby);
-                    editProfileExpDate.setText(strExpDate);
+                    btnProfileExpDate.setText(strExpDate);
                     if (strProfileUrl.isEmpty()) {
                         profile.setImageResource(R.drawable.ic_user_blue);
                     }else {

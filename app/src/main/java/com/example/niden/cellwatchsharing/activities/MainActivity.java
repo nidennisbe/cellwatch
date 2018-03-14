@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
+import com.example.niden.cellwatchsharing.fragments.ConfigFragment;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskForTechnicianFragment;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
 import com.example.niden.cellwatchsharing.serivces.LocationBackgroundService;
@@ -109,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id ==R.id.nav_create_new_task){
             fragmentManager.beginTransaction().replace(R.id.content_frame,new CreateTaskForTechnicianFragment()).commit();
         }
+        else if (id ==R.id.nav_config_task_type){
+            fragmentManager.beginTransaction().replace(R.id.content_frame,new ConfigFragment()).commit();
+        }
         else if (id == R.id.nav_logout) {
             mAccount.userOnlineisFalse(scoresRef.child(firebaseAuth.getCurrentUser().getUid()));
             firebaseAuth.signOut();
@@ -158,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_circles).setVisible(false);
+        nav_Menu.findItem(R.id.nav_config_task_type).setVisible(false);
         nav_Menu.findItem(R.id.nav_anouncement).setVisible(false);
         nav_Menu.findItem(R.id.nav_gallery).setEnabled(false);
         nav_Menu.findItem(R.id.nav_gallery).setVisible(false);
@@ -182,8 +187,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         break;
                                     case ADMIN:
                                         adminNavItem();
-                                        fragmentManager =getFragmentManager();
-                                        fragmentManager.beginTransaction().replace(R.id.nav_circles,new TechniciansFragment()).commit();
+                                       /* fragmentManager =getFragmentManager();
+                                        fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();*/
                                         break;
                                 }
                             }
@@ -210,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        QUERY_TECHNICIAN.keepSynced(true);
+//        QUERY_TECHNICIAN.keepSynced(true);
         firebaseAuth.addAuthStateListener(mAuthListener);
     }
     @Override

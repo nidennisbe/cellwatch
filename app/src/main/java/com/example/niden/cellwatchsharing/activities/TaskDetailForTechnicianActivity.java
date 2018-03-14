@@ -23,7 +23,6 @@ import com.example.niden.cellwatchsharing.controllers.Gallary;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.controllers.Zip;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
-import com.google.firebase.storage.StorageReference;
 
 
 import net.lingala.zip4j.exception.ZipException;
@@ -59,9 +58,9 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
     public Uri zipUri;
     public  File file;
     File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
-            "CellWatchZip");
+            "/CellWatchZip");
     String timeStampOfZipFile = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-    String zippath = mediaStorageDir.getAbsolutePath() + "/" + etTaskName+timeStampOfZipFile + ".zip";
+    public String zippath = mediaStorageDir.getAbsolutePath() + "/" +timeStampOfZipFile + ".zip";
 
 
     @Override
@@ -173,17 +172,38 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
                 final Uri fileUri = data.getClipData().getItemAt(i).getUri();
                 final String fileName = mGallery.getFileName(this,fileUri);
                 final String filePath = mGallery.getRealPathFromURIGallery(this,fileUri);
+                isExternalStorageWritable();
+                isExternalStorageReadable();
                 fileNameList.add(fileName);
                 filePathList.add(filePath);
                 fileDoneList.add("uploading");
                 imageUploadLRecyclerAdapter.notifyDataSetChanged();
                 mZip.putImagesToZip(zippath,filePathList);
-                mZip.uploadZipFile(this,i,zippath,zipUri,fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip,taskKey);
+                mZip.uploadZipFile(this,i,zippath, fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip,taskKey);
             }
         } else if (data.getData() != null) {
-            Toast.makeText(TaskDetailForTechnicianActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TaskDetailForTechnicianActivity.this, "Please choose at least TWO IMAGES by holding a few second on any images", Toast.LENGTH_LONG).show();
         }
     }
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+
 
 }
 

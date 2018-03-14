@@ -1,9 +1,13 @@
 package com.example.niden.cellwatchsharing.activities;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -20,6 +24,7 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.adapters.AlarmReceiver;
 import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.serivces.LocationBackgroundService;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
@@ -30,6 +35,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,10 +49,14 @@ import static com.example.niden.cellwatchsharing.utils.ValidationUtils.isEmailVa
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     LinearLayout linearLayout;
-    Button btnSignup, btnLogin, btnReset;
+    Button  btnLogin, btnReset;
     ProgressDialog myDialog;
     Account mAccount = new Account();
     Activity mActivity;
+    AlarmManager alarmMgr;
+    PendingIntent alarmIntent;
+    public static final int DAILY_REMINDER_REQUEST_CODE=100;
+    public static final String TAG="NotificationScheduler";
 
 
     @Override
@@ -66,20 +76,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mActivity, SignUpActivity.class));
-                finish();
-            }
-        });
+
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fieldsValidation(v);
-
+                //setReminder(AlarmReceiver.class);
             }
         });
     }
@@ -87,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
     private void bindingViews() {
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
-        btnSignup = (Button) findViewById(R.id.btn_signup);
         btnLogin = (Button) findViewById(R.id.btn_login);
        // btnReset = (Button) findViewById(R.id.btn_reset_password);
         linearLayout = (LinearLayout) findViewById(R.id.layout_parent);
@@ -105,6 +108,12 @@ public class LoginActivity extends AppCompatActivity {
         mAccount.isUserCurrentlyLogin(mActivity);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAccount.checkUserLogin(mActivity);
+
+    }
 
     private void fieldsValidation(View v) {
         String email = inputEmail.getText().toString();
@@ -134,6 +143,35 @@ public class LoginActivity extends AppCompatActivity {
             DialogsUtils.showAlertDialogDismiss(mActivity, getString(R.string.internet_connection), getString(R.string.alert_internet_connection));
         }
     }
+
+  /*  private void setReminder(Class<?> cls)
+    {
+        Calendar calendar = Calendar.getInstance();
+
+        Calendar setcalendar = Calendar.getInstance();
+        setcalendar.set(Calendar.HOUR_OF_DAY, 21);
+        setcalendar.set(Calendar.MINUTE, 32);
+
+
+        if(setcalendar.before(calendar))
+            setcalendar.add(Calendar.DATE,1);
+
+        // Enable a receiver
+
+       ComponentName receiver = new ComponentName(mActivity, cls);
+        PackageManager pm = mActivity.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+
+
+        Intent intent1 = new Intent(mActivity, cls);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mActivity, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) mActivity.getSystemService(ALARM_SERVICE);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+    }*/
 
 
 

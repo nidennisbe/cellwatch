@@ -20,8 +20,6 @@ import com.example.niden.cellwatchsharing.adapters.ImageUploadLRecyclerAdapter;
 import com.example.niden.cellwatchsharing.controllers.Gallary;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.controllers.Zip;
-import com.example.niden.cellwatchsharing.utils.GallaryUtils;
-import com.google.firebase.storage.StorageReference;
 
 import net.lingala.zip4j.exception.ZipException;
 
@@ -136,7 +134,7 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
                 fileDoneList.add("uploading");
                 imageUploadLRecyclerAdapter.notifyDataSetChanged();
                 mZip.putImagesToZip(zippath,filePathList);
-                mZip.uploadZipFile(this,i,zippath,zipUri,fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip,taskKey);
+                mZip.uploadZipFile(this,i,zippath, fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip,taskKey);
             }
         } else if (data.getData() != null) {
             Toast.makeText(TaskDetailForAdminActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();

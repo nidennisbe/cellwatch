@@ -60,10 +60,9 @@
 
                 <Spinner
                     android:id="@+id/spinner_task_status4"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:spinnerMode="dialog" />
+                    android:layout_weight="1" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

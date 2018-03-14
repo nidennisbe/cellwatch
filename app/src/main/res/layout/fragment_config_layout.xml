@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="60dp"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/task_type_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:errorEnabled="true"
+            app:hintEnabled="false">
+
+            <EditText
+                android:id="@+id/config_frag_et_task_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@drawable/background_search_layout"
+                android:ems="10"
+                android:hint="Type of task"
+                android:inputType="textPersonName"
+                android:padding="@dimen/standard_padding"
+                android:singleLine="true"
+                android:textColor="#383838"
+                android:textSize="@dimen/fab_margin" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/config_frag_btn_add_type_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="3"
+            android:background="@drawable/background_gradient"
+            android:text="ADD"
+            android:textColor="@color/cardview_light_background" />
+    </LinearLayout>
+
+</LinearLayout>

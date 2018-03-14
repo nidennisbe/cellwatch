@@ -10,7 +10,7 @@
     <string name="hint_name">Fullname</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_forgot_password">Forgot your password?</string>
-    <string name="btn_link_to_login">Already registered? Login</string>
+    <string name="btn_link_to_login">Go back</string>
     <string name="action_sign_in_short">Sign Up</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
     <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
@@ -28,7 +28,7 @@
 
     <string name="profile_names">Display name</string>
     <string name="induce_smile">Delaroy Studios</string>
-
+    <string name="toolbar_config">Configuration</string>
     <string name="edit_profile_name">Name</string>
     <string name="edit_profile_bio">Bio</string>
     <string name="edit_profile_phone">Phone number</string>
