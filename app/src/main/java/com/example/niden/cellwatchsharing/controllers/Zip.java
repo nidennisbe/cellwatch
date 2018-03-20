@@ -58,7 +58,7 @@ public class Zip {
         }
     }
 
-    public void uploadZipFile(Context context, int i, String zippath, final ArrayList<String> fileDoneList,
+    public void uploadZipFile(final Context context, int i, String zippath, final ArrayList<String> fileDoneList,
                               final ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter, final ImageView btnCamera,
                               final ImageView imageViewZip, final String taskKey) {
         StorageReference mStorage = FirebaseStorage.getInstance().getReference();
@@ -88,6 +88,7 @@ public class Zip {
                 imageUploadLRecyclerAdapter.notifyDataSetChanged();
                 btnCamera.setVisibility(View.INVISIBLE);
                 imageViewZip.setVisibility(View.VISIBLE);
+                Toast.makeText(context, "Upload successfully", Toast.LENGTH_LONG).show();
             }
         });
     }

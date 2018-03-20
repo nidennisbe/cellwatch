@@ -203,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/style_button_sign_in_round"
-                    android:text="@string/done"
+                    android:text="@string/submit"
                     android:textColor="@color/cardview_light_background" />
 
             </LinearLayout>

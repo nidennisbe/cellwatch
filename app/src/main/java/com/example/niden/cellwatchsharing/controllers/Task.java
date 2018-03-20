@@ -84,7 +84,7 @@ public class Task  {
                 .child(DIR_TASK)
                 .push()
                 .setValue(new TaskEntityDatabase(FirebaseAuth.getInstance().getCurrentUser().getUid(),strTaskName,strClass, strAdress, strDesc,strSuburb
-                        ,currentDateTimeString, strSpinnerType, name,"",strStartDate,strEndDate,"Uncomplete"));
+                        ,currentDateTimeString, strSpinnerType, name,"",strStartDate,strEndDate,"Pending"));
         txTaskName.setText("");
         txAddress.setText("");
         txDescription.setText("");
@@ -107,7 +107,8 @@ public class Task  {
 
 //SHOW CONTENTS ON TASK DETAIL ACTIVITY
     public void displayTaskDetailForTechnician(final String taskKey, final EditText etTaskName, final EditText etClass, final EditText etDescription,
-                                               final EditText etAddress, final EditText etSuburb, final EditText etComment ){
+                                               final EditText etAddress, final EditText etSuburb,
+                                               final EditText etComment,final EditText etStartDate,final EditText etEndDate,final EditText etTaskStatus ){
        DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference().child(DIR_TASK);
         mDataReference.child(taskKey).addValueEventListener(new ValueEventListener() {
             @Override
@@ -121,6 +122,9 @@ public class Task  {
                     String strClass = taskEntityDatabase.getTaskClass();
                     String strSuburb = taskEntityDatabase.getTaskSuburb();
                     String strComment = taskEntityDatabase.getTaskComment();
+                    String strStartDate= taskEntityDatabase.getTaskStartDate();
+                    String strEndDate= taskEntityDatabase.getTaskEndDate();
+                    String strTaskStatus = taskEntityDatabase.getTaskStatus();
                     //set into edit text
                     etComment.setText(strComment);
                     etTaskName.setText(strTaskName);
@@ -128,6 +132,9 @@ public class Task  {
                     etDescription.setText(strDescription);
                     etAddress.setText(strAddress);
                     etSuburb.setText(strSuburb);
+                    etStartDate.setText(strStartDate);
+                    etEndDate.setText(strEndDate);
+                    etTaskStatus.setText(strTaskStatus);
 
                 }
             }

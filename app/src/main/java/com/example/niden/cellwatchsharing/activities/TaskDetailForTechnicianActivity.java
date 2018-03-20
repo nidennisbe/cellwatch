@@ -22,7 +22,10 @@ import com.example.niden.cellwatchsharing.adapters.ImageUploadLRecyclerAdapter;
 import com.example.niden.cellwatchsharing.controllers.Gallary;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.controllers.Zip;
+import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
+import com.example.niden.cellwatchsharing.utils.InternetConnUtils;
+import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
 
 
 import net.lingala.zip4j.exception.ZipException;
@@ -35,15 +38,16 @@ import java.util.Calendar;
 import java.util.List;
 
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
+import static com.example.niden.cellwatchsharing.utils.DialogsUtils.showAlertDialogDismiss;
 
 
 public class TaskDetailForTechnicianActivity extends AppCompatActivity {
 
-    static final int RESULT_LOAD_IMAGE = 1;
+    static final int RESULT_LOAD_IMAGE = 30;
     RecyclerView recyclerImageUpload;
     ImageView btnCamera,imageViewZip;
     Button btnDone;
-    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb,etComment;
+    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb,etComment, etStartDate, etEndDate,etTaskStatus;
     private Spinner spinnerTaskStatus;
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
     public ArrayList<String> fileNameList;
@@ -56,11 +60,12 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
     Task mTask = new Task();
     Gallary mGallery = new Gallary();
     public Uri zipUri;
-    public  File file;
-    File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
+    //public  File file;
+    public File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
             "/CellWatchZip");
-    String timeStampOfZipFile = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-    public String zippath = mediaStorageDir.getAbsolutePath() + "/" +timeStampOfZipFile + ".zip";
+    String timeStampOfZipFile = new SimpleDateFormat("yyyyMMDD HH:mm:ss").format(Calendar.getInstance().getTime());
+    public String zippath = mediaStorageDir.getAbsolutePath()+"/" +timeStampOfZipFile + ".zip";
+    //File file = new File(path, "DemoPicture.jpg");
 
 
     @Override
@@ -73,9 +78,10 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
 
         bindingViews();
         spinnerArrayStatus.add("Choose status of the task");
-        spinnerArrayStatus.add("Completed");
         spinnerArrayStatus.add("Pending");
-        spinnerArrayStatus.add("Uncomplete");
+        spinnerArrayStatus.add("Started");
+        spinnerArrayStatus.add("Finished");
+        spinnerArrayStatus.add("Uncompleted");
 
         fileNameList = new ArrayList<>();
         fileDoneList = new ArrayList<>();
@@ -87,13 +93,12 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         recyclerImageUpload.setHasFixedSize(true);
         recyclerImageUpload.setAdapter(imageUploadLRecyclerAdapter);
         taskKey = getIntent().getStringExtra(ID_KEY);
-        mTask.displayTaskDetailForTechnician(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb,etComment);
+        mTask.displayTaskDetailForTechnician(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb,etComment,etStartDate,etEndDate,etTaskStatus);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getApplicationContext(),
                 R.layout.item_spinner_status,
-                spinnerArrayStatus
-        );
+                spinnerArrayStatus);
         spinnerTaskStatus.setAdapter(adapter);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -160,6 +165,9 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         etDescription = (EditText) findViewById(R.id.et_task_desc);
         etAddress = (EditText) findViewById(R.id.et_task_address);
         etSuburb = (EditText) findViewById(R.id.et_task_suburb);
+        etStartDate = (EditText)findViewById(R.id.et_start_date);
+        etEndDate= (EditText)findViewById(R.id.et_end_date);
+        etTaskStatus = (EditText)findViewById(R.id.et_task_status);
         imageViewZip = (ImageView)findViewById(R.id.imgview_zip);
         etComment = (EditText)findViewById(R.id.task_detail_technician_et_comment);
         spinnerTaskStatus = (Spinner)findViewById(R.id.spinner_task_status4);
@@ -174,17 +182,29 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
                 final String filePath = mGallery.getRealPathFromURIGallery(this,fileUri);
                 isExternalStorageWritable();
                 isExternalStorageReadable();
-                fileNameList.add(fileName);
-                filePathList.add(filePath);
-                fileDoneList.add("uploading");
-                imageUploadLRecyclerAdapter.notifyDataSetChanged();
-                mZip.putImagesToZip(zippath,filePathList);
-                mZip.uploadZipFile(this,i,zippath, fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip,taskKey);
+
+                if (InternetConnUtils.isOnline(this)) {
+                    fileNameList.add(fileName);
+                    filePathList.add(filePath);
+                    fileDoneList.add("uploading");
+                    imageUploadLRecyclerAdapter.notifyDataSetChanged();
+                    mZip.putImagesToZip(zippath,filePathList);
+                    try {
+                        mZip.uploadZipFile(this, i, zippath, fileDoneList, imageUploadLRecyclerAdapter, btnCamera, imageViewZip, taskKey);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    showAlertDialogDismiss(this, getString(R.string.internet_connection), getString(R.string.upload_failed));
+                }
             }
         } else if (data.getData() != null) {
             Toast.makeText(TaskDetailForTechnicianActivity.this, "Please choose at least TWO IMAGES by holding a few second on any images", Toast.LENGTH_LONG).show();
         }
     }
+
+
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {

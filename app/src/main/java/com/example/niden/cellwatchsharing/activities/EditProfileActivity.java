@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
+import static com.example.niden.cellwatchsharing.utils.DialogsUtils.showAlertDialogDismiss;
 
 
 //sixth push
@@ -44,6 +46,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final String TAG = EditProfileActivity.class.getSimpleName();
 
     int RESULT_LOAD_IMAGE = 1;
+    private TextInputLayout profileNameWrapper, profileBioWrapper, profilePhoneWrapper, profileEmailWrapper;
     //Firebase
     FirebaseUserEntity firebaseUserEntity;
     DatabaseReference databaseReference;
@@ -134,7 +137,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        onSaveClick();
+        fieldsValidation();
         return super.onOptionsItemSelected(item);
     }
 
@@ -174,7 +177,8 @@ public class EditProfileActivity extends AppCompatActivity {
             startActivity(intent);
             mActivity.finish();
         }
-        ToastUtils.showSnackbar(coordinatorLayout, "Saved Complete", Snackbar.LENGTH_LONG);
+        //ToastUtils.showSnackbar(coordinatorLayout, "Saved Complete", Snackbar.LENGTH_LONG);
+        showAlertDialogDismiss(mActivity, "Edit Information", "Edit successfully");
     }
     private void bindingView(){
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cor_layout);
@@ -186,5 +190,50 @@ public class EditProfileActivity extends AppCompatActivity {
        //editProfileExp = (EditText) findViewById(R.id.ed_profile_exp_date);
         parentLayout = (LinearLayout) findViewById(R.id.layout_parent);
         datePicker = (Button)findViewById(R.id.btnExpirationDate);
+        profileNameWrapper = (TextInputLayout) parentLayout.findViewById(R.id.profile_name_wrapper);
+        profileBioWrapper = (TextInputLayout) parentLayout.findViewById(R.id.profile_bio_wrapper);
+        profilePhoneWrapper = (TextInputLayout) parentLayout.findViewById(R.id.profile_phone_wrapper);
+        profileEmailWrapper = (TextInputLayout) parentLayout.findViewById(R.id.profile_email_wrapper);
+
+    }
+
+    private void fieldsValidation() {
+        String strProfileName = editProfileName.getText().toString();
+        String strProfileBio = editProfileBio.getText().toString();
+        String strProfilePhone = editProfileContact.getText().toString();
+        String strProfileEmail = editProfileHobby.getText().toString();
+
+        //Validation
+        if (TextUtils.isEmpty(strProfileName)) {
+            profileNameWrapper.setError("Please field in profile name");
+
+        } else {
+            profileNameWrapper.setErrorEnabled(false);
+        }
+
+        if (TextUtils.isEmpty(strProfileBio)) {
+            profileBioWrapper.setError("Please field in bio");
+
+        } else {
+            profileBioWrapper.setErrorEnabled(false);
+        }
+
+        if (TextUtils.isEmpty(strProfilePhone)) {
+            profilePhoneWrapper.setError("Please field in phone");
+
+        } else {
+            profilePhoneWrapper.setErrorEnabled(false);
+        }
+
+        if (TextUtils.isEmpty(strProfileEmail)) {
+            profileEmailWrapper.setError("Please field in email");
+
+        } else {
+            profileEmailWrapper.setErrorEnabled(false);
+        }
+
+        if (!TextUtils.isEmpty(strProfileName) && !TextUtils.isEmpty(strProfileBio) && !TextUtils.isEmpty(strProfilePhone) && !TextUtils.isEmpty(strProfileEmail)) {
+            onSaveClick();
+        }
     }
 }

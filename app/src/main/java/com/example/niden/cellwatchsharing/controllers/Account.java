@@ -47,6 +47,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import static com.example.niden.cellwatchsharing.utils.DialogsUtils.showAlertDialogDismiss;
+
 /**
  * Created by niden on 20-Nov-17.
  */
@@ -135,10 +137,12 @@ public class Account {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            ToastUtils.showSnackbar(v, context.getString(R.string.alert_check_emailpassword), Snackbar.LENGTH_LONG);
+                            showAlertDialogDismiss(context, "Validatoin", context.getString(R.string.alert_check_emailpassword));
+                            //ToastUtils.showSnackbar(v, context.getString(R.string.alert_check_emailpassword), Snackbar.LENGTH_LONG);
                             myDialog.dismiss();
                         } else {
-                         checkGPS(context);myDialog.dismiss();
+                         checkGPS(context);
+                         myDialog.dismiss();
                         }
                     }
 

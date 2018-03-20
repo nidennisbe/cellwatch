@@ -49,11 +49,7 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
     Task mTask = new Task();
     Gallary mGallery = new Gallary();
     public Uri zipUri;
-    public  File file;
-    File mediaStorageDir = new File(Environment.getExternalStorageDirectory(),
-            "CellWatchZip");
-    String timeStampOfZipFile = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-    String zippath = mediaStorageDir.getAbsolutePath() + "/" + timeStampOfZipFile + ".zip";
+
 
 
     @Override
@@ -133,8 +129,6 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
                 filePathList.add(filePath);
                 fileDoneList.add("uploading");
                 imageUploadLRecyclerAdapter.notifyDataSetChanged();
-                mZip.putImagesToZip(zippath,filePathList);
-                mZip.uploadZipFile(this,i,zippath, fileDoneList,imageUploadLRecyclerAdapter,btnCamera,imageViewZip,taskKey);
             }
         } else if (data.getData() != null) {
             Toast.makeText(TaskDetailForAdminActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();

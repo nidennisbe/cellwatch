@@ -184,9 +184,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 switch (type) {
                                     case TECHNICIAN:
                                         technicianNavItem();
+                                        setTitle("Technician");
                                         break;
                                     case ADMIN:
                                         adminNavItem();
+                                        setTitle("Admin");
                                        /* fragmentManager =getFragmentManager();
                                         fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();*/
                                         break;
