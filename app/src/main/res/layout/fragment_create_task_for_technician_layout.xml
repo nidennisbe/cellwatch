@@ -38,8 +38,8 @@
                     android:textAlignment="textStart" />
 
                 <Spinner
-                    android:id="@+id/spinnerType"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tech_frag_spinnerType"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="5" />
 

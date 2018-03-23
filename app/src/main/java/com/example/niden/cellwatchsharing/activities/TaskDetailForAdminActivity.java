@@ -1,6 +1,7 @@
 package com.example.niden.cellwatchsharing.activities;
 
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,9 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
@@ -20,6 +24,7 @@ import com.example.niden.cellwatchsharing.adapters.ImageUploadLRecyclerAdapter;
 import com.example.niden.cellwatchsharing.controllers.Gallary;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.controllers.Zip;
+import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
 
 import net.lingala.zip4j.exception.ZipException;
 
@@ -28,6 +33,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
 
@@ -38,8 +44,9 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
     RecyclerView recyclerImageUpload;
     ImageView btnCamera,imageViewZip;
     Button btnDone;
-    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb, etComment;
+    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb, etComment,etStartDate,etEndDate;
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
+    Spinner spinnerTaskStatus;
     public ArrayList<String> fileNameList;
     public ArrayList<String> fileDoneList;
     public ArrayList<String> filePathList;
@@ -49,8 +56,8 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
     Task mTask = new Task();
     Gallary mGallery = new Gallary();
     public Uri zipUri;
-
-
+    List<String> spinnerArrayStatus = new ArrayList<>();
+FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +68,16 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         bindingViews();
-
+        spinnerArrayStatus.add("Choose status of the task");
+        spinnerArrayStatus.add("Pending");
+        spinnerArrayStatus.add("Started");
+        spinnerArrayStatus.add("Finished");
+        spinnerArrayStatus.add("Uncompleted");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getApplicationContext(),
+                R.layout.item_spinner_status,
+                spinnerArrayStatus);
+        spinnerTaskStatus.setAdapter(adapter);
         fileNameList = new ArrayList<>();
         fileDoneList = new ArrayList<>();
         filePathList = new ArrayList<>();
@@ -72,7 +88,7 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
         recyclerImageUpload.setHasFixedSize(true);
         recyclerImageUpload.setAdapter(imageUploadLRecyclerAdapter);
         taskKey = getIntent().getStringExtra(ID_KEY);
-        mTask.displayTaskDetailForAdmin(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb,etComment);
+        mTask.displayTaskDetailForAdmin(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb,etComment,etStartDate,etEndDate,spinnerTaskStatus);
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -84,17 +100,16 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
             }
         });
 
-        imageViewZip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mTask.updateTask(taskKey,etComment,spinnerTaskStatus);
+                Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(actMain);
+                TaskDetailForAdminActivity.this.finish();
+                fragmentManager =getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();
             }
         });
     }
@@ -145,7 +160,10 @@ public class TaskDetailForAdminActivity extends AppCompatActivity {
         etAddress = (EditText) findViewById(R.id.et_task_address);
         etSuburb = (EditText) findViewById(R.id.et_task_suburb);
         imageViewZip = (ImageView)findViewById(R.id.imgview_zip);
-        etComment = (EditText)findViewById(R.id.task_detail_admin_et_comment);
+        etComment = (EditText)findViewById(R.id.task_detail_technician_et_comment);
+        etStartDate = (EditText)findViewById(R.id.et_start_date);
+        etEndDate= (EditText)findViewById(R.id.et_end_date);
+        spinnerTaskStatus = (Spinner)findViewById(R.id.spinner_task_status4);
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.niden.cellwatchsharing.fragments;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -48,13 +49,12 @@ public class CreateTaskForTechnicianFragment extends Fragment {
     public static FirebaseDatabase database;
     private Task mTask = new Task();
     private Button mBtnStartDate, mBtnEndDate;
-    private Spinner spinner, spinnerTech;
+    private Spinner spinner;
     private View parentHolder;
     private LinearLayout parentLayout;
     int duration = Snackbar.LENGTH_LONG;
-    DatePickerDialog datePickerDialog;
     SpinnerTaskTypeAdapter buildSpinnerTaskTypeAdapter;
-    SpinnerTechnicianAdapter buildSpinnerTechAdapter;
+
 
     @Nullable
     @Override
@@ -72,7 +72,7 @@ public class CreateTaskForTechnicianFragment extends Fragment {
             }
         });
         //SETUP SPINNER FOR SELECTING TYPE OF TASK
-        buildSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity, TaskTypeEntityDatabase.class, android.R.layout.simple_list_item_1, QUERY_TASK_TYPE);
+        buildSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity, TaskTypeEntityDatabase.class, R.layout.item_type_task, QUERY_TASK_TYPE);
         spinner.setAdapter(buildSpinnerTaskTypeAdapter);
 
 
@@ -100,13 +100,13 @@ public class CreateTaskForTechnicianFragment extends Fragment {
         txDescription = (EditText) parentHolder.findViewById(R.id.editTextDescription);
         txSuburb = (EditText) parentHolder.findViewById(R.id.editTextSuburb);
         txClass = (EditText) parentHolder.findViewById(R.id.editTextClass);
-        spinner = (Spinner) parentHolder.findViewById(R.id.spinnerType);
         parentLayout = (LinearLayout) parentHolder.findViewById(R.id.layout_parent);
         taskNameWrapper = (TextInputLayout) parentLayout.findViewById(R.id.task_name_wrapper);
         descriptionWrapper = (TextInputLayout) parentLayout.findViewById(R.id.description_wrapper);
         addressWrapper = (TextInputLayout) parentLayout.findViewById(R.id.address_wrapper);
         suburbWrapper = (TextInputLayout) parentLayout.findViewById(R.id.suburb_wrapper);
         classWrapper = (TextInputLayout) parentLayout.findViewById(R.id.class_wrapper);
+        spinner = (Spinner) parentHolder.findViewById(R.id.tech_frag_spinnerType);
     }
 
     @Override
@@ -165,12 +165,14 @@ public class CreateTaskForTechnicianFragment extends Fragment {
         }
         if (!TextUtils.isEmpty(strTaskName) && !TextUtils.isEmpty(strDescription) && !TextUtils.isEmpty(strAddress) && !TextUtils.isEmpty(strAddress) &&
                 !TextUtils.isEmpty(strAddress) && !TextUtils.isEmpty(strSuburb) && !TextUtils.isEmpty(strClass)) {
-            mTask.insertTaskForTheirOwn(txTaskName, txClass, txDescription, txAddress, txSuburb, spinner, spinnerTech,mBtnStartDate,mBtnEndDate);
+            mTask.insertTaskForTheirOwn(txTaskName, txClass, txDescription, txAddress, txSuburb, spinner,mBtnStartDate,mBtnEndDate);
             ToastUtils.showSnackbar(parentLayout, getString(R.string.txt_submit_task), duration);
             txTaskName.setText("");
             txClass.setText("");
             txDescription.setText("");
             txAddress.setText("");
+
+
         }
     }
 

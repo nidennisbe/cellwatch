@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         checkUserType();
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         scoresRef =FirebaseDatabase.getInstance().getReference("users");
         scoresRef.keepSynced(true);
@@ -189,8 +189,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     case ADMIN:
                                         adminNavItem();
                                         setTitle("Admin");
-                                       /* fragmentManager =getFragmentManager();
-                                        fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();*/
+                                        fragmentManager =getFragmentManager();
+                                        fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();
                                         break;
                                 }
                             }
