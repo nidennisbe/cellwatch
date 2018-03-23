@@ -39,6 +39,8 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.example.niden.cellwatchsharing.utils.DialogsUtils.showAlertDialog;
+import static com.example.niden.cellwatchsharing.utils.DialogsUtils.showAlertDialogDismiss;
 import static com.example.niden.cellwatchsharing.utils.ValidationUtils.isEmailValid;
 
 
@@ -120,14 +122,17 @@ public class LoginActivity extends AppCompatActivity {
         String password = inputPassword.getText().toString();
         //Validation
         if (TextUtils.isEmpty(email)) {
-            ToastUtils.showSnackbar(linearLayout, getString(R.string.validation_email), Snackbar.LENGTH_LONG);
+            showAlertDialogDismiss(mActivity, "Validatoin", getString(R.string.validation_email));
+          //  ToastUtils.showSnackbar(linearLayout, getString(R.string.validation_email), Snackbar.LENGTH_LONG);
             return;
         } else if (TextUtils.isEmpty(password)) {
-            ToastUtils.showSnackbar(linearLayout, getString(R.string.validation_password), Snackbar.LENGTH_LONG);
+            //ToastUtils.showSnackbar(linearLayout, getString(R.string.validation_password), Snackbar.LENGTH_LONG);
+            showAlertDialogDismiss(mActivity, "Validatoin", getString(R.string.validation_password));
             return;
         }
         else if (!isEmailValid(email)){
-            ToastUtils.showSnackbar(linearLayout, getString(R.string.txt_invalid_email_format), Snackbar.LENGTH_LONG);
+            showAlertDialogDismiss(mActivity, "Validatoin", getString(R.string.txt_invalid_email_format));
+           // ToastUtils.showSnackbar(linearLayout, getString(R.string.txt_invalid_email_format), Snackbar.LENGTH_LONG);
             return;
         }
         //End of Validation
@@ -140,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
             myDialog = DialogsUtils.showProgressDialog(mActivity, getString(R.string.sign_in_process));
             mAccount.loginAUser(linearLayout, mActivity, email, password, myDialog);
         } else {
-            DialogsUtils.showAlertDialogDismiss(mActivity, getString(R.string.internet_connection), getString(R.string.alert_internet_connection));
+            showAlertDialogDismiss(mActivity, getString(R.string.internet_connection), getString(R.string.alert_internet_connection));
         }
     }
 

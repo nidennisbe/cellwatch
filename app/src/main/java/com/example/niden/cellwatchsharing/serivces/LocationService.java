@@ -199,8 +199,8 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         Calendar calendar = Calendar.getInstance();
 
         Calendar setcalendar = Calendar.getInstance();
-        setcalendar.set(Calendar.HOUR_OF_DAY, 22);
-        setcalendar.set(Calendar.MINUTE, 24);
+        setcalendar.set(Calendar.HOUR_OF_DAY, 17);
+        setcalendar.set(Calendar.MINUTE, 00);
 
 
         if(setcalendar.before(calendar))
@@ -213,8 +213,6 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
-
-
         Intent intent1 = new Intent(getApplicationContext(), cls);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE);

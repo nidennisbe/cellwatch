@@ -40,6 +40,7 @@
     <string name="validation_password">You must enter your password</string>
     <string name="sign_in_process">Signing in...</string>
     <string name="internet_connection">Internet Connection</string>
+    <string name="upload_failed">Upload failed! Please try again</string>
     <string name="alert_internet_connection">Please check your internet connectivity and try again</string>
     <string name="ok">OK</string>
     <string name="toolbar_edit_profile_info">Edit Profile Information</string>

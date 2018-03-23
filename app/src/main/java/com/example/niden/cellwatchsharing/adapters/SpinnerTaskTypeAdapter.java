@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 
+import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.TaskTypeEntityDatabase;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.ChildEventListener;
@@ -13,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by niden on 03-Feb-18.
@@ -28,27 +30,12 @@ public class SpinnerTaskTypeAdapter extends FirebaseListAdapter<TaskTypeEntityDa
 
     @Override
     protected void populateView(final View v, final TaskTypeEntityDatabase model, int position) {
-        DatabaseReference mRefTaskType = FirebaseDatabase.getInstance().getReference();
-        mRefTaskType.child("taskType").child(getRef(position).getKey()).addChildEventListener(new ChildEventListener() {
+        DatabaseReference mRefTaskType = FirebaseDatabase.getInstance().getReference().child("taskType");
+        mRefTaskType.child(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    TextView textview = (TextView) v.findViewById(android.R.id.text1);
-                    textview.setText(model.getType());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TextView textview = (TextView) v.findViewById(R.id.txt_type_task);
+                textview.setText(model.getType());
             }
 
             @Override

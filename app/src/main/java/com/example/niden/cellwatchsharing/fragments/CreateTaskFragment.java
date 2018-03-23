@@ -48,13 +48,14 @@ public class CreateTaskFragment extends Fragment {
     public static FirebaseDatabase database;
     private Task mTask = new Task();
     private Button mBtnStartDate, mBtnEndDate;
-    private Spinner spinner, spinnerTech;
+    public Spinner spinner, spinnerTech;
     private View parentHolder;
     private LinearLayout parentLayout;
     int duration = Snackbar.LENGTH_LONG;
     DatePickerDialog datePickerDialog;
     SpinnerTaskTypeAdapter buildSpinnerTaskTypeAdapter;
     SpinnerTechnicianAdapter buildSpinnerTechAdapter;
+
 
     @Nullable
     @Override
@@ -72,7 +73,7 @@ public class CreateTaskFragment extends Fragment {
             }
         });
         //SETUP SPINNER FOR SELECTING TYPE OF TASK
-        buildSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity, TaskTypeEntityDatabase.class, android.R.layout.simple_list_item_1, QUERY_TASK_TYPE);
+        buildSpinnerTaskTypeAdapter = new SpinnerTaskTypeAdapter(referenceActivity, TaskTypeEntityDatabase.class, R.layout.item_type_task, QUERY_TASK_TYPE);
         spinner.setAdapter(buildSpinnerTaskTypeAdapter);
 
 
@@ -135,6 +136,7 @@ public class CreateTaskFragment extends Fragment {
         String strClass = txClass.getText().toString();
         String strStartDate = mBtnStartDate.getText().toString();
         String strStartEnd = mBtnEndDate.getText().toString();
+
         //Validation
         if (TextUtils.isEmpty(strTaskName)) {
             taskNameWrapper.setError("Please field in task name");

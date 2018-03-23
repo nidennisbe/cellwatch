@@ -33,7 +33,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "%%%%%%%%%$$$$$$Logout");
+
 
         showNotification(context,LoginActivity.class,"AUTOMATIC LOG OUT","The tracking system now is timeout");
 
@@ -66,14 +66,14 @@ public class AlarmReceiver extends BroadcastReceiver {
         notificationManager.notify(DAILY_REMINDER_REQUEST_CODE, notification);
         firebaseAuth=FirebaseAuth.getInstance();
         firebaseAuth.signOut();
-        FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
+      /*  FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 assert user != null;
 
             }
-        };
+        };*/
         context.stopService(new Intent(context,LocationService.class));
         context.startActivity(new Intent(context, LoginActivity.class));
 

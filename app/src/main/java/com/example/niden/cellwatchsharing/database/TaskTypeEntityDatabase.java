@@ -1,10 +1,12 @@
 package com.example.niden.cellwatchsharing.database;
 
+import java.io.Serializable;
+
 /**
  * Created by niden on 18-Jan-18.
  */
 
-public class TaskTypeEntityDatabase {
+public class TaskTypeEntityDatabase implements Serializable {
     private String type;
 
     public TaskTypeEntityDatabase(){
@@ -17,5 +19,9 @@ public class TaskTypeEntityDatabase {
 
     public String getType() {
         return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

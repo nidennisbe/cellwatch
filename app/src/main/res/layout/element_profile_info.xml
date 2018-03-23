@@ -80,11 +80,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
+            android:drawableLeft="@drawable/ic_email"
             android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/icon_hobby"
+            android:fontFamily="sans-serif-light"
             android:padding="20dp"
-            android:text="Hobby"
+            android:text="Email"
             android:textAlignment="textStart"
             android:textSize="14sp" />
 
