@@ -36,9 +36,7 @@ public class Task  {
     private String currentDateTimeString = String.valueOf(System.currentTimeMillis());
     public static String eachUserID;
 
-
     //Insert new task
-
     public void insertTask(EditText txTaskName, EditText txClass, EditText txAddress, EditText txDescription, EditText txSuburb, Spinner spinner, Spinner spinnerTech,Button btnStartDate,Button btnEndDate) {
         String strTaskName=txTaskName.getText().toString();
         String strClass =txClass.getText().toString();
@@ -116,7 +114,8 @@ public class Task  {
 //SHOW CONTENTS ON TASK DETAIL ACTIVITY
     public void displayTaskDetailForTechnician(final String taskKey, final EditText etTaskName, final EditText etClass, final EditText etDescription,
                                                final EditText etAddress, final EditText etSuburb,
-                                               final EditText etComment,final EditText etStartDate,final EditText etEndDate,final Spinner stateStatus ){
+                                               final EditText etComment,final EditText etStartDate,
+                                               final EditText etEndDate,final Spinner stateStatus,final EditText etTaskType ){
        DatabaseReference mDataReference = FirebaseDatabase.getInstance().getReference().child(DIR_TASK);
         mDataReference.child(taskKey).addValueEventListener(new ValueEventListener() {
             @Override
@@ -132,6 +131,7 @@ public class Task  {
                     String strComment = taskEntityDatabase.getTaskComment();
                     String strStartDate= taskEntityDatabase.getTaskStartDate();
                     String strEndDate= taskEntityDatabase.getTaskEndDate();
+                    String strTaskType= taskEntityDatabase.getTaskType();
                     int taskStatusState = taskEntityDatabase.getTaskStatusSelectedState();
                     //set into edit text
                     etComment.setText(strComment);
@@ -143,9 +143,7 @@ public class Task  {
                     etStartDate.setText(strStartDate);
                     etEndDate.setText(strEndDate);
                     stateStatus.setSelection(taskStatusState);
-
-
-
+                    etTaskType.setText(strTaskType);
                 }
             }
             @Override

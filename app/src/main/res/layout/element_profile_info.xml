@@ -39,6 +39,7 @@
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:padding="20dp"
+            android:maxLines="1"
             android:textSize="14sp" />
 
     </TableRow>
@@ -66,6 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:maxLines="1"
             android:fontFamily="sans-serif-light"
             android:gravity="center_vertical"
             android:textSize="14sp" />
@@ -80,7 +82,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_email"
+            android:drawableLeft="@drawable/icon_email"
             android:drawablePadding="5dp"
             android:fontFamily="sans-serif-light"
             android:padding="20dp"
@@ -93,6 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:maxLines="1"
             android:fontFamily="sans-serif-light"
             android:gravity="center_vertical"
             android:textSize="14sp" />
@@ -110,6 +113,7 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/icon_calender"
             android:drawablePadding="5dp"
+            android:maxLines="1"
             android:fontFamily="sans-serif-light"
             android:padding="20dp"
             android:text="Contract Date"
@@ -121,6 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:maxLines="1"
             android:fontFamily="sans-serif-light"
             android:gravity="center_vertical"
             android:textSize="14sp" />

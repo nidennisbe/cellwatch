@@ -2,7 +2,6 @@ package com.example.niden.cellwatchsharing.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -46,7 +45,7 @@ public class RecyclerTechniciansAdapter extends FirebaseRecyclerAdapter<Firebase
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     viewHolder.name_user.setText(model.getName());
-                    viewHolder.textTypeUser.setText(model.getUser_type());
+                    viewHolder.textTypeUser.setText(model.getUserType());
                     String url = model.getProfileUrl();
                     if (url.isEmpty()) {
                         viewHolder.profile_user.setImageResource(R.drawable.ic_user_blue);

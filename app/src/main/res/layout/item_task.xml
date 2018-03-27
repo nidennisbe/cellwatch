@@ -65,7 +65,7 @@
         android:id="@+id/task_icon_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="?android:attr/textCheckMarkInverse" />
+        android:layout_gravity="center" />
 
 </LinearLayout>
 

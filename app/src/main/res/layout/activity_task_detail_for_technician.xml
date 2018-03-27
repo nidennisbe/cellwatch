@@ -47,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:elevation="3dp"
                     android:gravity="right"
                     android:paddingTop="15dp"
                     android:src="@drawable/ic_circle_camera" />
@@ -92,6 +93,28 @@
 
                     <EditText
                         android:id="@+id/et_task_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:ems="10"
+                        android:enabled="false"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Type of task" />
+
+                    <EditText
+                        android:id="@+id/task_detail_et_task_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -263,6 +286,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/style_button_sign_in_round"
+                    android:elevation="5dp"
                     android:text="@string/submit"
                     android:textColor="@color/cardview_light_background" />
 

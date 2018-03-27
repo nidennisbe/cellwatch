@@ -148,38 +148,5 @@ public class LoginActivity extends AppCompatActivity {
             showAlertDialogDismiss(mActivity, getString(R.string.internet_connection), getString(R.string.alert_internet_connection));
         }
     }
-
-  /*  private void setReminder(Class<?> cls)
-    {
-        Calendar calendar = Calendar.getInstance();
-
-        Calendar setcalendar = Calendar.getInstance();
-        setcalendar.set(Calendar.HOUR_OF_DAY, 21);
-        setcalendar.set(Calendar.MINUTE, 32);
-
-
-        if(setcalendar.before(calendar))
-            setcalendar.add(Calendar.DATE,1);
-
-        // Enable a receiver
-
-       ComponentName receiver = new ComponentName(mActivity, cls);
-        PackageManager pm = mActivity.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
-
-
-        Intent intent1 = new Intent(mActivity, cls);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mActivity, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager am = (AlarmManager) mActivity.getSystemService(ALARM_SERVICE);
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setcalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-    }*/
-
-
-
-
 }
 

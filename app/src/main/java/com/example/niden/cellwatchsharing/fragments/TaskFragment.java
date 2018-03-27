@@ -51,7 +51,6 @@ public class TaskFragment extends Fragment {
         this.activity = getActivity();
         getActivity().setTitle(getString(R.string.toobar_tasks));
         setupRecyclerView();
-
         return myView;
     }
 
@@ -75,6 +74,7 @@ public class TaskFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
     }
+
 
 
 }

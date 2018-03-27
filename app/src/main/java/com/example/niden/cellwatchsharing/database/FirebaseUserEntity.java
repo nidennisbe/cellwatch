@@ -11,7 +11,7 @@ public class FirebaseUserEntity {
     private String hobby;
     private String expirationDate;
     private String profileUrl;
-    private String user_type;
+    private String userType;
     private Boolean online;
 
 
@@ -36,7 +36,7 @@ public class FirebaseUserEntity {
     }
 
 
-    public FirebaseUserEntity(String id, String email, String name, String bio, String phone, String hobby, String expirationDate, String profileUrl, String user_type,Boolean online) {
+    public FirebaseUserEntity(String id, String email, String name, String bio, String phone, String hobby, String expirationDate, String profileUrl, String userType, Boolean online) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -45,7 +45,7 @@ public class FirebaseUserEntity {
         this.hobby = hobby;
         this.expirationDate = expirationDate;
         this.profileUrl = profileUrl;
-        this.user_type = user_type;
+        this.userType = userType;
         this.online = online;
     }
 
@@ -115,8 +115,8 @@ public class FirebaseUserEntity {
         this.profileUrl = profileUrl;
     }
 
-    public String getUser_type() {
-        return user_type;
+    public String getUserType() {
+        return userType;
     }
 
     public Boolean getOnline() {

@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -44,10 +45,9 @@ public class UserProfile {
     public static final String DIR_STORAGE_PROFILE_PHOTO="user_profile_image/";
 
 
+
     public void saveUserProfileInfo(String userId, FirebaseUserEntity firebaseUserEntity){
        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-
         Map<String, Object> result = new HashMap<>();
         result.put("name",firebaseUserEntity.getName());
         result.put("bio",firebaseUserEntity.getBio());
@@ -55,9 +55,11 @@ public class UserProfile {
         result.put("expirationDate",firebaseUserEntity.getExpirationDate());
         result.put("hobby",firebaseUserEntity.getHobby());
         result.put("phone",firebaseUserEntity.getPhone());
-        result.put("user_type",firebaseUserEntity.getUser_type());
+        result.put("userType",firebaseUserEntity.getUserType());
         result.put("id",firebaseUserEntity.getId());
+        result.put("online",true);
         result.put("profileUrl",firebaseUserEntity.getProfileUrl());
+       // result.put("profileUrl",firebaseUserEntity.getProfileUrl());
         databaseReference.child("users").child(FirebaseAuth.getInstance().getUid()).updateChildren(result);
     }
 
@@ -149,6 +151,7 @@ public class UserProfile {
                     editProfileName.setText(strName);
                     editProfileHobby.setText(strHobby);
                     btnProfileExpDate.setText(strExpDate);
+                    strProfileUrl = firebaseUserEntity.getProfileUrl();
                     if (strProfileUrl.isEmpty()) {
                         profile.setImageResource(R.drawable.ic_user_blue);
                     }else {
@@ -183,7 +186,6 @@ public class UserProfile {
                             user.put("profileUrl", url);
                             databaseReference.child(DIR_USER)
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(user);
-
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

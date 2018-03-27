@@ -34,6 +34,7 @@ import com.google.firebase.database.Query;
 
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
+import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ONLY_TECHNICIAN;
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN_BY_NAME;
 
@@ -104,7 +105,7 @@ public class TechniciansFragment extends Fragment {
 
 
     private void initialTechnicianAdapter(){
-        buildRecyclerTechniciansAdapter = new RecyclerTechniciansAdapter(query,activity,R.layout.item_technician);
+        buildRecyclerTechniciansAdapter = new RecyclerTechniciansAdapter(QUERY_ONLY_TECHNICIAN,activity,R.layout.item_technician);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         technicianList.setHasFixedSize(true);
         technicianList.setLayoutManager(layoutManager);

@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/background"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="-70dp">
+        android:layout_marginTop="-70dp"
+        android:elevation="3dp">
 
 
         <ImageView
@@ -53,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
+                android:maxLines="1"
                 android:textColor="@android:color/black"
                 android:textSize="30sp" />
 
@@ -61,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
+                android:maxLines="1"
                 android:textSize="14sp" />
 
         </LinearLayout>

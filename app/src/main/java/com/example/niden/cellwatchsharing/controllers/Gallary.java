@@ -14,23 +14,16 @@ import android.provider.OpenableColumns;
 
 public class Gallary {
 
-    public String getRealPathFromURIGallery(Context context, Uri uri){
+    public String getRealPathFromURIGallery(Context context, Uri uri) {
         String filePath = "";
         String wholeID = DocumentsContract.getDocumentId(uri);
-
-        // Split at colon, use second item in the array
         String id = wholeID.split(":")[1];
-
-        String[] column = { MediaStore.Images.Media.DATA };
-
+        String[] column = {MediaStore.Images.Media.DATA};
         // where id is equal to
         String sel = MediaStore.Images.Media._ID + "=?";
-
         Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                column, sel, new String[]{ id }, null);
-
+                column, sel, new String[]{id}, null);
         int columnIndex = cursor.getColumnIndex(column[0]);
-
         if (cursor.moveToFirst()) {
             filePath = cursor.getString(columnIndex);
         }
@@ -39,7 +32,7 @@ public class Gallary {
     }
 
     //GET FILE NAME
-    public String getFileName(Context context,Uri uri) {
+    public String getFileName(Context context, Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {
             Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
@@ -60,10 +53,6 @@ public class Gallary {
         }
         return result;
     }
-
-
-
-
 
 
 }

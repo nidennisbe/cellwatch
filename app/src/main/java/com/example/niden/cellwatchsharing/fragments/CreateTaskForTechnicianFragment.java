@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -15,12 +17,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.niden.cellwatchsharing.R;
+import com.example.niden.cellwatchsharing.activities.MainActivity;
 import com.example.niden.cellwatchsharing.adapters.SpinnerTaskTypeAdapter;
 import com.example.niden.cellwatchsharing.adapters.SpinnerTechnicianAdapter;
 import com.example.niden.cellwatchsharing.controllers.Task;
@@ -34,6 +39,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_ONLY_TECHNICIAN;
 import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TASK_TYPE;
+import static com.example.niden.cellwatchsharing.utils.ShakerAnimationUtils.shakeError;
 
 
 /**
@@ -54,7 +60,9 @@ public class CreateTaskForTechnicianFragment extends Fragment {
     private LinearLayout parentLayout;
     int duration = Snackbar.LENGTH_LONG;
     SpinnerTaskTypeAdapter buildSpinnerTaskTypeAdapter;
-
+    FragmentManager fragmentManager;
+    Vibrator vibrator ;
+    public final int timeOfVibrate = 400;
 
     @Nullable
     @Override
@@ -64,7 +72,8 @@ public class CreateTaskForTechnicianFragment extends Fragment {
         setHasOptionsMenu(true);
         getActivity().setTitle("New Task");
         bindingViews();
-
+        vibrator=(Vibrator) referenceActivity.getSystemService(referenceActivity.VIBRATOR_SERVICE);
+        fragmentManager =getFragmentManager();
         parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,6 +142,7 @@ public class CreateTaskForTechnicianFragment extends Fragment {
         //Validation
         if (TextUtils.isEmpty(strTaskName)) {
             taskNameWrapper.setError("Please field in task name");
+            taskNameWrapper.startAnimation(shakeError());
 
         } else {
             taskNameWrapper.setErrorEnabled(false);
@@ -140,26 +150,31 @@ public class CreateTaskForTechnicianFragment extends Fragment {
 
         if (TextUtils.isEmpty(strDescription)) {
             descriptionWrapper.setError("Please field in description");
-
+            descriptionWrapper.startAnimation(shakeError());
+            vibrator.vibrate(timeOfVibrate);
         } else {
             descriptionWrapper.setErrorEnabled(false);
         }
 
         if (TextUtils.isEmpty(strAddress)) {
             addressWrapper.setError("Please field in address");
-
+            addressWrapper.startAnimation(shakeError());
+            vibrator.vibrate(timeOfVibrate);
         } else {
             addressWrapper.setErrorEnabled(false);
         }
 
         if (TextUtils.isEmpty(strSuburb)) {
             suburbWrapper.setError("Please field in suburb");
-
+            suburbWrapper.startAnimation(shakeError());
+            vibrator.vibrate(timeOfVibrate);
         } else {
             suburbWrapper.setErrorEnabled(false);
         }
         if (TextUtils.isEmpty(strClass)) {
             classWrapper.setError("Please field in class");
+            classWrapper.startAnimation(shakeError());
+            vibrator.vibrate(timeOfVibrate);
         } else {
             classWrapper.setErrorEnabled(false);
         }
@@ -171,9 +186,9 @@ public class CreateTaskForTechnicianFragment extends Fragment {
             txClass.setText("");
             txDescription.setText("");
             txAddress.setText("");
-
-
+            fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
         }
     }
+
 
 }

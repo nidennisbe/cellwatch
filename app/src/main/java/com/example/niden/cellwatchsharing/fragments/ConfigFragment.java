@@ -73,7 +73,6 @@ public class ConfigFragment extends Fragment {
                     etTaskType.clearAnimation();
                     etTaskType.setText("");
                 }
-
             }
         });
 
