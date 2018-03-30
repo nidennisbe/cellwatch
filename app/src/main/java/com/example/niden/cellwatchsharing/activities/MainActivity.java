@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.example.niden.cellwatchsharing.R;
@@ -23,14 +24,12 @@ import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.fragments.ConfigFragment;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskForTechnicianFragment;
 import com.example.niden.cellwatchsharing.fragments.TaskFragment;
-import com.example.niden.cellwatchsharing.serivces.LocationBackgroundService;
 import com.example.niden.cellwatchsharing.serivces.LocationService;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
 import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
 import com.example.niden.cellwatchsharing.fragments.MapFragment;
 import com.example.niden.cellwatchsharing.fragments.ProfileFragment;
-import com.example.niden.cellwatchsharing.utils.ToastUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,11 +37,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.example.niden.cellwatchsharing.database.DataQuery.QUERY_TECHNICIAN;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -58,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public  FirebaseAuth firebaseAuth;
     Account mAccount = new Account();
     DatabaseReference scoresRef;
-    LocationService locationBackgroundService = new LocationService();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +66,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FragmentManager fragmentManager =getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
+        Intent i = getIntent();
+        String fragmentName = i.getStringExtra("fragment");
+        String forum = "nav_task";
+        if (fragmentName != null && fragmentName.equals(forum)) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame,new TaskFragment()).commit();
+
+        }else {
+            fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
+        }
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_anouncement) {
            fragmentManager.beginTransaction().replace(R.id.content_frame,new CreateTaskFragment()).commit();
         } else if (id == R.id.nav_about) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();
+
         }
         else if (id ==R.id.content_frame){
             fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
@@ -143,8 +145,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            myAlertDialog= DialogsUtils.showAlertDialog(activity,getString(R.string.exit_app_dialog_title),getString(R.string.exit_app_desc));
-        }
+            myAlertDialog = DialogsUtils.showAlertDialog(activity, getString(R.string.exit_app_dialog_title), getString(R.string.exit_app_desc));
+           /* if (fragmentManager.getBackStackEntryCount() >0) {
+                fragmentManager.popBackStack();
+                Toast.makeText(activity, "Go back 1 Frag", Toast.LENGTH_SHORT).show();
+            } else {*/
+
+
+            //super.onBackPressed();
+
+            }
+
+
+
+
+
     }//End of BackButtonPressed
 
 
@@ -180,15 +195,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 FirebaseUserEntity user = dataSnapshot.getValue(FirebaseUserEntity.class);
-                                String type = user.getUser_type();
+                                String type = user.getUserType();
                                 switch (type) {
                                     case TECHNICIAN:
                                         technicianNavItem();
-                                        setTitle("Technician");
+                                        setTitle("You are Technician");
                                         break;
                                     case ADMIN:
                                         adminNavItem();
-                                        setTitle("Admin");
+                                        setTitle("You are Admin");
                                         fragmentManager =getFragmentManager();
                                         fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();
                                         break;

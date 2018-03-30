@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class ProfileFragment extends Fragment {
     TextView textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate;
     ImageView profileImage, addTaskFragment;
     View parentHolder;
-    LinearLayout btnComplete;
+    Button btnViewTask;
     public TextView taskButton,taskUncompleteButton;
 
 
@@ -54,16 +55,10 @@ public class ProfileFragment extends Fragment {
         final FragmentManager fragmentManager = getFragmentManager();
 
         mUserProfile.displayProfileInfo(refActivity, textViewName, textViewBio, textViewPhone, textViewHobby, textViewExpDate, profileImage);
-        btnComplete.setOnClickListener(new View.OnClickListener() {
+        btnViewTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskFragment()).commit();
-            }
-        });
-        addTaskFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new CreateTaskForTechnicianFragment()).commit();
             }
         });
 
@@ -90,14 +85,14 @@ public class ProfileFragment extends Fragment {
     }
 
     private void bindingViews() {
-        btnComplete = (LinearLayout)parentHolder.findViewById(R.id.btn_complete);
+        btnViewTask = (Button)parentHolder.findViewById(R.id.btn_view_task);
         profileImage = (ImageView) parentHolder.findViewById(R.id.profile_image);
         textViewName = (TextView) parentHolder.findViewById(R.id.user_profile_name);
         textViewBio = (TextView) parentHolder.findViewById(R.id.user_profile_short_bio);
         textViewPhone = (TextView) parentHolder.findViewById(R.id.tv_phonenumber);
         textViewHobby = (TextView) parentHolder.findViewById(R.id.prof_tv_hobby);
         textViewExpDate = (TextView) parentHolder.findViewById(R.id.prof_tv_exp_date);
-        addTaskFragment = (ImageView)parentHolder.findViewById(R.id.btn_add_task);
+
     }
 
 

@@ -25,7 +25,7 @@ public class DataQuery {
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
             .child("tasks").orderByChild("task_type").equalTo("Install");
 
-    public final static Query QUERY_ONLY_TECHNICIAN = db.child("users").orderByChild("user_type").equalTo("technician");
+    public final static Query QUERY_ONLY_TECHNICIAN = db.child("users").orderByChild("userType").equalTo("technician");
 
     public final static Query QUERY_TECHNICIAN_BY_NAME = db.child("users");
 

@@ -56,12 +56,14 @@ public class TechnicianRecyclerTaskAdapter extends FirebaseRecyclerAdapter<TaskE
                     viewholder.tvDate.setText(TSConverterUtils.getDateFormat(date));
                     viewholder.tvDateAgo.setText(strTimeStamp);
                     viewholder.tvTime.setText(TSConverterUtils.getTimeFormat(date));
-                    if (strTaskStatus.equals("Completed")){
+                    if (strTaskStatus.equals("Finished")){
                         viewholder.taskIconStatus.setImageResource(R.drawable.icon_complete);
                     }else if (strTaskStatus.equals("Pending")){
                         viewholder.taskIconStatus.setImageResource(R.drawable.icon_pending);
-                    }else if (strTaskStatus.equals("Uncomplete")){
+                    }else if (strTaskStatus.equals("Uncompleted")){
                         viewholder.taskIconStatus.setImageResource(R.drawable.icon_uncomplete);
+                    }else if (strTaskStatus.equals("Started")) {
+                        viewholder.taskIconStatus.setImageResource(R.drawable.ic_start);
                     }
                 }
             }

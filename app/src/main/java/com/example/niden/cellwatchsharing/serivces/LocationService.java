@@ -46,7 +46,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
     private static final String LOGSERVICE = "#######";
-    private static final long MIN_TIME_BW_UPDATES = 900000; //900000milisecond = 15minute
+    private static final long MIN_TIME_BW_UPDATES = 900000*2; //900000milisecond = 15minute
     public DatabaseReference mDatabaseLocationDetails;
     double longitude, latitude;
     public static final int DAILY_REMINDER_REQUEST_CODE=100;

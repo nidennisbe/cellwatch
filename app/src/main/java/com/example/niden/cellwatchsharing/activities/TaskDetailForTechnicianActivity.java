@@ -53,7 +53,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
     RecyclerView recyclerImageUpload;
     ImageView btnCamera, imageViewZip;
     Button btnDone;
-    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb, etComment, etStartDate, etEndDate;
+    private EditText etTaskName, etClass, etDescription, etAddress, etSuburb, etComment, etStartDate, etEndDate, etTaskType;
     private Spinner spinnerTaskStatus;
     private ImageUploadLRecyclerAdapter imageUploadLRecyclerAdapter;
     public ArrayList<String> fileNameList;
@@ -99,7 +99,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         recyclerImageUpload.setHasFixedSize(true);
         recyclerImageUpload.setAdapter(imageUploadLRecyclerAdapter);
         taskKey = getIntent().getStringExtra(ID_KEY);
-        mTask.displayTaskDetailForTechnician(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb, etComment, etStartDate, etEndDate, spinnerTaskStatus);
+        mTask.displayTaskDetailForTechnician(taskKey, etTaskName, etClass, etDescription, etAddress, etSuburb, etComment, etStartDate, etEndDate, spinnerTaskStatus,etTaskType);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getApplicationContext(),
@@ -112,6 +112,8 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
             public void onClick(View v) {
                 TaskDetailForTechnicianActivity.this.finish();
                 Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
+                String fragmnet = "nav_task";
+                actMain.putExtra("fragment", fragmnet);
                 startActivity(actMain);
             }
         });
@@ -129,9 +131,10 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mTask.updateTask(taskKey, etComment, spinnerTaskStatus);
                 Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(actMain);
                 TaskDetailForTechnicianActivity.this.finish();
-
+                String fragmnet = "nav_task";
+                actMain.putExtra("fragment", fragmnet);
+                startActivity(actMain);
             }
         });
     }
@@ -177,6 +180,7 @@ public class TaskDetailForTechnicianActivity extends AppCompatActivity {
         imageViewZip = (ImageView) findViewById(R.id.imgview_zip);
         etComment = (EditText) findViewById(R.id.task_detail_technician_et_comment);
         spinnerTaskStatus = (Spinner) findViewById(R.id.spinner_task_status4);
+        etTaskType= (EditText)findViewById(R.id.task_detail_et_task_type);
     }
 
     private void setup(Intent data) throws IOException, ZipException {
