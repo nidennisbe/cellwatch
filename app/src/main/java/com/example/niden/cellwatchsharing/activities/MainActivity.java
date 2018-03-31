@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.ConsoleMessage;
+import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.Account;
@@ -35,6 +37,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.Console;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_anouncement) {
            fragmentManager.beginTransaction().replace(R.id.content_frame,new CreateTaskFragment()).commit();
         } else if (id == R.id.nav_about) {
-
+            Toast.makeText(activity, "About us", Toast.LENGTH_SHORT).show();
         }
         else if (id ==R.id.content_frame){
             fragmentManager.beginTransaction().replace(R.id.content_frame,new ProfileFragment()).commit();
@@ -144,13 +148,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         } else {
             myAlertDialog = DialogsUtils.showAlertDialog(activity, getString(R.string.exit_app_dialog_title), getString(R.string.exit_app_desc));
-           /* if (fragmentManager.getBackStackEntryCount() >0) {
-                fragmentManager.popBackStack();
-                Toast.makeText(activity, "Go back 1 Frag", Toast.LENGTH_SHORT).show();
-            } else {*/
-
-
-            //super.onBackPressed();
 
             }
 
@@ -205,6 +202,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         fragmentManager =getFragmentManager();
                                         fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();
                                         break;
+                                    default:
+                                    technicianNavItem();
+                                        setTitle("You are Technician");
+
                                 }
                             }
                         }
