@@ -22,7 +22,6 @@ import com.example.niden.cellwatchsharing.adapters.ImageUploadLRecyclerAdapter;
 import com.example.niden.cellwatchsharing.controllers.Gallary;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.controllers.Zip;
-import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
 
 import net.lingala.zip4j.exception.ZipException;
 
