@@ -4,42 +4,20 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.adapters.AlarmReceiver;
 import com.example.niden.cellwatchsharing.controllers.Account;
-import com.example.niden.cellwatchsharing.serivces.LocationBackgroundService;
 import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.utils.InternetConnUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
-import com.example.niden.cellwatchsharing.utils.ToastUtils;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static com.example.niden.cellwatchsharing.utils.DialogsUtils.showAlertDialog;
 import static com.example.niden.cellwatchsharing.utils.DialogsUtils.showAlertDialogDismiss;
 import static com.example.niden.cellwatchsharing.utils.ValidationUtils.isEmailValid;
 

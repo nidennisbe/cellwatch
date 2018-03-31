@@ -1,11 +1,9 @@
 package com.example.niden.cellwatchsharing.fragments;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
@@ -24,13 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.niden.cellwatchsharing.R;
-import com.example.niden.cellwatchsharing.activities.MainActivity;
-import com.example.niden.cellwatchsharing.activities.TechnicianActivity;
 import com.example.niden.cellwatchsharing.adapters.SpinnerTaskTypeAdapter;
 import com.example.niden.cellwatchsharing.adapters.SpinnerTechnicianAdapter;
-import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.controllers.Task;
-import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
+import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.database.TaskTypeEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.DatePickerUtils;
 import com.example.niden.cellwatchsharing.utils.KeyboardUtils;

@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
@@ -40,7 +39,6 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import static com.example.niden.cellwatchsharing.activities.MainActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
-import static com.example.niden.cellwatchsharing.utils.DialogsUtils.showAlertDialogDismiss;
 import static com.example.niden.cellwatchsharing.utils.ShakerAnimationUtils.shakeError;
 
 

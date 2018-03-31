@@ -1,13 +1,10 @@
 package com.example.niden.cellwatchsharing.activities;
 
-
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,14 +21,8 @@ import com.example.niden.cellwatchsharing.adapters.ImageUploadLRecyclerAdapter;
 import com.example.niden.cellwatchsharing.controllers.Gallary;
 import com.example.niden.cellwatchsharing.controllers.Task;
 import com.example.niden.cellwatchsharing.controllers.Zip;
-import com.example.niden.cellwatchsharing.fragments.ProfileFragment;
-import com.example.niden.cellwatchsharing.fragments.TaskFragment;
-import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
-import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.utils.GallaryUtils;
 import com.example.niden.cellwatchsharing.utils.InternetConnUtils;
-import com.example.niden.cellwatchsharing.utils.KeyboardUtils;
-
 
 import net.lingala.zip4j.exception.ZipException;
 

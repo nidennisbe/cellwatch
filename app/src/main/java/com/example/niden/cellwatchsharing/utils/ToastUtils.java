@@ -1,7 +1,6 @@
 package com.example.niden.cellwatchsharing.utils;
 
 import android.content.Context;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
