@@ -1,12 +1,9 @@
 package com.example.niden.cellwatchsharing.controllers;
 
 
-
-import android.content.Context;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
@@ -16,14 +13,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
-
-import static com.example.niden.cellwatchsharing.activities.TechnicianActivity.mUserKey;
 
 
 /**

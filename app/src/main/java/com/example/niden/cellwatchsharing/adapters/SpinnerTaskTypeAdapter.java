@@ -4,11 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.database.TaskTypeEntityDatabase;
 import com.firebase.ui.database.FirebaseListAdapter;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

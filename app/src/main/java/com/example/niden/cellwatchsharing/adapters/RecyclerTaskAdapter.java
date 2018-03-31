@@ -13,12 +13,10 @@ import android.widget.Toast;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.activities.TaskDetailForAdminActivity;
-import com.example.niden.cellwatchsharing.activities.TaskDetailForTechnicianActivity;
 import com.example.niden.cellwatchsharing.database.TaskEntityDatabase;
 import com.example.niden.cellwatchsharing.utils.TSConverterUtils;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.github.marlonlom.utilities.timeago.TimeAgo;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,8 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-
-import static com.example.niden.cellwatchsharing.activities.TechnicianActivity.mUserKey;
 import static com.example.niden.cellwatchsharing.utils.NotificationUltils.showAlertNotifcation;
 
 

@@ -15,21 +15,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.controllers.Account;
 import com.example.niden.cellwatchsharing.database.FirebaseUserEntity;
 import com.example.niden.cellwatchsharing.fragments.ConfigFragment;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskForTechnicianFragment;
-import com.example.niden.cellwatchsharing.fragments.TaskFragment;
-import com.example.niden.cellwatchsharing.serivces.LocationService;
-import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.example.niden.cellwatchsharing.fragments.CreateTaskFragment;
-import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
 import com.example.niden.cellwatchsharing.fragments.MapFragment;
 import com.example.niden.cellwatchsharing.fragments.ProfileFragment;
+import com.example.niden.cellwatchsharing.fragments.TaskFragment;
+import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
+import com.example.niden.cellwatchsharing.serivces.LocationService;
+import com.example.niden.cellwatchsharing.utils.DialogsUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

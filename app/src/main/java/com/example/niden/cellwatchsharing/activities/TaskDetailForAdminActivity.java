@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -28,11 +26,8 @@ import com.example.niden.cellwatchsharing.fragments.TechniciansFragment;
 
 import net.lingala.zip4j.exception.ZipException;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import static com.example.niden.cellwatchsharing.adapters.RecyclerTechniciansAdapter.ID_KEY;
@@ -108,8 +103,6 @@ FragmentManager fragmentManager;
                 Intent actMain = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(actMain);
                 TaskDetailForAdminActivity.this.finish();
-                fragmentManager =getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame,new TechniciansFragment()).commit();
             }
         });
     }

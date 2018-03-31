@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

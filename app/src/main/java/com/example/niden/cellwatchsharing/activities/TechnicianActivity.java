@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.example.niden.cellwatchsharing.R;
 import com.example.niden.cellwatchsharing.adapters.RecyclerTaskAdapter;
-import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.controllers.Account;
+import com.example.niden.cellwatchsharing.controllers.UserProfile;
 import com.example.niden.cellwatchsharing.utils.IntentUtils;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;

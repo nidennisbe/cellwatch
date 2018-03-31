@@ -1,13 +1,7 @@
 package com.example.niden.cellwatchsharing.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.MediaStore;
-
-import java.io.File;
-import java.io.IOException;
 
 
 
